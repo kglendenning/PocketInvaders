@@ -4,7 +4,9 @@ package gameapp;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.JPanel;
 
 /**
@@ -15,6 +17,7 @@ public final class GameField extends JPanel implements KeyListener{
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Projectile> projectiles = new ArrayList<>();
     public ArrayList<Effect> effects = new ArrayList<>();
+    public Scanner in;
     
     public GameField(){
         super();
@@ -27,7 +30,14 @@ public final class GameField extends JPanel implements KeyListener{
     public void startGame(){
         setPlayer();
         addEnemy(0);
-        //read in levels
+        //read in level count
+        try{
+            in = new Scanner(new File("games/Test.txt"));
+            System.out.println(in.nextInt());
+        }catch(Exception e){
+            System.out.println("Error: " + e);
+        }
+        
         //call start level 1
     }
     
