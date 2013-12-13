@@ -18,7 +18,10 @@ public final class GameField extends JPanel implements KeyListener{
     public ArrayList<Projectile> projectiles = new ArrayList<>();
     public ArrayList<Effect> effects = new ArrayList<>();
     public Scanner in;
-    
+    public int levelcount;
+    public int enemycount;
+    public int spawndelay;
+        
     public GameField(){
         super();
     }
@@ -29,16 +32,29 @@ public final class GameField extends JPanel implements KeyListener{
     
     public void startGame(){
         setPlayer();
-        addEnemy(0);
+        //addEnemy(0);
         //read in level count
         try{
             in = new Scanner(new File("games/Test.txt"));
-            System.out.println(in.nextInt());
+            levelcount = in.nextInt();
+            getLevel();
         }catch(Exception e){
             System.out.println("Error: " + e);
         }
-        
-        //call start level 1
+    }
+    
+    public void getLevel(){
+        enemycount = in.nextInt();
+        levelcount--;
+        spawndelay = in.nextInt();
+    }
+    
+    public void getEnemy(){
+        addEnemy(in.nextInt());
+        enemycount--;
+        if(enemycount>0){
+           spawndelay = in.nextInt();
+        }
     }
     
     public void addEnemy(int level){
@@ -69,7 +85,13 @@ public final class GameField extends JPanel implements KeyListener{
         }
         
         detectHits();
-        
+        if(spawndelay==0){
+            if(enemycount==0 && enemies.isEmpty()){
+                if(levelcount==0){
+                    // game end
+                } else {getLevel();}
+            } else {getEnemy();}
+        } else {spawndelay--;}
         repaint();
     }
     
