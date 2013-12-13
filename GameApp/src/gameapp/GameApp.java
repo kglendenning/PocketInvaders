@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 public class GameApp {
     public static GameField field = new GameField();
     public static final int WINDOW_HEIGHT = 800, WINDOW_WIDTH = 1200;
-
     public static void main(String[] args) {
         //create main frame
         JFrame frame = new JFrame("Battlefield");
