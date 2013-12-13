@@ -27,6 +27,8 @@ public final class GameField extends JPanel implements KeyListener{
     public void startGame(){
         setPlayer();
         addEnemy(0);
+        //read in levels
+        //call start level 1
     }
     
     public void addEnemy(int level){
@@ -78,7 +80,17 @@ public final class GameField extends JPanel implements KeyListener{
             }
         }
         
-        
+        ArrayList<Projectile> playerShots = player.getProjectiles();
+        for(int i = 0; i < playerShots.size(); i++){
+            for(int j = 0; j < enemies.size(); j++){
+                if(enemies.get(j).isHit(playerShots.get(i))){
+                    effects.add(new Effect(playerShots.get(i).getCenter()));
+                    playerShots.remove(i);
+                    i--;
+                    break;
+                }
+            }
+        }
     }
     
     @Override

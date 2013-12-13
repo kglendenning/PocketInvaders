@@ -16,7 +16,7 @@ public class Effect extends JPanel{
     public Effect(Point center){
         setX(center.x);
         setY(center.y);
-        setTimer(20);
+        setTimer(30);
     }
     
     public void setX(int x){

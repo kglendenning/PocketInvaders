@@ -30,6 +30,10 @@ public class Player extends Ship{
         setImage(icon);
     }
     
+    public ArrayList<Projectile> getProjectiles(){
+        return projectiles;
+    }
+    
     public void update(){
         for(int i = 0; i < projectiles.size(); i++){
             Projectile shot = projectiles.get(i);
