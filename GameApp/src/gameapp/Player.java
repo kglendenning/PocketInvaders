@@ -86,24 +86,24 @@ public class Player extends Ship{
     
     public void moveCheck(){
         if(moveLeft && !moveRight){
-            setX(getX()-(speed ? 7 : 5));
+            setX(getX()-(speed ? 7 : 4));
             if(getX() <= 0){
                 setX(0);
             }
         }else if(moveRight && !moveLeft){
-            setX(getX()+(speed ? 7 : 5));
+            setX(getX()+(speed ? 7 : 4));
             if(getX() >= panelWidth-getWidth()){
                 setX(panelWidth-getWidth());
             }
         }
         
         if(moveUp && !moveDown){
-            setY(getY()-(speed ? 7 : 5));
+            setY(getY()-(speed ? 7 : 4));
             if(getY() <= 0){
                 setY(0);
             }
         }else if(moveDown && !moveUp){
-            setY(getY()+(speed ? 7 : 5));
+            setY(getY()+(speed ? 7 : 4));
             if(getY() >= panelHeight-getHeight()){
                 setY(panelHeight-getHeight());
             }
