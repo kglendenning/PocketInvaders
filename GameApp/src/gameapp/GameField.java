@@ -132,7 +132,7 @@ public final class GameField extends JPanel implements KeyListener{
             player.setShooting(true);
         }else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             //speed up
-            player.setSpeed(true);
+            player.setSpeed(false);
         }
     }
 
@@ -149,7 +149,7 @@ public final class GameField extends JPanel implements KeyListener{
         }else if(e.getKeyCode() == KeyEvent.VK_SPACE){
             player.setShooting(false);
         }else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
-            player.setSpeed(false);
+            player.setSpeed(true);
         }
     }
 }
