@@ -4,6 +4,8 @@
  */
 package gameapp;
 
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 /**
@@ -63,6 +65,10 @@ public class Ship {
         this.image = image;
         setWidth(image.getIconWidth());
         setHeight(image.getIconHeight());
+    }
+    
+    public boolean isHit(Projectile shot){
+        return new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(shot.getBoundingBox());
     }
     
     public ImageIcon getImageIcon(){

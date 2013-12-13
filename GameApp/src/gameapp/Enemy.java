@@ -46,16 +46,11 @@ public class Enemy extends Ship{
     }
     
     public Projectile shootProjectile(){
-        return new Projectile(getX()+(getWidth()/2), getY(), false);
+        return new Projectile(getX()+(getWidth()/2), getY()+getHeight(), false);
     }
     
     public void shootWeapon(){
         
-    }
-    
-    public boolean isHit(Projectile shot){
-        
-        return false;
     }
     
     public void move(){
