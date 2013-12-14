@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 public class Player extends Ship{
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     public boolean shooting = false, moveLeft = false, moveRight = false,
-            moveUp = false, moveDown = false, speed = false;
+            moveUp = false, moveDown = false, speed = true;
     private int shotDelay = 0;
     
     public Player(int width, int height){
