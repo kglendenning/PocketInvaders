@@ -12,11 +12,12 @@ import javax.swing.JPanel;
 public class Effect extends JPanel{
     private int x, y;
     private int timer;
+    private final int SIZE = 10;
     
     public Effect(Point center){
         setX(center.x);
         setY(center.y);
-        setTimer(30);
+        setTimer(3);
     }
     
     public void setX(int x){
@@ -28,18 +29,19 @@ public class Effect extends JPanel{
     }
     
     public void setTimer(int timer){
-        
+        this.timer = timer;
     }
     
     /**
      * @return 0 - if not finished, 1 - if finished
      */
     public int update(){
+        timer--;
         return timer <= 0 ? 1 : 0;
     }
     
     public void draw(Graphics g){
-        g.setColor(Color.red);
-        g.fillOval(x-(20-timer)/2, y-(20-timer)/2, 20-timer, 20-timer);
+        g.setColor(Color.green);
+        g.fillOval(x-(SIZE)/2, y-(SIZE)/2, SIZE, SIZE);
     }
 }
