@@ -1,9 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gameapp;
 
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -22,7 +20,7 @@ public class Ship {
         int randY = (int) Math.random() * 800;
         setX(randX);
         setY(randY);
-        setHealth(100);
+        setHealth(200);
     }
     
     public Ship(int x, int y){
@@ -74,6 +72,10 @@ public class Ship {
         this.image = image;
         setWidth(image.getIconWidth());
         setHeight(image.getIconHeight());
+    }
+    
+    public Point getCenter(){
+        return new Point(getX()+getWidth()/2, getY()+getHeight()/2);
     }
     
     public boolean isHit(Projectile shot){

@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 /**
  * @author Kurt
  */
-public class Effect extends JPanel{
+public class Effect{
     private int x, y;
     private int timer;
     private final int SIZE = 10;

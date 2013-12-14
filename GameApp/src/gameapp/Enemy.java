@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gameapp;
 
 import java.awt.Graphics;
@@ -13,7 +10,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Enemy extends Ship{
-    private int run, rise;
+    private int run, rise, level;
     
     public Enemy(int width, int height){
         ImageIcon icon = new ImageIcon("images/Fighter1.png");
@@ -24,6 +21,7 @@ public class Enemy extends Ship{
         setY((int) (Math.random()*(panelHeight/4)));
         setRun(3);
         setRise(0);
+        setLevel(0);
         setImage(icon);
     }
     
@@ -33,6 +31,22 @@ public class Enemy extends Ship{
     
     public void setRise(int rise){
         this.rise = rise;
+    }
+    
+    public void setLevel(int level){
+        this.level = level;
+    }
+    
+    public int getRun(){
+        return run;
+    }
+    
+    public int getRise(){
+        return rise;
+    }
+    
+    public int getLevel(){
+        return level;
     }
     
     /**

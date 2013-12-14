@@ -1,9 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gameapp;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.Rectangle;
@@ -28,7 +26,7 @@ public class Player extends Ship{
         this.panelHeight = height;
         setX(width/2 - icon.getIconWidth()/2);
         setY(height-icon.getIconHeight());
-        //setHealth(MAX_HEALTH);
+        //setHealth(MAX_HEALTH);//testing with default for now
         setImage(icon);
     }
     
@@ -101,8 +99,8 @@ public class Player extends Ship{
         
         if(moveUp && !moveDown){
             setY(getY()-(speed ? 7 : 4));
-            if(getY() <= 0){
-                setY(0);
+            if(getY() <= 3*panelHeight/5){
+                setY(3*panelHeight/5);
             }
         }else if(moveDown && !moveUp){
             setY(getY()+(speed ? 7 : 4));
@@ -120,10 +118,21 @@ public class Player extends Ship{
         
     }
     
+    @Override
     public boolean isHit(Projectile shot){
         int xpoints[] = {getX(), getX()+getWidth(), getX()+getWidth()/2};
         int ypoints[] = {getY()+getHeight(), getY()+getHeight(), getY()};
         return new Polygon(xpoints, ypoints, 3).intersects(shot.getBoundingBox());
+    }
+    
+    public boolean isHit(Powerup powerup){
+        int xpoints[] = {getX(), getX()+getWidth(), getX()+getWidth()/2};
+        int ypoints[] = {getY()+getHeight(), getY()+getHeight(), getY()};
+        return new Polygon(xpoints, ypoints, 3).intersects(powerup.getBoundingBox());
+    }
+    
+    public void enhance(int type){
+        
     }
 
     public void draw(Graphics g) {

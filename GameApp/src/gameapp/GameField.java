@@ -17,6 +17,7 @@ public final class GameField extends JPanel implements KeyListener{
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Projectile> projectiles = new ArrayList<>();
     public ArrayList<Effect> effects = new ArrayList<>();
+    public ArrayList<Powerup> powerups = new ArrayList<>();
     public Scanner in;
     public int levelcount, enemycount, spawndelay;
         
@@ -25,7 +26,7 @@ public final class GameField extends JPanel implements KeyListener{
     }
     
     public void setPlayer(){
-        player = new Player(this.getWidth(), this.getHeight());
+        player = new Player(getWidth(), getHeight());
     }
     
     public void startGame(){
@@ -35,13 +36,13 @@ public final class GameField extends JPanel implements KeyListener{
         try{
             in = new Scanner(new File("games/Test.txt"));
             levelcount = in.nextInt();
-            getLevel();
+            nextLevel();
         }catch(Exception e){
             System.out.println("Error: " + e);
         }
     }
     
-    public void getLevel(){
+    public void nextLevel(){
         enemycount = in.nextInt();
         if(levelcount > 0){
             spawndelay = in.nextInt();
@@ -49,7 +50,7 @@ public final class GameField extends JPanel implements KeyListener{
         levelcount--;
     }
     
-    public void getEnemy(){
+    public void nextEnemy(){
         addEnemy(in.nextInt());
         enemycount--;
         if(enemycount > 0){
@@ -58,7 +59,13 @@ public final class GameField extends JPanel implements KeyListener{
     }
     
     public void addEnemy(int level){
-        enemies.add(new Enemy(this.getWidth(), this.getHeight()));
+        switch (level){
+            case 0:
+                enemies.add(new Enemy(getWidth(), getHeight()));
+                break;
+            case 1:
+                enemies.add(new Enemy2(getWidth(), getHeight()));
+        }
     }
     
     public void update(){
@@ -67,6 +74,14 @@ public final class GameField extends JPanel implements KeyListener{
         for(int i = 0; i < effects.size(); i++){
             if(effects.get(i).update() == 1){
                 effects.remove(i);
+                i--;
+            }
+        }
+        
+        for(int i = 0; i < powerups.size(); i++){
+            powerups.get(i).update();
+            if(powerups.get(i).getY() > getHeight()){
+                powerups.remove(i);
                 i--;
             }
         }
@@ -92,9 +107,9 @@ public final class GameField extends JPanel implements KeyListener{
                         //game end
                         System.out.println("You win.");
                         System.exit(0);
-                    }else{getLevel();}
+                    }else{nextLevel();}
                 }
-            } else {getEnemy();}
+            } else {nextEnemy();}
         } else {spawndelay--;}
         repaint();
     }
@@ -124,6 +139,15 @@ public final class GameField extends JPanel implements KeyListener{
             }
         }
         
+        //detect powerup collection
+        for(int i = 0; i < powerups.size(); i++){
+            if(player.isHit(powerups.get(i))){
+                player.enhance(powerups.get(i).getType());
+                powerups.remove(i);
+                i--;
+            }
+        }
+        
         //detect enemy collision
         ArrayList<Projectile> playerShots = player.getProjectiles();
         for(int i = 0; i < playerShots.size(); i++){
@@ -133,6 +157,7 @@ public final class GameField extends JPanel implements KeyListener{
                     
                     //enemy is killed
                     if(enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1){
+                        generatePowerup(enemies.get(j));
                         enemies.remove(j);
                     }
                     
@@ -141,6 +166,16 @@ public final class GameField extends JPanel implements KeyListener{
                     break;
                 }
             }
+        }
+    }
+    
+    public void generatePowerup(Enemy enemy){
+        int level = enemy.getLevel();
+        double chance = Math.random() + ((double) level * 0.10);
+        int type = (int) (Math.random() * 4.0) + 1;
+        
+        if(chance >= 0.70){
+            powerups.add(new Powerup(enemy.getCenter(), type));
         }
     }
     
@@ -168,6 +203,11 @@ public final class GameField extends JPanel implements KeyListener{
         //draw effects
         for(Effect effect : effects){
             effect.draw(g);
+        }
+        
+        //draw powerups
+        for(Powerup powerup : powerups){
+            powerup.draw(g);
         }
     }
 
