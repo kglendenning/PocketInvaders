@@ -1,6 +1,7 @@
 
 package gameapp;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -98,5 +99,9 @@ public class Projectile {
     public void move(){
         x += run;
         y += rise;
+    }
+    
+    public void draw(Graphics g){
+        g.drawImage(getImageIcon().getImage(), getX(), getY(), null);
     }
 }

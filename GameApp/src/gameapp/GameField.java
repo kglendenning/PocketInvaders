@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -20,6 +21,8 @@ public final class GameField extends JPanel implements KeyListener{
     public ArrayList<Powerup> powerups = new ArrayList<>();
     public Scanner in;
     public int levelcount, enemycount, spawndelay;
+    public boolean debug = false;
+    public String debugInfo = "";
         
     public GameField(){
         super();
@@ -132,7 +135,7 @@ public final class GameField extends JPanel implements KeyListener{
                 //player is killed
                 if(player.takeDamage(projectiles.get(i).getDamage()) == 1){
                     System.out.println("You lose.");
-                    System.exit(0);
+                    //System.exit(0);
                 }
                 
                 projectiles.remove(i);
@@ -198,7 +201,7 @@ public final class GameField extends JPanel implements KeyListener{
         
         //draw projectiles
         for(Projectile shot : projectiles){
-            g.drawImage(shot.getImageIcon().getImage(), shot.getX(), shot.getY(), null);
+            shot.draw(g);
         }
         
         //draw effects
@@ -209,6 +212,21 @@ public final class GameField extends JPanel implements KeyListener{
         //draw powerups
         for(Powerup powerup : powerups){
             powerup.draw(g);
+        }
+        
+        if(debug){showDebug(g);}
+    }
+    
+    public void showDebug(Graphics g){
+        debugInfo = "Enemies: "+enemies.size()+"\t"+
+                "Projectiles: "+projectiles.size()+"\t"+
+                "Player shots: "+player.getProjectiles().size()+"\t"+
+                "Player hp: "+player.getHealth()+"\t"+
+                "";
+        String lines[] = debugInfo.split("\t");
+        for(int i = 0; i < lines.length; i++){
+            g.setColor(Color.YELLOW);
+            g.drawString(lines[i], 10, 20+i*10);
         }
     }
 
@@ -240,6 +258,8 @@ public final class GameField extends JPanel implements KeyListener{
         }else if(e.getKeyCode() == KeyEvent.VK_UP){
             //shoot weapon
             player.shootWeapon();
+        }else if(e.getKeyCode() == KeyEvent.VK_F8){
+            debug = !debug;
         }
     }
 

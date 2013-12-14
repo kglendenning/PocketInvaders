@@ -12,23 +12,27 @@ import javax.swing.ImageIcon;
  */
 public class Enemy extends Ship{
     private int run, rise, level;
-    private ArrayList<ImageIcon> parts = new ArrayList<>();
+    //private ArrayList<ImageIcon> parts = new ArrayList<>();
     
     public Enemy(int width, int height){
-        ImageIcon bottom = new ImageIcon("images/Fighter1Bottom.png");
-        ImageIcon top = new ImageIcon("images/Fighter1Top.png");
+        //ImageIcon bottom = new ImageIcon("images/Fighter1Bottom.png");
+        //ImageIcon top = new ImageIcon("images/Fighter1Top.png");
+        ImageIcon icon = new ImageIcon("images/Fighter1.png");
         
         this.panelWidth = width;
         this.panelHeight = height;
-        setX((int) (Math.random()*(panelWidth-bottom.getIconWidth())));
+        setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
         setY((int) (Math.random()*(panelHeight/4)));
-        setWidth(bottom.getIconWidth());
-        setHeight(bottom.getIconHeight()+top.getIconHeight());
+        setWidth(icon.getIconWidth());
+        setHeight(icon.getIconHeight());
+        //setWidth(bottom.getIconWidth());
+        //setHeight(bottom.getIconHeight()+top.getIconHeight());
         setRun(3);
         setRise(0);
         setLevel(0);
-        parts.add(bottom);
-        parts.add(top);
+        setImage(icon);
+        //parts.add(bottom);
+        //parts.add(top);
     }
     
     public void setRun(int run){
@@ -73,7 +77,7 @@ public class Enemy extends Ship{
         
     }
     
-    @Override
+    /*Override
     public boolean isHit(Projectile shot){
         if(shot.getBoundingBox().intersects(new Rectangle(getX(), getY(), getWidth(), parts.get(0).getIconHeight()))){
             return true;
@@ -81,7 +85,7 @@ public class Enemy extends Ship{
             return shot.getBoundingBox().intersects(new Rectangle(getX()+getWidth()/2-parts.get(1).getIconWidth()/2, parts.get(0).getIconHeight(),
                     parts.get(1).getIconWidth(), parts.get(1).getIconHeight()));
         }
-    }
+    }*/
     
     public void move(){
         if(getX()+run < 0 || getX()+getWidth()+run >= panelWidth){
@@ -94,8 +98,8 @@ public class Enemy extends Ship{
 
     public void draw(Graphics g) {
         //draw self
-        //g.drawImage(getImageIcon().getImage(), getX(), getY(), null);
-        g.drawImage(parts.get(0).getImage(), getX(), getY(), null);
-        g.drawImage(parts.get(1).getImage(), getX()+getWidth()/2-parts.get(1).getIconWidth()/2, getY()+parts.get(0).getIconHeight(), null);
+        g.drawImage(getImageIcon().getImage(), getX(), getY(), null);
+        //g.drawImage(parts.get(0).getImage(), getX(), getY(), null);
+        //g.drawImage(parts.get(1).getImage(), getX()+getWidth()/2-parts.get(1).getIconWidth()/2, getY()+parts.get(0).getIconHeight(), null);
     }
 }
