@@ -41,7 +41,7 @@ public class Effect extends JPanel{
     }
     
     public void draw(Graphics g){
-        g.setColor(Color.green);
+        g.setColor(Color.ORANGE);
         g.fillOval(x-(SIZE)/2, y-(SIZE)/2, SIZE, SIZE);
     }
 }

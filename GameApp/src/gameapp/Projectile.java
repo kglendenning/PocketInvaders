@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Projectile {
-    private int x, y, width, height, run, rise;
+    private int x, y, width, height, run, rise, damage;
     private ImageIcon image = new ImageIcon("images/Projectile.gif");
     
     public Projectile(int x, int y, boolean up){
@@ -23,6 +23,11 @@ public class Projectile {
         setY(y);
         setRun(0);
         setRise(up ? -10 : 10);
+        setDamage(20);
+    }
+    
+    public void setDamage(int damage){
+        this.damage = damage;
     }
     
     public void setX(int x){
@@ -47,6 +52,10 @@ public class Projectile {
     
     public void setRise(int rise){
         this.rise = rise;
+    }
+    
+    public int getDamage(){
+        return damage;
     }
     
     public int getX(){

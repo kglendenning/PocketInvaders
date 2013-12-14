@@ -19,6 +19,7 @@ public class Player extends Ship{
     public boolean shooting = false, moveLeft = false, moveRight = false,
             moveUp = false, moveDown = false, speed = true;
     private int shotDelay = 0;
+    private final int MAX_HEALTH = 500;
     
     public Player(int width, int height){
         ImageIcon icon = new ImageIcon("images/Player.jpg");
@@ -27,6 +28,7 @@ public class Player extends Ship{
         this.panelHeight = height;
         setX(width/2 - icon.getIconWidth()/2);
         setY(height-icon.getIconHeight());
+        //setHealth(MAX_HEALTH);
         setImage(icon);
     }
     

@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Ship {
-    private int x, y, width, height;
+    private int x, y, width, height, health;
     public int panelHeight, panelWidth;;
     private ImageIcon image;
     
@@ -22,11 +22,16 @@ public class Ship {
         int randY = (int) Math.random() * 800;
         setX(randX);
         setY(randY);
+        setHealth(100);
     }
     
     public Ship(int x, int y){
         setX(x);
         setY(y);
+    }
+    
+    public void setHealth(int health){
+        this.health = health;
     }
     
     public void setX(int x){
@@ -43,6 +48,10 @@ public class Ship {
     
     public void setHeight(int height){
         this.height = height;
+    }
+    
+    public int getHealth(){
+        return health;
     }
     
     public int getX(){
@@ -69,6 +78,15 @@ public class Ship {
     
     public boolean isHit(Projectile shot){
         return new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(shot.getBoundingBox());
+    }
+    
+    /**
+     * @param damage Damage of projectile
+     * @return 0 - if nothing, 1 - if killed
+     */
+    public int takeDamage(int damage){
+        health -= damage;
+        return health > 0 ? 0 : 1;
     }
     
     public ImageIcon getImageIcon(){

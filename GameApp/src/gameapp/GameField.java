@@ -30,7 +30,7 @@ public final class GameField extends JPanel implements KeyListener{
     
     public void startGame(){
         setPlayer();
-        //addEnemy(0);
+        
         //read in level count
         try{
             in = new Scanner(new File("games/Test.txt"));
@@ -43,10 +43,10 @@ public final class GameField extends JPanel implements KeyListener{
     
     public void getLevel(){
         enemycount = in.nextInt();
-        levelcount--;
         if(levelcount > 0){
             spawndelay = in.nextInt();
         }
+        levelcount--;
     }
     
     public void getEnemy(){
@@ -85,14 +85,14 @@ public final class GameField extends JPanel implements KeyListener{
         }
         
         detectHits();
-        if(spawndelay==0){
-            if(enemycount==0){
+        if(spawndelay == 0){
+            if(enemycount == 0){
                 if(enemies.isEmpty()){
-                    if(levelcount==0){
-                        getLevel();
-                    }else{
-                        // game end
-                    }
+                    if(levelcount == 0){
+                        //game end
+                        System.out.println("You win.");
+                        System.exit(0);
+                    }else{getLevel();}
                 }
             } else {getEnemy();}
         } else {spawndelay--;}
@@ -108,19 +108,34 @@ public final class GameField extends JPanel implements KeyListener{
     }
     
     public void detectHits(){
+        //detect player collision
         for(int i = 0; i < projectiles.size(); i++){
             if(player.isHit(projectiles.get(i))){
                 effects.add(new Effect(projectiles.get(i).getCenter()));
+                
+                //player is killed
+                if(player.takeDamage(projectiles.get(i).getDamage()) == 1){
+                    System.out.println("You lose.");
+                    System.exit(0);
+                }
+                
                 projectiles.remove(i);
                 i--;
             }
         }
         
+        //detect enemy collision
         ArrayList<Projectile> playerShots = player.getProjectiles();
         for(int i = 0; i < playerShots.size(); i++){
             for(int j = 0; j < enemies.size(); j++){
                 if(enemies.get(j).isHit(playerShots.get(i))){
                     effects.add(new Effect(playerShots.get(i).getCenter()));
+                    
+                    //enemy is killed
+                    if(enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1){
+                        enemies.remove(j);
+                    }
+                    
                     playerShots.remove(i);
                     i--;
                     break;
