@@ -34,11 +34,12 @@ public final class GameField extends JPanel implements KeyListener{
         
         //read in level count
         try{
-            in = new Scanner(new File("games/Test.txt"));
+            in = new Scanner(new File("games/BiggerTest.txt"));
             levelcount = in.nextInt();
             nextLevel();
         }catch(Exception e){
             System.out.println("Error: " + e);
+            System.exit(0);
         }
     }
     
@@ -174,7 +175,7 @@ public final class GameField extends JPanel implements KeyListener{
         double chance = Math.random() + ((double) level * 0.10);
         int type = (int) (Math.random() * 4.0) + 1;
         
-        if(chance >= 0.70){
+        if(chance >= 0.90){
             powerups.add(new Powerup(enemy.getCenter(), type));
         }
     }
@@ -236,6 +237,9 @@ public final class GameField extends JPanel implements KeyListener{
         }else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             //speed up
             player.setSpeed(false);
+        }else if(e.getKeyCode() == KeyEvent.VK_UP){
+            //shoot weapon
+            player.shootWeapon();
         }
     }
 

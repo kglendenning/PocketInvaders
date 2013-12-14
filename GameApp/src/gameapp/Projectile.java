@@ -95,10 +95,6 @@ public class Projectile {
         return new Point(getX()+getWidth()/2, getY()+getHeight()/2);
     }
     
-    public void hits(){
-        
-    }
-    
     public void move(){
         x += run;
         y += rise;
