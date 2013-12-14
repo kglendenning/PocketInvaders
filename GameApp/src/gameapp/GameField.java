@@ -107,7 +107,7 @@ public final class GameField extends JPanel implements KeyListener{
                     if(levelcount == 0){
                         //game end
                         System.out.println("You win.");
-                        System.exit(0);
+                        //System.exit(0);
                     }else{nextLevel();}
                 }
             } else {nextEnemy();}
