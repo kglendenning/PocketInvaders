@@ -12,9 +12,14 @@ import javax.swing.JPanel;
 public class Section extends JPanel{
     public ImageIcon left, middle, right;
     public SideBar sideBar;
+    public boolean top = false;
     
     public Section(){
         super();
+    }
+    
+    public void setTop(){
+        this.top = true;
     }
     
     public void setLeft(ImageIcon image){
@@ -47,9 +52,11 @@ public class Section extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         
+        //background
         g.setColor(Color.DARK_GRAY);
         g.fillRect(0, 0, getWidth(), getHeight());
         
+        //draw weapon panel images
         if(left != null){
             g.drawImage(left.getImage(), 30, 100, null);
         }
@@ -58,6 +65,16 @@ public class Section extends JPanel{
         }
         if(middle != null){
             g.drawImage(middle.getImage(), 150-middle.getIconWidth()/2, 80, null);
+        }
+        
+        //health bar
+        if(top){
+            int health = (int) (((double) sideBar.health/ (double)sideBar.maxHealth) * 250.0);
+            
+            g.setColor(new Color(0, 204, 0));
+            g.fillRect(25, 75, health, 50);
+            g.setColor(new Color(204, 0, 0));
+            g.fillRect(25+health, 75, 250-health, 50);
         }
     }
 }

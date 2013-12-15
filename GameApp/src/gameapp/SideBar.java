@@ -18,9 +18,11 @@ public class SideBar extends JPanel {
     public Section top, upper, lower, bottom;
     public JLabel ammoLabel, healthLabel, weaponLabel;
     public ImageIcon weaponIcon, left, right;
+    public int health, maxHealth;
 
     public SideBar() {
         super();
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         top = new Section(); upper = new Section(); lower = new Section(); bottom = new Section();
         lower.setLeft(new ImageIcon("images/Left.jpg")); lower.setMiddle(new ImageIcon("images/BigBurstIcon.jpg")); lower.setRight(new ImageIcon("images/Right.jpg"));
@@ -34,19 +36,22 @@ public class SideBar extends JPanel {
         healthLabel.setForeground(Color.ORANGE);
         weaponLabel.setForeground(Color.ORANGE);
         
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        top.setTop();
         add(top);
         add(upper);
         add(lower);
         add(bottom);
-        //top.add(healthMeter);
+
         top.add(healthLabel);
         upper.add(weaponLabel);
         bottom.add(ammoLabel);
     }
 
     public void update(GameField field) {
-        healthLabel.setText("" + field.player.getHealth() + "/" + field.player.getMaxHealth());
+        health = field.player.getHealth();
+        maxHealth = field.player.getMaxHealth();
+        
+        healthLabel.setText("" + health + "/" + maxHealth);
         ammoLabel.setText("" + field.player.getWeaponAmmo()[field.player.getActiveWeapon()]);
         weaponLabel.setText(field.weapon.getWeaponName(field.player.getActiveWeapon()));
         lower.setMiddle(new ImageIcon("images/Big" + field.weapon.getWeaponName(field.player.getActiveWeapon()) + "Icon.jpg"));

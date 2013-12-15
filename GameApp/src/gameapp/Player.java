@@ -163,6 +163,20 @@ public class Player extends Ship {
         int ypoints[] = {getY() + getHeight(), getY() + getHeight(), getY()};
         return new Polygon(xpoints, ypoints, 3).intersects(powerup.getBoundingBox());
     }
+    
+    /**
+     * @param damage Damage of projectile
+     * @return 0 - if nothing, 1 - if killed
+     */
+    @Override
+    public int takeDamage(int damage){
+        setHealth(getHealth()-damage);
+        if(getHealth() < 0){
+            setHealth(0);
+        }
+        
+        return getHealth() > 0 ? 0 : 1;
+    }
 
     public void shiftWeapon(boolean right) {
         if (right) {
