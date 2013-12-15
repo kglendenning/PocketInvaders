@@ -1,4 +1,3 @@
-
 package gameapp;
 
 import java.awt.*;
@@ -7,13 +6,17 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
  * @author Kurt
  */
-public final class GameField extends JPanel implements KeyListener{
+public final class GameField extends JPanel implements KeyListener {
+
     public Player player;
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Projectile> projectiles = new ArrayList<>();
@@ -23,47 +26,78 @@ public final class GameField extends JPanel implements KeyListener{
     public int levelcount, enemycount, spawndelay;
     public boolean debug = false;
     public String debugInfo = "";
-        
-    public GameField(){
-        super();
-    }
+    public SideBar sideBar = new SideBar();
+    public Weapon weapon = new Weapon();
     
-    public void setPlayer(){
+    public GameField() {
+        super();
+        add(sideBar);
+        sideBar.setLocation(getWidth()-200,0);
+        sideBar.setSize(200, getHeight());
+    }
+
+    public class SideBar extends JPanel {
+
+        private JPanel top, upper, lower, bottom;
+        private JButton left, right;
+        private JLabel ammoLabel, healthLabel, weaponLabel;
+        private ImageIcon enlargedWeaponIcon;
+              
+        public SideBar() {
+            JPanel top = new JPanel(); JPanel upper = new JPanel(); JPanel lower = new JPanel(); JPanel bottom = new JPanel();
+            JButton left = new JButton("<"); JButton right = new JButton(">");
+            ammoLabel = new JLabel(); healthLabel = new JLabel(); weaponLabel = new JLabel();
+            enlargedWeaponIcon = new ImageIcon("images/weaponEnlarged.jpg");
+            setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
+            add(top);
+            add(upper);
+            add(lower);
+            add(bottom);
+            //top.add(healthMeter);
+            top.add(healthLabel);
+            lower.add(weaponLabel);
+            bottom.add(left);
+            bottom.add(ammoLabel);
+            bottom.add(right);
+        }
+    }
+
+    public void setPlayer() {
         player = new Player(getWidth(), getHeight());
     }
-    
-    public void startGame(){
+
+    public void startGame() {
         setPlayer();
-        
+
         //read in level count
-        try{
+        try {
             in = new Scanner(new File("games/BiggerTest.txt"));
             levelcount = in.nextInt();
             nextLevel();
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error: " + e);
             System.exit(0);
         }
     }
-    
-    public void nextLevel(){
+
+    public void nextLevel() {
         enemycount = in.nextInt();
-        if(levelcount > 0){
+        if (levelcount > 0) {
             spawndelay = in.nextInt();
         }
         levelcount--;
     }
-    
-    public void nextEnemy(){
+
+    public void nextEnemy() {
         addEnemy(in.nextInt());
         enemycount--;
-        if(enemycount > 0){
-           spawndelay = in.nextInt();
+        if (enemycount > 0) {
+            spawndelay = in.nextInt();
         }
     }
-    
-    public void addEnemy(int level){
-        switch (level){
+
+    public void addEnemy(int level) {
+        switch (level) {
             case 0:
                 enemies.add(new Enemy(getWidth(), getHeight()));
                 break;
@@ -71,100 +105,112 @@ public final class GameField extends JPanel implements KeyListener{
                 enemies.add(new Enemy2(getWidth(), getHeight()));
         }
     }
-    
-    public void update(){
+
+    public void update() {
         player.update();
-        
-        for(int i = 0; i < effects.size(); i++){
-            if(effects.get(i).update() == 1){
+
+        for (int i = 0; i < effects.size(); i++) {
+            if (effects.get(i).update() == 1) {
                 effects.remove(i);
                 i--;
             }
         }
-        
-        for(int i = 0; i < powerups.size(); i++){
+
+        for (int i = 0; i < powerups.size(); i++) {
             powerups.get(i).update();
-            if(powerups.get(i).getY() > getHeight()){
+            if (powerups.get(i).getY() > getHeight()) {
                 powerups.remove(i);
                 i--;
             }
         }
-        
-        for(int i = 0; i < projectiles.size(); i++){
+
+        for (int i = 0; i < projectiles.size(); i++) {
             Projectile shot = projectiles.get(i);
             shot.move();
-            if(shot.getY() + shot.getHeight() >= this.getHeight()){
+            if (shot.getY() + shot.getHeight() >= this.getHeight()) {
                 projectiles.remove(i);
                 i--;
             }
         }
-        
-        for(Enemy enemy : enemies){
+
+        for (Enemy enemy : enemies) {
             handleAction(enemy);
         }
-        
+
         detectHits();
-        if(spawndelay == 0){
-            if(enemycount == 0){
-                if(enemies.isEmpty()){
-                    if(levelcount == 0){
+        if (spawndelay == 0) {
+            if (enemycount == 0) {
+                if (enemies.isEmpty()) {
+                    if (levelcount == 0) {
                         //game end
                         System.out.println("You win.");
                         //System.exit(0);
-                    }else{nextLevel();}
+                    } else {
+                        nextLevel();
+                    }
                 }
-            } else {nextEnemy();}
-        } else {spawndelay--;}
+            } else {
+                nextEnemy();
+            }
+        } else {
+            spawndelay--;
+        }
+        
+        sideBar.healthLabel.setText(""+player.getHealth());
+        sideBar.ammoLabel.setText(player.getWeaponAmmo()[player.getActiveWeapon()]);
+        sideBar.weaponLabel.setText(weapon.getWeaponName(player.getActiveWeapon()));
+        sideBar.enlargedWeaponIcon.setImage(new ImageIcon("images/Big"+weapon.getWeaponName(player.getActiveWeapon)+"Icon.jpg").getImage());
+        
         repaint();
     }
-    
-    public void handleAction(Enemy enemy){
+
+    public void handleAction(Enemy enemy) {
         int action = enemy.update();
-        
-        if(action == 1){
+
+        if (action == 1) {
             projectiles.add(enemy.shootProjectile());
         }
     }
-    
-    public void detectHits(){
+
+    public void detectHits() {
         //detect player collision
-        for(int i = 0; i < projectiles.size(); i++){
-            if(player.isHit(projectiles.get(i))){
+        for (int i = 0; i < projectiles.size(); i++) {
+            if (player.isHit(projectiles.get(i))) {
                 effects.add(new Effect(projectiles.get(i).getCenter()));
-                
+
                 //player is killed
-                if(player.takeDamage(projectiles.get(i).getDamage()) == 1){
+                if (player.takeDamage(projectiles.get(i).getDamage()) == 1) {
                     System.out.println("You lose.");
                     //System.exit(0);
                 }
-                
+
                 projectiles.remove(i);
                 i--;
             }
         }
-        
+
         //detect powerup collection
-        for(int i = 0; i < powerups.size(); i++){
-            if(player.isHit(powerups.get(i))){
+        for (int i = 0; i < powerups.size(); i++) {
+            if (player.isHit(powerups.get(i))) {
                 player.enhance(powerups.get(i).getType());
                 powerups.remove(i);
                 i--;
             }
         }
-        
+
         //detect enemy collision
         ArrayList<Projectile> playerShots = player.getProjectiles();
-        for(int i = 0; i < playerShots.size(); i++){
-            for(int j = 0; j < enemies.size(); j++){
-                if(enemies.get(j).isHit(playerShots.get(i))){
+        for (int i = 0; i < playerShots.size(); i++) {
+            for (int j = 0; j < enemies.size(); j++) {
+                if (enemies.get(j).isHit(playerShots.get(i))) {
                     effects.add(new Effect(playerShots.get(i).getCenter()));
-                    
+
                     //enemy is killed
-                    if(enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1){
+                    if (enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1) {
                         generatePowerup(enemies.get(j));
                         enemies.remove(j);
                     }
-                    
+
                     playerShots.remove(i);
                     i--;
                     break;
@@ -172,110 +218,112 @@ public final class GameField extends JPanel implements KeyListener{
             }
         }
     }
-    
-    public void generatePowerup(Enemy enemy){
+
+    public void generatePowerup(Enemy enemy) {
         int level = enemy.getLevel();
         double chance = Math.random() + ((double) level * 0.10);
         int type = (int) (Math.random() * 4.0) + 1;
-        
-        if(chance >= 0.90){
+
+        if (chance >= 0.90) {
             powerups.add(new Powerup(enemy.getCenter(), type));
         }
     }
-    
+
     @Override
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+
         //paint background
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
-        
+
         //paint enemies
-        for(Enemy enemy : enemies){
+        for (Enemy enemy : enemies) {
             enemy.draw(g);
         }
-        
+
         //paint player objects
         player.draw(g);
-        
+
         //draw projectiles
-        for(Projectile shot : projectiles){
+        for (Projectile shot : projectiles) {
             shot.draw(g);
         }
-        
+
         //draw effects
-        for(Effect effect : effects){
+        for (Effect effect : effects) {
             effect.draw(g);
         }
-        
+
         //draw powerups
-        for(Powerup powerup : powerups){
+        for (Powerup powerup : powerups) {
             powerup.draw(g);
         }
-        
-        if(debug){showDebug(g);}
+
+        if (debug) {
+            showDebug(g);
+        }
     }
-    
-    public void showDebug(Graphics g){
-        debugInfo = "Enemies: "+enemies.size()+"\t"+
-                "Projectiles: "+projectiles.size()+"\t"+
-                "Player shots: "+player.getProjectiles().size()+"\t"+
-                "Player hp: "+player.getHealth()+"\t"+
-                "";
+
+    public void showDebug(Graphics g) {
+        debugInfo = "Enemies: " + enemies.size() + "\t"
+                + "Projectiles: " + projectiles.size() + "\t"
+                + "Player shots: " + player.getProjectiles().size() + "\t"
+                + "Player hp: " + player.getHealth() + "\t"
+                + "";
         String lines[] = debugInfo.split("\t");
-        for(int i = 0; i < lines.length; i++){
+        for (int i = 0; i < lines.length; i++) {
             g.setColor(Color.YELLOW);
-            g.drawString(lines[i], 10, 20+i*10);
+            g.drawString(lines[i], 10, 20 + i * 10);
         }
     }
 
     @Override
-    public void keyTyped(KeyEvent e){
-        
+    public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
-    public void keyPressed(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_A){
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_A) {
             //move left
             player.setMoveLeft(true);
-        }else if(e.getKeyCode() == KeyEvent.VK_D){
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
             //move right
             player.setMoveRight(true);
-        }else if(e.getKeyCode() == KeyEvent.VK_W){
+        } else if (e.getKeyCode() == KeyEvent.VK_W) {
             //move up
             player.setMoveUp(true);
-        }else if(e.getKeyCode() == KeyEvent.VK_S){
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
             //move down
             player.setMoveDown(true);
-        }else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             //shoot standard projectile
             player.setShooting(true);
-        }else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+        } else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
             //speed up
             player.setSpeed(false);
-        }else if(e.getKeyCode() == KeyEvent.VK_UP){
+        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             //shoot weapon
             player.shootWeapon();
-        }else if(e.getKeyCode() == KeyEvent.VK_F8){
+        } else if (e.getKeyCode() == KeyEvent.VK_F8) {
             debug = !debug;
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_A){
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_A) {
             player.setMoveLeft(false);
-        }else if(e.getKeyCode() == KeyEvent.VK_D){
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
             player.setMoveRight(false);
-        }else if(e.getKeyCode() == KeyEvent.VK_W){
+        } else if (e.getKeyCode() == KeyEvent.VK_W) {
             player.setMoveUp(false);
-        }else if(e.getKeyCode() == KeyEvent.VK_S){
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
             player.setMoveDown(false);
-        }else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             player.setShooting(false);
-        }else if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+        } else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
             player.setSpeed(true);
         }
     }
