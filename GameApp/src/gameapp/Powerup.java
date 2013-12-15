@@ -29,13 +29,13 @@ public class Powerup extends Entity{
                 setImage(new ImageIcon("images/BurstIcon.jpg"));
                 break;
             case 2:
-                setImage(new ImageIcon("images/BombIcon.jpg"));
+                setImage(new ImageIcon("images/RocketIcon.jpg"));
                 break;
             case 3:
                 setImage(new ImageIcon("images/SprayIcon.jpg"));
                 break;
             default:
-                setImage(new ImageIcon("images/RocketIcon.jpg"));
+                setImage(new ImageIcon("images/BombIcon.jpg"));
                 break;
         }
         setWidth(getImageIcon().getIconWidth());

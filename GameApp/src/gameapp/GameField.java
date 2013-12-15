@@ -157,7 +157,7 @@ public final class GameField extends JPanel implements KeyListener {
         //detect powerup collection
         for (int i = 0; i < powerups.size(); i++) {
             if (player.isHit(powerups.get(i))) {
-                player.enhance(powerups.get(i).getType());
+                player.collect(powerups.get(i).getType());
                 powerups.remove(i);
                 i--;
             }
@@ -189,7 +189,7 @@ public final class GameField extends JPanel implements KeyListener {
         double chance = Math.random() + ((double) level * 0.10);
         int type = (int) (Math.random() * 4.0) + 1;
 
-        if (chance >= 0.90) {
+        if (chance >= 0.50) {
             powerups.add(new Powerup(enemy.getCenter(), type));
         }
     }
@@ -273,6 +273,10 @@ public final class GameField extends JPanel implements KeyListener {
             player.shootWeapon();
         } else if (e.getKeyCode() == KeyEvent.VK_F8) {
             debug = !debug;
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            player.shiftWeapon(false);
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            player.shiftWeapon(true);
         }
     }
 
