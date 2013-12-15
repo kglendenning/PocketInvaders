@@ -16,7 +16,7 @@ public class Player extends Ship{
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     public boolean shooting = false, moveLeft = false, moveRight = false,
             moveUp = false, moveDown = false, speed = true;
-    private int shotDelay = 0;
+    private int shotDelay = 0, activeWeapon;
     private final int MAX_HEALTH = 500;
     private int weaponAmmo[] = new int[20];
     
@@ -30,6 +30,7 @@ public class Player extends Ship{
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
+        setActiveWeapon(0);
         //setHealth(MAX_HEALTH);//testing with default for now
     }
     
@@ -75,8 +76,16 @@ public class Player extends Ship{
         this.shooting = shooting;
     }
     
+    public void setActiveWeapon(int activeWeapon){
+        this.activeWeapon = activeWeapon;
+    }
+    
     public int[] getWeaponAmmo(){
         return weaponAmmo;
+    }
+    
+    public int getActiveWeapon(){
+        return activeWeapon;
     }
     
     public void shootCheck(){
