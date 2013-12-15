@@ -10,11 +10,13 @@ import javax.swing.ImageIcon;
  */
 public class Enemy2 extends Enemy{
 
-    public Enemy2(int width, int height){
-        super(width, height);
+    public Enemy2(int panelWidth, int panelHeight){
+        super(panelWidth, panelHeight);
         ImageIcon icon = new ImageIcon("images/Fighter2.jpg");
 
         setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
+        setWidth(icon.getIconWidth());
+        setHeight(icon.getIconHeight());
         setRun(4);
         setLevel(1);
         setImage(icon);
@@ -31,9 +33,9 @@ public class Enemy2 extends Enemy{
         return action > .95 ? 1 : 0;
     }
     
-    public boolean isHit(Projectile shot){
+    /*public boolean isHit(Projectile shot){
         int xpoints[] = {getX(), getX()+getWidth(), getX()+getWidth()/2};
         int ypoints[] = {getY(), getY(), getY()+getHeight()};
         return new Polygon(xpoints, ypoints, 3).intersects(shot.getBoundingBox());
-    }
+    }*/
 }

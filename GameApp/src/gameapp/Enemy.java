@@ -11,48 +11,33 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Enemy extends Ship{
-    private int run, rise, level;
+    private int level;
     //private ArrayList<ImageIcon> parts = new ArrayList<>();
     
-    public Enemy(int width, int height){
+    public Enemy(int panelWidth, int panelHeight){
         //ImageIcon bottom = new ImageIcon("images/Fighter1Bottom.png");
         //ImageIcon top = new ImageIcon("images/Fighter1Top.png");
         ImageIcon icon = new ImageIcon("images/Fighter1.png");
         
-        this.panelWidth = width;
-        this.panelHeight = height;
+        setPanelWidth(panelWidth);
+        setPanelHeight(panelHeight);
         setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
         setY((int) (Math.random()*(panelHeight/4)));
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        //setWidth(bottom.getIconWidth());
-        //setHeight(bottom.getIconHeight()+top.getIconHeight());
         setRun(3);
         setRise(0);
         setLevel(0);
         setImage(icon);
+        setHealth(200);
         //parts.add(bottom);
         //parts.add(top);
-    }
-    
-    public void setRun(int run){
-        this.run = run;
-    }
-    
-    public void setRise(int rise){
-        this.rise = rise;
+        //setWidth(bottom.getIconWidth());
+        //setHeight(bottom.getIconHeight()+top.getIconHeight());
     }
     
     public void setLevel(int level){
         this.level = level;
-    }
-    
-    public int getRun(){
-        return run;
-    }
-    
-    public int getRise(){
-        return rise;
     }
     
     public int getLevel(){
@@ -87,15 +72,17 @@ public class Enemy extends Ship{
         }
     }*/
     
+    @Override
     public void move(){
-        if(getX()+run < 0 || getX()+getWidth()+run >= panelWidth){
-            setRun(0-run);
+        if(getX()+getRun() < 0 || getX()+getWidth()+getRun() >= getPanelWidth()){
+            setRun(0-getRun());
         }
         
-        setX(getX()+run);
-        setY(getY()+rise);
+        setX(getX()+getRun());
+        setY(getY()+getRise());
     }
 
+    @Override
     public void draw(Graphics g) {
         //draw self
         g.drawImage(getImageIcon().getImage(), getX(), getY(), null);

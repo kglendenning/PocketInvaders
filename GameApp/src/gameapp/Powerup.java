@@ -9,9 +9,8 @@ import javax.swing.ImageIcon;
 /**
  * @author Kurt
  */
-public class Powerup {
-    private int x, y, width, height, acceleration, run, rise, type, timer;
-    private ImageIcon image;
+public class Powerup extends Entity{
+    private int acceleration, type, timer;
     
     public Powerup(Point center, int type){
         setX(center.x);
@@ -39,40 +38,12 @@ public class Powerup {
                 setImage(new ImageIcon("images/RocketIcon.jpg"));
                 break;
         }
-        setWidth(image.getIconWidth());
-        setHeight(image.getIconHeight());
-    }
-    
-    public void setX(int x){
-        this.x = x;
-    }
-    
-    public void setY(int y){
-        this.y = y;
-    }
-    
-    public void setWidth(int width){
-        this.width = width;
-    }
-    
-    public void setHeight(int height){
-        this.height = height;
-    }
-    
-    public void setRun(int run){
-        this.run = run;
-    }
-    
-    public void setRise(int rise){
-        this.rise = rise;
+        setWidth(getImageIcon().getIconWidth());
+        setHeight(getImageIcon().getIconHeight());
     }
     
     public void setAcceleration(int acceleration){
         this.acceleration = acceleration;
-    }
-    
-    public void setImage(ImageIcon image){
-        this.image = image;
     }
     
     public void setType(int type){
@@ -83,36 +54,8 @@ public class Powerup {
         this.timer = timer;
     }
     
-    public int getX(){
-        return x;
-    }
-    
-    public int getY(){
-        return y;
-    }
-    
-    public int getWidth(){
-        return width;
-    }
-    
-    public int getHeight(){
-        return height;
-    }
-    
-    public int getRun(){
-        return run;
-    }
-    
-    public int getRise(){
-        return rise;
-    }
-    
     public int getAcceleration(){
         return acceleration;
-    }
-    
-    public ImageIcon getImageIcon(){
-        return image;
     }
     
     public int getType(){
@@ -132,20 +75,8 @@ public class Powerup {
         
         timer--;
         if(timer == 0){
-            rise += acceleration;
+            setRise(getRise() + acceleration);
             timer = 5;
         }
     }
-    
-    public void move(){
-        x += run;
-        y += rise;
-    }
-    
-    public void draw(Graphics g) {
-        //draw self
-        g.drawImage(getImageIcon().getImage(), getX(), getY(), null);
-    }
-
-    
 }

@@ -18,16 +18,19 @@ public class Player extends Ship{
             moveUp = false, moveDown = false, speed = true;
     private int shotDelay = 0;
     private final int MAX_HEALTH = 500;
+    private int weaponAmmo[] = new int[20];
     
-    public Player(int width, int height){
+    public Player(int panelWidth, int panelHeight){
         ImageIcon icon = new ImageIcon("images/Player.jpg");
         
-        this.panelWidth = width;
-        this.panelHeight = height;
-        setX(width/2 - icon.getIconWidth()/2);
-        setY(height-icon.getIconHeight());
-        //setHealth(MAX_HEALTH);//testing with default for now
+        setPanelWidth(panelWidth);
+        setPanelHeight(panelHeight);
+        setX(panelWidth/2 - icon.getIconWidth()/2);
+        setY(panelHeight-icon.getIconHeight());
         setImage(icon);
+        setWidth(icon.getIconWidth());
+        setHeight(icon.getIconHeight());
+        //setHealth(MAX_HEALTH);//testing with default for now
     }
     
     public ArrayList<Projectile> getProjectiles(){
@@ -72,6 +75,10 @@ public class Player extends Ship{
         this.shooting = shooting;
     }
     
+    public int[] getWeaponAmmo(){
+        return weaponAmmo;
+    }
+    
     public void shootCheck(){
         if(shooting){
             if(shotDelay == 0){
@@ -92,20 +99,20 @@ public class Player extends Ship{
             }
         }else if(moveRight && !moveLeft){
             setX(getX()+(speed ? 7 : 4));
-            if(getX() >= panelWidth-getWidth()){
-                setX(panelWidth-getWidth());
+            if(getX() >= getPanelWidth()-getWidth()){
+                setX(getPanelWidth()-getWidth());
             }
         }
         
         if(moveUp && !moveDown){
             setY(getY()-(speed ? 7 : 4));
-            if(getY() <= 3*panelHeight/5){
-                setY(3*panelHeight/5);
+            if(getY() <= 3*getPanelHeight()/5){
+                setY(3*getPanelHeight()/5);
             }
         }else if(moveDown && !moveUp){
             setY(getY()+(speed ? 7 : 4));
-            if(getY() >= panelHeight-getHeight()){
-                setY(panelHeight-getHeight());
+            if(getY() >= getPanelHeight()-getHeight()){
+                setY(getPanelHeight()-getHeight());
             }
         }
     }
@@ -138,6 +145,7 @@ public class Player extends Ship{
         
     }
 
+    @Override
     public void draw(Graphics g) {
         //draw projectiles
         for(Projectile shot : projectiles){
