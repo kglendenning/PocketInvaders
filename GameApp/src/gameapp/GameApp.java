@@ -1,31 +1,46 @@
 
 package gameapp;
 
+import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import javax.swing.GroupLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * @author Kurt & Chris
  */
 public class GameApp {
     public static GameField field = new GameField();
+    public static SideBar sideBar = new SideBar();
     public static final int WINDOW_HEIGHT = 900, WINDOW_WIDTH = 1600;
     public static void main(String[] args) {
         //create main frame
-        JFrame frame = new JFrame("Battlefield");
+        JFrame frame = new JFrame("Pocket Invaders");
+        frame.setLayout(null);
+        frame.getContentPane().setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         center(frame);
-        frame.setResizable(false);
+        frame.setResizable(true);
+        
+        field.setBounds(0, 0, WINDOW_WIDTH-320, WINDOW_HEIGHT-55);
         frame.add(field);
-        frame.setVisible(true);
         field.startGame();
         frame.addKeyListener(field);
+        
+        sideBar.setBounds(WINDOW_WIDTH-320, 0, 300, WINDOW_HEIGHT-52);
+        frame.add(sideBar);
+        frame.setVisible(true);
+        
+        
         
         while(true){
             pause();
             field.update();
+            sideBar.update(field);
+            field.getFocusListeners();
         }
     }
     

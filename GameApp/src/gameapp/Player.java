@@ -17,7 +17,7 @@ public class Player extends Ship{
     public boolean shooting = false, moveLeft = false, moveRight = false,
             moveUp = false, moveDown = false, speed = true;
     private int shotDelay = 0, activeWeapon;
-    private final int MAX_HEALTH = 500;
+    private final int MAX_HEALTH = 200;
     private int weaponAmmo[] = new int[20];
     
     public Player(int panelWidth, int panelHeight){
@@ -31,7 +31,7 @@ public class Player extends Ship{
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
         setActiveWeapon(0);
-        //setHealth(MAX_HEALTH);//testing with default for now
+        setHealth(MAX_HEALTH);//testing with default for now
     }
     
     public ArrayList<Projectile> getProjectiles(){
@@ -50,6 +50,10 @@ public class Player extends Ship{
 
         shootCheck();
         moveCheck();
+    }
+    
+    public int getMaxHealth(){
+        return MAX_HEALTH;
     }
     
     public void setMoveLeft(boolean moveLeft){

@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Projectile extends Entity{
-    private int damage;
+    private int damage, type;
     
     public Projectile(int x, int y, boolean up){
         ImageIcon icon = new ImageIcon("images/Projectile.gif");
@@ -23,15 +23,24 @@ public class Projectile extends Entity{
         setRun(0);
         setRise(up ? -10 : 10);
         setImage(icon);
-        setDamage(20);
+        setType(0);
+        setDamage(weapon.getDamage(getType()));
     }
     
     public void setDamage(int damage){
         this.damage = damage;
     }
     
+    public void setType(int type){
+        this.type = type;
+    }
+    
     public int getDamage(){
         return damage;
+    }
+    
+    public int getType(){
+        return type;
     }
     
     public Rectangle getBoundingBox(){

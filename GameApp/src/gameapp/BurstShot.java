@@ -21,8 +21,9 @@ public class BurstShot extends Projectile{
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
+        setType(1);
 
         setRise(up ? -8 : 8);
-        setDamage(25);
+        setDamage(weapon.getDamage(getType()));
     }
 }

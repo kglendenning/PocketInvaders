@@ -26,40 +26,10 @@ public final class GameField extends JPanel implements KeyListener {
     public int levelcount, enemycount, spawndelay;
     public boolean debug = false;
     public String debugInfo = "";
-    public SideBar sideBar = new SideBar();
     public Weapon weapon = new Weapon();
     
     public GameField() {
         super();
-        add(sideBar);
-        sideBar.setLocation(getWidth()-200,0);
-        sideBar.setSize(200, getHeight());
-    }
-
-    public class SideBar extends JPanel {
-
-        private JPanel top, upper, lower, bottom;
-        private JButton left, right;
-        private JLabel ammoLabel, healthLabel, weaponLabel;
-        private ImageIcon enlargedWeaponIcon;
-              
-        public SideBar() {
-            JPanel top = new JPanel(); JPanel upper = new JPanel(); JPanel lower = new JPanel(); JPanel bottom = new JPanel();
-            JButton left = new JButton("<"); JButton right = new JButton(">");
-            ammoLabel = new JLabel(); healthLabel = new JLabel(); weaponLabel = new JLabel();
-            enlargedWeaponIcon = new ImageIcon("images/weaponEnlarged.jpg");
-            setLayout(new BoxLayout(sideBar, BoxLayout.Y_AXIS));
-            add(top);
-            add(upper);
-            add(lower);
-            add(bottom);
-            //top.add(healthMeter);
-            top.add(healthLabel);
-            lower.add(weaponLabel);
-            bottom.add(left);
-            bottom.add(ammoLabel);
-            bottom.add(right);
-        }
     }
 
     public void setPlayer() {
@@ -155,11 +125,6 @@ public final class GameField extends JPanel implements KeyListener {
         } else {
             spawndelay--;
         }
-        
-        sideBar.healthLabel.setText(""+player.getHealth());
-        sideBar.ammoLabel.setText(""+player.getWeaponAmmo()[player.getActiveWeapon()]);
-        sideBar.weaponLabel.setText(weapon.getWeaponName(player.getActiveWeapon()));
-        sideBar.enlargedWeaponIcon.setImage(new ImageIcon("images/Big"+weapon.getWeaponName(player.getActiveWeapon())+"Icon.jpg").getImage());
         
         repaint();
     }

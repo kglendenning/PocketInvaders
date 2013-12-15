@@ -18,8 +18,9 @@ public class Rocket extends Projectile {
         setHeight(icon.getIconHeight());
 
         setRise(up ? -3 : 3);
-        setDamage(100);
         setLimit(5);
+        setType(2);
+        setDamage(weapon.getDamage(getType()));
         setAcceleration(up ? -1 : 1);
     }
     

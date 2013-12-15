@@ -6,7 +6,7 @@ package gameapp;
  */
 public class Weapon {
     String name[] = {"", "Burst", "Rocket"};
-    int damage[] = {0, 25, 100};
+    int damage[] = {20, 25, 100};
     
     public String getWeaponName(int type){
         return name[type];
