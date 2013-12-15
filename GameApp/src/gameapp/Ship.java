@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
  */
 public class Ship {
     private int x, y, width, height, health;
-    public int panelHeight, panelWidth;;
+    public int panelHeight, panelWidth;
     private ImageIcon image;
     
     public Ship(){

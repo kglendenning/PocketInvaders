@@ -115,7 +115,10 @@ public class Player extends Ship{
     }
     
     public void shootWeapon(){
-        projectiles.add(new Rocket(getX()+(getWidth()/2), getY(), true));
+        //projectiles.add(new Rocket(getX()+(getWidth()/2), getY(), true));
+        projectiles.add(new BurstShot(getX()+(getWidth()/2), getY(), true));
+        projectiles.add(new BurstShot(getX()+(getWidth()/2), getY(), true));
+        projectiles.add(new BurstShot(getX()+(getWidth()/2), getY(), true));
     }
     
     @Override

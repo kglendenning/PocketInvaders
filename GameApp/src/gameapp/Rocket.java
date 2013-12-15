@@ -41,8 +41,7 @@ public class Rocket extends Projectile {
     
     @Override
     public void move(){
-        setX(getX()+getRun());
-        setY(getY()+getRise());
+        super.move();
         
         limit--;
         if(limit == 0){
