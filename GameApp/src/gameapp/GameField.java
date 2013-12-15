@@ -157,9 +157,9 @@ public final class GameField extends JPanel implements KeyListener {
         }
         
         sideBar.healthLabel.setText(""+player.getHealth());
-        sideBar.ammoLabel.setText(player.getWeaponAmmo()[player.getActiveWeapon()]);
+        sideBar.ammoLabel.setText(""+player.getWeaponAmmo()[player.getActiveWeapon()]);
         sideBar.weaponLabel.setText(weapon.getWeaponName(player.getActiveWeapon()));
-        sideBar.enlargedWeaponIcon.setImage(new ImageIcon("images/Big"+weapon.getWeaponName(player.getActiveWeapon)+"Icon.jpg").getImage());
+        sideBar.enlargedWeaponIcon.setImage(new ImageIcon("images/Big"+weapon.getWeaponName(player.getActiveWeapon())+"Icon.jpg").getImage());
         
         repaint();
     }
