@@ -1,6 +1,8 @@
 
 package gameapp;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Point;
 
 /**
@@ -8,9 +10,28 @@ import java.awt.Point;
  */
 public class Explosion extends Effect {
     
-    public Explosion(Point center){
-        super(center);
+    public Explosion(Projectile projectile){
+        super(projectile);
+        
+        setSize(0);
+        setTimer(25);
     }
     
-    
+    /**
+     * @return 0 - if not finished, 1 - if finished
+     */
+    @Override
+    public int update(){
+        int ret = super.update();
+        
+        setSize(25-getTimer());
+        
+        return ret;
+    }
+
+    @Override
+    public void draw(Graphics g){
+        g.setColor(Color.ORANGE);
+        g.fillOval(getX()-(getSize())/2, getY()-(getSize())/2, getSize(), getSize());
+    }
 }

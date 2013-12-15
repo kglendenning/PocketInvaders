@@ -4,23 +4,21 @@ package gameapp;
 import javax.swing.ImageIcon;
 
 /**
- *
  * @author Kurt
  */
-public class BurstShot extends Projectile{
+public class Spread extends Projectile{
     
-    public BurstShot(int x, int y, boolean up){
+    public Spread(int x, int y, int run, int rise, boolean up){
         super(x, y, up);
         ImageIcon icon = new ImageIcon("images/BurstShot.gif");
         
-        setX(getX() + ((int) (Math.random() * 20.0)) - 10);
-        setY(getY() + ((int) (Math.random() * 30.0)) - 15);
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setType(1);
+        setType(3);
 
-        setRise(up ? -8 : 8);
+        setRun(run);
+        setRise(up ? (-1*rise) : rise);
         setDamage(weapon.getDamage(getType()));
     }
 }

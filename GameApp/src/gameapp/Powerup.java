@@ -21,23 +21,7 @@ public class Powerup extends Entity{
         setType(type);
         setTimer(5);
         
-        switch (type){
-            case 0:
-                setImage(new ImageIcon("images/TestIcon.jpg"));
-                break;
-            case 1:
-                setImage(new ImageIcon("images/BurstIcon.jpg"));
-                break;
-            case 2:
-                setImage(new ImageIcon("images/RocketIcon.jpg"));
-                break;
-            case 3:
-                setImage(new ImageIcon("images/SprayIcon.jpg"));
-                break;
-            default:
-                setImage(new ImageIcon("images/BombIcon.jpg"));
-                break;
-        }
+        setImage(new ImageIcon("images/"+weapon.getWeaponName(type)+"Icon.jpg"));
         setWidth(getImageIcon().getIconWidth());
         setHeight(getImageIcon().getIconHeight());
     }

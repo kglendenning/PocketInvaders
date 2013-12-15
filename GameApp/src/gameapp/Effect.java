@@ -11,16 +11,31 @@ import javax.swing.JPanel;
  */
 public class Effect extends Entity{
     private int timer;
-    private final int SIZE = 10;
+    private int size = 10;
     
-    public Effect(Point center){
+    public Effect(Projectile projectile){
+        Point center = projectile.getCenter();
+        
         setX(center.x);
         setY(center.y);
+        setSize(10);
         setTimer(3);
     }
     
     public void setTimer(int timer){
         this.timer = timer;
+    }
+    
+    public void setSize(int size){
+        this.size = size;
+    }
+    
+    public int getTimer(){
+        return timer;
+    }
+    
+    public int getSize(){
+        return size;
     }
     
     /**
@@ -34,6 +49,6 @@ public class Effect extends Entity{
     @Override
     public void draw(Graphics g){
         g.setColor(Color.ORANGE);
-        g.fillOval(getX()-(SIZE)/2, getY()-(SIZE)/2, SIZE, SIZE);
+        g.fillOval(getX()-(size)/2, getY()-(size)/2, size, size);
     }
 }

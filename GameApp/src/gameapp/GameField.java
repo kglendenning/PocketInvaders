@@ -24,10 +24,10 @@ public final class GameField extends JPanel implements KeyListener {
     public ArrayList<Powerup> powerups = new ArrayList<>();
     public Scanner in;
     public int levelcount, enemycount, spawndelay;
-    public boolean debug = false;
+    public boolean debug = false, pause = false;
     public String debugInfo = "";
     public Weapon weapon = new Weapon();
-    
+
     public GameField() {
         super();
     }
@@ -77,55 +77,60 @@ public final class GameField extends JPanel implements KeyListener {
     }
 
     public void update() {
-        player.update();
+        if (!pause) {
+            player.update();
 
-        for (int i = 0; i < effects.size(); i++) {
-            if (effects.get(i).update() == 1) {
-                effects.remove(i);
-                i--;
+            for (int i = 0; i < effects.size(); i++) {
+                if (effects.get(i).update() == 1) {
+                    effects.remove(i);
+                    i--;
+                }
             }
-        }
 
-        for (int i = 0; i < powerups.size(); i++) {
-            powerups.get(i).update();
-            if (powerups.get(i).getY() > getHeight()) {
-                powerups.remove(i);
-                i--;
+            for (int i = 0; i < powerups.size(); i++) {
+                powerups.get(i).update();
+                if (powerups.get(i).getY() > getHeight()) {
+                    powerups.remove(i);
+                    i--;
+                }
             }
-        }
 
-        for (int i = 0; i < projectiles.size(); i++) {
-            Projectile shot = projectiles.get(i);
-            shot.move();
-            if (shot.getY() + shot.getHeight() >= this.getHeight()) {
-                projectiles.remove(i);
-                i--;
+            for (int i = 0; i < projectiles.size(); i++) {
+                Projectile shot = projectiles.get(i);
+                shot.move();
+                if (shot.getY() + shot.getHeight() >= this.getHeight()) {
+                    projectiles.remove(i);
+                    i--;
+                }
             }
-        }
 
-        for (Enemy enemy : enemies) {
-            handleAction(enemy);
-        }
+            for (Enemy enemy : enemies) {
+                handleAction(enemy);
+            }
 
-        detectHits();
-        if (spawndelay == 0) {
-            if (enemycount == 0) {
-                if (enemies.isEmpty()) {
-                    if (levelcount == 0) {
-                        //game end
-                        System.out.println("You win.");
-                        //System.exit(0);
-                    } else {
-                        nextLevel();
+            detectHits();
+            if (spawndelay == 0) {
+                if (enemycount == 0) {
+                    if (enemies.isEmpty()) {
+                        if (levelcount == 0) {
+                            //game end
+                            System.out.println("You win.");
+                            //System.exit(0);
+                        } else {
+                            nextLevel();
+                        }
                     }
+                } else {
+                    nextEnemy();
                 }
             } else {
-                nextEnemy();
+                spawndelay--;
             }
         } else {
-            spawndelay--;
+            //display pause
+            
         }
-        
+
         repaint();
     }
 
@@ -141,7 +146,7 @@ public final class GameField extends JPanel implements KeyListener {
         //detect player collision
         for (int i = 0; i < projectiles.size(); i++) {
             if (player.isHit(projectiles.get(i))) {
-                effects.add(new Effect(projectiles.get(i).getCenter()));
+                effects.add(weapon.getEffect(projectiles.get(i)));
 
                 //player is killed
                 if (player.takeDamage(projectiles.get(i).getDamage()) == 1) {
@@ -168,7 +173,7 @@ public final class GameField extends JPanel implements KeyListener {
         for (int i = 0; i < playerShots.size(); i++) {
             for (int j = 0; j < enemies.size(); j++) {
                 if (enemies.get(j).isHit(playerShots.get(i))) {
-                    effects.add(new Effect(playerShots.get(i).getCenter()));
+                    effects.add(weapon.getEffect(playerShots.get(i)));
 
                     //enemy is killed
                     if (enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1) {
@@ -228,6 +233,11 @@ public final class GameField extends JPanel implements KeyListener {
         if (debug) {
             showDebug(g);
         }
+        if(pause){
+            g.setColor(new Color(0.5f, 0.5f, 0.5f, 0.4f));
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
+        
     }
 
     public void showDebug(Graphics g) {
@@ -235,6 +245,7 @@ public final class GameField extends JPanel implements KeyListener {
                 + "Projectiles: " + projectiles.size() + "\t"
                 + "Player shots: " + player.getProjectiles().size() + "\t"
                 + "Player hp: " + player.getHealth() + "\t"
+                + "Effects: " + effects.size() + "\t"
                 + "";
         String lines[] = debugInfo.split("\t");
         for (int i = 0; i < lines.length; i++) {
@@ -245,7 +256,6 @@ public final class GameField extends JPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -277,6 +287,8 @@ public final class GameField extends JPanel implements KeyListener {
             player.shiftWeapon(false);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             player.shiftWeapon(true);
+        } else if (e.getKeyCode() == KeyEvent.VK_P) {
+            pause = !pause;
         }
     }
 

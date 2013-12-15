@@ -136,17 +136,7 @@ public class Player extends Ship {
 
     public void shootWeapon() {
         if (weaponAmmo[activeWeapon] > 0) {
-            switch (activeWeapon) {
-                case 1:
-                    projectiles.add(new BurstShot(getX() + (getWidth() / 2), getY(), true));
-                    projectiles.add(new BurstShot(getX() + (getWidth() / 2), getY(), true));
-                    projectiles.add(new BurstShot(getX() + (getWidth() / 2), getY(), true));
-                    break;
-                case 2:
-                    projectiles.add(new Rocket(getX() + (getWidth() / 2), getY(), true));
-                    break;
-            }
-            
+            projectiles.addAll(weapon.getShot(activeWeapon, getX() + (getWidth() / 2), getY(), true));
             weaponAmmo[activeWeapon]--;
         }
     }
