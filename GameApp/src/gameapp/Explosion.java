@@ -24,7 +24,7 @@ public class Explosion extends Effect {
     public int update(){
         int ret = super.update();
         
-        setSize(25-getTimer());
+        setSize((25-getTimer())*2);
         
         return ret;
     }
@@ -32,6 +32,6 @@ public class Explosion extends Effect {
     @Override
     public void draw(Graphics g){
         g.setColor(Color.ORANGE);
-        g.fillOval(getX()-(getSize())/2, getY()-(getSize())/2, getSize(), getSize());
+        g.drawOval(getX()-(getSize())/2, getY()-(getSize())/2, getSize(), getSize());
     }
 }

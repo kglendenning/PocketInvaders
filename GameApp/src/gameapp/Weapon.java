@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Kurt
  */
 public class Weapon {
-    private String name[] = {"", "Burst", "Rocket", "Spray", "Bomb"};
+    private String name[] = {"", "Burst", "Rocket", "Spread", "Bomb"};
     private int damage[] = {20, 35, 150, 35, 200};
     private int max[] = {0, 25, 15, 20, 15};
     private int reload[] = {0, 10, 5, 6, 5};
@@ -38,7 +38,7 @@ public class Weapon {
     }
     
     public Effect getEffect(Projectile projectile){
-        switch (projectile.getType()){
+        switch (effect[projectile.getType()]){
             case 1:
                 
             case 2:

@@ -1,0 +1,7 @@
+p - pause
+F8 - debug label
+wasd - move
+up - shoot weapon
+left, right - toggle weapons
+space - shoot
+shift - slow
