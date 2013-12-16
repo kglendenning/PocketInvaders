@@ -1,6 +1,7 @@
 
 package gameapp;
 
+import java.awt.Point;
 import javax.swing.ImageIcon;
 
 /**
@@ -19,5 +20,10 @@ public class Bomb extends Projectile{
 
         setRise(up ? -6 : 6);
         setDamage(weapon.getDamage(getType()));
+    }
+    
+    @Override
+    public Point getCenter(){
+        return new Point(getX()+getWidth()/2, getY());
     }
 }

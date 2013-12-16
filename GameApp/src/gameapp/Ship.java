@@ -37,8 +37,8 @@ public class Ship extends Entity{
         return new Point(getX()+getWidth()/2, getY()+getHeight()/2);
     }
     
-    public boolean isHit(Projectile shot){
-        return new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(shot.getBoundingBox());
+    public boolean isHit(Entity entity){
+        return new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(entity.getBoundingBox());
     }
     
     /**

@@ -2,6 +2,7 @@
 package gameapp;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 /**
@@ -82,6 +83,10 @@ public class Entity {
     
     public int getPanelHeight(){
         return panelHeight;
+    }
+    
+    public Rectangle getBoundingBox(){
+        return new Rectangle(x, y, width, height);
     }
     
     public void move(){

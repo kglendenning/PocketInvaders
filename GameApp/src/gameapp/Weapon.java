@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Weapon {
     private String name[] = {"", "Burst", "Rocket", "Spread", "Bomb"};
-    private int damage[] = {20, 35, 150, 35, 200};
+    private int damage[] = {20, 35, 150, 35, 50};
     private int max[] = {0, 25, 15, 20, 15};
     private int reload[] = {0, 10, 5, 6, 5};
     private int effect[] = {0, 0, 1, 0, 2};

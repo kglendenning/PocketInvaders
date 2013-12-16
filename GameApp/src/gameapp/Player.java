@@ -146,16 +146,10 @@ public class Player extends Ship {
     }
 
     @Override
-    public boolean isHit(Projectile shot) {
+    public boolean isHit(Entity entity) {
         int xpoints[] = {getX(), getX() + getWidth(), getX() + getWidth() / 2};
         int ypoints[] = {getY() + getHeight(), getY() + getHeight(), getY()};
-        return new Polygon(xpoints, ypoints, 3).intersects(shot.getBoundingBox());
-    }
-
-    public boolean isHit(Powerup powerup) {
-        int xpoints[] = {getX(), getX() + getWidth(), getX() + getWidth() / 2};
-        int ypoints[] = {getY() + getHeight(), getY() + getHeight(), getY()};
-        return new Polygon(xpoints, ypoints, 3).intersects(powerup.getBoundingBox());
+        return new Polygon(xpoints, ypoints, 3).intersects(entity.getBoundingBox());
     }
 
     /**

@@ -10,15 +10,17 @@ import javax.swing.JPanel;
  * @author Kurt
  */
 public class Effect extends Entity{
-    private int timer;
-    private int size = 10;
+    private int timer, damage;
+    private boolean harmful;
     
     public Effect(Projectile projectile){
         Point center = projectile.getCenter();
         
         setX(center.x);
         setY(center.y);
-        setSize(10);
+        setWidth(10);
+        setHeight(10);
+        setHarmful(false);
         setTimer(3);
     }
     
@@ -26,16 +28,24 @@ public class Effect extends Entity{
         this.timer = timer;
     }
     
-    public void setSize(int size){
-        this.size = size;
+    public void setHarmful(boolean harmful){
+        this.harmful = harmful;
+    }
+    
+    public void setDamage(int damage){
+        this.damage = damage;
     }
     
     public int getTimer(){
         return timer;
     }
     
-    public int getSize(){
-        return size;
+    public boolean isHarmful(){
+        return harmful;
+    }
+    
+    public int getDamage(){
+        return damage;
     }
     
     /**
@@ -49,6 +59,6 @@ public class Effect extends Entity{
     @Override
     public void draw(Graphics g){
         g.setColor(Color.ORANGE);
-        g.fillOval(getX()-(size)/2, getY()-(size)/2, size, size);
+        g.fillOval(getX()-(getWidth())/2, getY()-(getHeight())/2, getWidth(), getHeight());
     }
 }

@@ -13,8 +13,11 @@ public class Explosion extends Effect {
     public Explosion(Projectile projectile){
         super(projectile);
         
-        setSize(0);
-        setTimer(20);
+        setWidth(0);
+        setHeight(0);
+        setHarmful(true);
+        setDamage(10);
+        setTimer(15);
     }
     
     /**
@@ -24,7 +27,8 @@ public class Explosion extends Effect {
     public int update(){
         int ret = super.update();
         
-        setSize((25-getTimer())*3);
+        setWidth((15-getTimer())*6);
+        setHeight(getWidth());
         
         return ret;
     }
@@ -32,6 +36,6 @@ public class Explosion extends Effect {
     @Override
     public void draw(Graphics g){
         g.setColor(Color.ORANGE);
-        g.drawOval(getX()-(getSize())/2, getY()-(getSize())/2, getSize(), getSize());
+        g.drawOval(getX()-(getWidth())/2, getY()-(getHeight())/2, getWidth(), getHeight());
     }
 }

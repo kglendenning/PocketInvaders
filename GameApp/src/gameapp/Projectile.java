@@ -43,10 +43,6 @@ public class Projectile extends Entity{
         return type;
     }
     
-    public Rectangle getBoundingBox(){
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
-    }
-    
     public Point getCenter(){
         return new Point(getX()+getWidth()/2, getY()+getHeight()/2);
     }

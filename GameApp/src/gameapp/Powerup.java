@@ -45,10 +45,6 @@ public class Powerup extends Entity{
         return timer;
     }
     
-    public Rectangle getBoundingBox(){
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
-    }
-    
     public void update() {
         move();
         

@@ -27,7 +27,7 @@ public class GameApp {
         
         field.setBounds(0, 0, WINDOW_WIDTH-320, WINDOW_HEIGHT-55);
         frame.add(field);
-        field.startGame();
+        field.startGame("games/BiggerTest.txt");
         frame.addKeyListener(field);
         
         sideBar.setBounds(WINDOW_WIDTH-320, 0, 300, WINDOW_HEIGHT-52);
@@ -40,7 +40,7 @@ public class GameApp {
             pause();
             field.update();
             sideBar.update(field);
-            field.getFocusListeners();
+            //field.getFocusListeners();
         }
     }
     
