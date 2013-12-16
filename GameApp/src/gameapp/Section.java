@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 public class Section extends JPanel{
     public ImageIcon left, middle, right;
     public SideBar sideBar;
-    public boolean top = false;
+    public boolean top = false, target = false;
     
     public Section(){
         super();
@@ -35,15 +35,6 @@ public class Section extends JPanel{
     }
     
     public void draw(SideBar sideBar){
-        if(right != null){
-            //g.drawImage(right.getImage(), sideBar.leftHolder.getX(), sideBar.leftHolder.getY(), null);
-        }
-        if(left != null){
-            //g.drawImage(left.getImage(), sideBar.rightHolder.getX(), sideBar.rightHolder.getY(), null);
-        }
-        if(middle != null){
-            //g.drawImage(middle.getImage(), sideBar.weaponLabel.getX(), sideBar.weaponLabel.getY(), null);
-        }
         this.sideBar = sideBar;
         
         repaint();
@@ -69,12 +60,20 @@ public class Section extends JPanel{
         
         //health bar
         if(top){
-            int health = (int) (((double) sideBar.health/ (double)sideBar.maxHealth) * 250.0);
+            int playerHealth = (int) (((double) sideBar.health/ (double)sideBar.maxHealth) * 250.0);
             
             g.setColor(new Color(0, 204, 0));
-            g.fillRect(25, 75, health, 50);
+            g.fillRect(25, 75, playerHealth, 50);
             g.setColor(new Color(204, 0, 0));
-            g.fillRect(25+health, 75, 250-health, 50);
+            g.fillRect(25+playerHealth, 75, 250-playerHealth, 50);
+            
+            if(target){
+                int enemyHealth = (int) (((double) sideBar.targetHealth/ (double)sideBar.targetMaxHealth) * 250.0);
+                g.setColor(new Color(0, 204, 0));
+                g.fillRect(25, 165, enemyHealth, 30);
+                g.setColor(new Color(204, 0, 0));
+                g.fillRect(25+enemyHealth, 165, 250-enemyHealth, 30);
+            }
         }
     }
 }

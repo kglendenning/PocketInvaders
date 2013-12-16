@@ -11,25 +11,27 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Enemy extends Ship{
-    private int level;
+    private int level, type;
     //private ArrayList<ImageIcon> parts = new ArrayList<>();
     
-    public Enemy(int panelWidth, int panelHeight){
+    public Enemy(int panelWidth, int panelHeight, int type){
+        ImageIcon icon = new ImageIcon("images/"+villain.getEnemyName(type)+".jpg");
         //ImageIcon bottom = new ImageIcon("images/Fighter1Bottom.png");
         //ImageIcon top = new ImageIcon("images/Fighter1Top.png");
-        ImageIcon icon = new ImageIcon("images/Fighter1.png");
         
         setPanelWidth(panelWidth);
         setPanelHeight(panelHeight);
-        setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
-        setY((int) (Math.random()*(panelHeight/4)));
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setRun(3);
-        setRise(0);
-        setLevel(0);
+        setRun(villain.getRun(type));
+        setRise(villain.getRise(type));
+        setLevel(villain.getLevel(type));
+        setMaxHealth(villain.getHealth(type));
+        setHealth(villain.getHealth(type));
+        setType(type);
         setImage(icon);
-        setHealth(200);
+        setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
+        setY((int) (Math.random()*(panelHeight/4)));
         //parts.add(bottom);
         //parts.add(top);
         //setWidth(bottom.getIconWidth());
@@ -40,8 +42,16 @@ public class Enemy extends Ship{
         this.level = level;
     }
     
+    public void setType(int type){
+        this.type = type;
+    }
+    
     public int getLevel(){
         return level;
+    }
+    
+    public int getType(){
+        return type;
     }
     
     /**
@@ -51,7 +61,7 @@ public class Enemy extends Ship{
         move();
         
         double action = Math.random();
-        return action > .98 ? 1 : 0;
+        return action > villain.getFireRate(getType()) ? 1 : 0;
     }
     
     public Projectile shootProjectile(){

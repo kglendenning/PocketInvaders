@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 public final class GameField extends JPanel implements KeyListener {
 
     public Player player;
+    public Enemy target;
     public ArrayList<Enemy> enemies = new ArrayList<>();
     public ArrayList<Projectile> projectiles = new ArrayList<>();
     public ArrayList<Effect> effects = new ArrayList<>();
@@ -61,14 +62,8 @@ public final class GameField extends JPanel implements KeyListener {
         }
     }
 
-    public void addEnemy(int level) {
-        switch (level) {
-            case 0:
-                enemies.add(new Enemy(getWidth(), getHeight()));
-                break;
-            case 1:
-                enemies.add(new Enemy2(getWidth(), getHeight()));
-        }
+    public void addEnemy(int type) {
+        enemies.add(new Enemy(getWidth(), getHeight(), type));
     }
 
     public void update() {
@@ -179,6 +174,7 @@ public final class GameField extends JPanel implements KeyListener {
         for (int i = 0; i < playerShots.size(); i++) {
             for (int j = 0; j < enemies.size(); j++) {
                 if (enemies.get(j).isHit(playerShots.get(i))) {
+                    target = enemies.get(j);
                     effects.add(weapon.getEffect(playerShots.get(i)));
 
                     //enemy is killed

@@ -1,5 +1,6 @@
 title screen
 player death
+last hit enemy hp bar
 
 remote bomb
 sticky bomb

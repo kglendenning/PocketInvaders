@@ -12,6 +12,7 @@ public class Entity {
     private int x, y, width, height, run, rise, panelWidth, panelHeight;
     private ImageIcon image;
     public Weapon weapon = new Weapon();
+    public Villain villain = new Villain();
     
     public void setX(int x){
         this.x = x;

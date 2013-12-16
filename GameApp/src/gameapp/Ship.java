@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Ship extends Entity{
-    private int health;
+    private int health, maxHealth;
     
     public Ship(){
         int randX = (int) Math.random() * 1200;
@@ -29,8 +29,16 @@ public class Ship extends Entity{
         this.health = health;
     }
     
+    public void setMaxHealth(int health){
+        this.maxHealth = health;
+    }
+    
     public int getHealth(){
         return health;
+    }
+    
+    public int getMaxHealth(){
+        return maxHealth;
     }
     
     public Point getCenter(){
