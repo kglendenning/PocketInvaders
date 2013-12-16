@@ -1,5 +1,5 @@
 p - pause
-F8 - debug label
+F8 - debug label and infinite ammo
 wasd - move
 up - shoot weapon
 left, right - toggle weapons

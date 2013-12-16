@@ -12,18 +12,13 @@ import javax.swing.ImageIcon;
 public class Powerup extends Entity{
     private int acceleration, type, timer;
     
-    public Powerup(Point center, int type){
+    public Powerup(Point center){
         setX(center.x);
         setY(center.y);
         setRise(-2);
         setRun(1);
         setAcceleration(1);
-        setType(type);
         setTimer(5);
-        
-        setImage(new ImageIcon("images/"+weapon.getWeaponName(type)+"Icon.jpg"));
-        setWidth(getImageIcon().getIconWidth());
-        setHeight(getImageIcon().getIconHeight());
     }
     
     public void setAcceleration(int acceleration){

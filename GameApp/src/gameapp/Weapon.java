@@ -40,7 +40,7 @@ public class Weapon {
     public Effect getEffect(Projectile projectile){
         switch (effect[projectile.getType()]){
             case 1:
-                
+                return new Effect(projectile);
             case 2:
                 return new Explosion(projectile);
             default:

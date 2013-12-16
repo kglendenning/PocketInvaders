@@ -14,7 +14,7 @@ public class Explosion extends Effect {
         super(projectile);
         
         setSize(0);
-        setTimer(25);
+        setTimer(20);
     }
     
     /**
@@ -24,7 +24,7 @@ public class Explosion extends Effect {
     public int update(){
         int ret = super.update();
         
-        setSize((25-getTimer())*2);
+        setSize((25-getTimer())*3);
         
         return ret;
     }

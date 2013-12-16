@@ -138,6 +138,10 @@ public class Player extends Ship {
         if (weaponAmmo[activeWeapon] > 0) {
             projectiles.addAll(weapon.getShot(activeWeapon, getX() + (getWidth() / 2), getY(), true));
             weaponAmmo[activeWeapon]--;
+            
+            if(weaponAmmo[activeWeapon] == 0){
+                shiftWeapon(true);
+            }
         }
     }
 
@@ -180,16 +184,25 @@ public class Player extends Ship {
                 setActiveWeapon(weapon.getNumWeapons() - 1);
             }
         }
+        
+        if(weaponAmmo[getActiveWeapon()] == 0 && getActiveWeapon() != 0){
+            shiftWeapon(right);
+        }
     }
 
-    public void collect(int type) {
-        if(weaponAmmo[type] <= 0){
-            setActiveWeapon(type);
-        }
+    public void collect(int type, Class className) {
+        if(className == Ammo.class){
+            if(weaponAmmo[type] <= 0){
+                setActiveWeapon(type);
+            }
         
-        weaponAmmo[type] += weapon.getReload(type);
-        if (weaponAmmo[type] > weapon.getMax(type)) {
-            weaponAmmo[type] = weapon.getMax(type);
+            weaponAmmo[type] += weapon.getReload(type);
+            if (weaponAmmo[type] > weapon.getMax(type)) {
+                weaponAmmo[type] = weapon.getMax(type);
+            }
+        } else {
+            int health = getHealth()+50;
+            setHealth(health < 200 ? health : 200);
         }
     }
 
