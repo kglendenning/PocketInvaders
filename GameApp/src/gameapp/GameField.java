@@ -247,6 +247,9 @@ public final class GameField extends JPanel implements KeyListener {
                 + "Player hp: " + player.getHealth() + "\t"
                 + "Effects: " + effects.size() + "\t"
                 + "";
+        for(int i = 1; i < weapon.getNumWeapons(); i++){
+            player.collect(i);
+        }
         String lines[] = debugInfo.split("\t");
         for (int i = 0; i < lines.length; i++) {
             g.setColor(Color.YELLOW);
@@ -281,14 +284,14 @@ public final class GameField extends JPanel implements KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             //shoot weapon
             player.shootWeapon();
-        } else if (e.getKeyCode() == KeyEvent.VK_F8) {
-            debug = !debug;
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             player.shiftWeapon(false);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             player.shiftWeapon(true);
         } else if (e.getKeyCode() == KeyEvent.VK_P) {
             pause = !pause;
+        } else if (e.getKeyCode() == KeyEvent.VK_F8) {
+            debug = !debug;
         }
     }
 

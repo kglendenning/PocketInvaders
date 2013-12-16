@@ -183,12 +183,14 @@ public class Player extends Ship {
     }
 
     public void collect(int type) {
+        if(weaponAmmo[type] <= 0){
+            setActiveWeapon(type);
+        }
+        
         weaponAmmo[type] += weapon.getReload(type);
         if (weaponAmmo[type] > weapon.getMax(type)) {
             weaponAmmo[type] = weapon.getMax(type);
         }
-        
-        setActiveWeapon(type);
     }
 
     @Override
