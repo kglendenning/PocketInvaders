@@ -4,6 +4,7 @@
 
 *.class
 *private.xml
+*build.properties
 
 #################
 ## Eclipse
