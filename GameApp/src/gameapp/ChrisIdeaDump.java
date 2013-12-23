@@ -26,7 +26,7 @@ Entity: name, x, y, movement_style, movement_speed, angle, model (one class that
 
 "Laser" weapon type: beam that takes a delay to expand/contract to full/zero width, weak but supplements the default weapon
     and hits far away mobs with least possible delay (instant? don't think java's int goes to the speed of light in pixels, 
-    but maybe one update later we can have the laser hit every pixel on screen within its lowest width at the ship's angle)
+    but maybe one update later we can have the laser hit every pixel on screen within its initial width at the ship's angle)
 
 
 
