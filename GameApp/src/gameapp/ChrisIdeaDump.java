@@ -22,7 +22,7 @@ Entity: name, x, y, movement_style, movement_speed, angle, model (one class that
 
 "Sidewinder" enemy type: a pair of enemies where when one is destroyed, the remaining one becomes 
     (either by deleting then spawning a new type or boolean determined behavior; they could exist outside of pairs as a new type...)
-    a new suicidal-homing sidewinder that no longer shoots (0 fire rate}. Encourages some focus/prioritizing/movement
+    a new suicidal-homing sidewinder that no longer shoots (0 fire rate}. Encourages some focus/prioritizing/movement. I recommend some time delay where the suicider just explodes
 
 "Laser" weapon type: beam that takes a delay to expand/contract to full/zero width, weak but supplements the default weapon
     and hits far away mobs with least possible delay (instant? don't think java's int goes to the speed of light in pixels, 
