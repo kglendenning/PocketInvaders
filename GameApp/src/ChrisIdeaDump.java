@@ -1,18 +1,18 @@
-package gameapp;public class ChrisIdeaDump{}
+public class ChrisIdeaDump{}
 
 /*
 
 Below is a hierarchy....chart....thing...to get my ideas flowing; a revision of the current design if we were making the game 
 "directionless" aka not biased to the forward direction, and more robust in general
 
-Entity: name, x, y, movement_style, movement_speed, angle, model (one class that handles the image and hitbox? we should discuss the possibility of deriving hitbox from image)
+Entity: name, x, y, movement_type, movement_speed, angle, model (one class that handles the image and hitbox? we should discuss the possibility of deriving hitbox from image)
     Sidebar: sidebar_image (for all sidebar-specific graphics; an interface)
         Powerup: drop_rate, drop_chart, effect
-        Weapon: ammo, ammo_max, fire_rate
-            *Weapons*
-        Buff: duration, duration_max
-            *Buffs*
-        Projectile: damage
+            Weapon: ammo, ammo_max, fire_rate
+               *Weapons*
+            Buff: duration, duration_max
+                *Buffs*
+            Projectile: damage
     Effect: duration
         *Effects*
     Ship: health, health_max, weapons, weapon_current, buffs, buff_current, fire_rate_factor, affinity, invuln,  
