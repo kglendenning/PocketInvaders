@@ -28,9 +28,30 @@ public final class GameField extends JPanel implements KeyListener {
     public boolean debug = false, pause = false;
     public String debugInfo = "";
     public Weapon weapon = new Weapon();
+    public SideBar sideBar;
+    public int widthDiff, heightDiff;
 
-    public GameField() {
+    public GameField(int widthDiff, int heightDiff) {
         super();
+        
+        this.widthDiff = widthDiff;
+        this.heightDiff = heightDiff;
+        sideBar = new SideBar();
+    }
+    
+    /**
+     * These allow sideBar to be contained in GameField. Less overhead to update
+     */
+    public void setSideBarBounds(){
+        sideBar.setBounds(super.getWidth()-widthDiff, 0, 300, super.getHeight()-heightDiff+3);
+    }
+    @Override
+    public int getHeight(){
+        return super.getHeight()-heightDiff;
+    }
+    @Override
+    public int getWidth(){
+        return super.getWidth()-widthDiff;
     }
 
     public void startGame(String fileName) {
@@ -66,7 +87,7 @@ public final class GameField extends JPanel implements KeyListener {
         enemies.add(new Enemy(getWidth(), getHeight(), type));
     }
 
-    public void update() {
+    public int update() {
         if (!pause) {
             player.update();
 
@@ -98,13 +119,16 @@ public final class GameField extends JPanel implements KeyListener {
                 handleAction(enemy);
             }
 
-            detectHits();
+            if(detectHits()){
+                return 1;
+            }
             if (spawnDelay == 0) {
                 if (enemyCount == 0) {
                     if (enemies.isEmpty()) {
                         if (levelCount == 0) {
                             //game end
-                            System.out.println("You win.");
+                            return 2;
+                            //System.out.println("You win.");
                             //System.exit(0);
                         } else {
                             nextLevel();
@@ -121,7 +145,9 @@ public final class GameField extends JPanel implements KeyListener {
             
         }
 
+        sideBar.update(player, weapon, target);
         repaint();
+        return 0;
     }
 
     public void handleAction(Enemy enemy) {
@@ -132,7 +158,7 @@ public final class GameField extends JPanel implements KeyListener {
         }
     }
 
-    public void detectHits() {
+    public boolean detectHits() {
         //detect player collision
         for (int i = 0; i < projectiles.size(); i++) {
             if (player.isHit(projectiles.get(i))) {
@@ -140,7 +166,8 @@ public final class GameField extends JPanel implements KeyListener {
 
                 //player is killed
                 if (player.takeDamage(projectiles.get(i).getDamage()) == 1) {
-                    System.out.println("You lose.");
+                    //System.out.println("You lose.");
+                    return true;
                     //System.exit(0);
                 }
 
@@ -154,7 +181,8 @@ public final class GameField extends JPanel implements KeyListener {
             if(effects.get(i).isHarmful() && player.isHit(effects.get(i))){
                 //player is killed
                 if(player.takeDamage(effects.get(i).getDamage()) == 1){
-                    System.out.println("You lose.");
+                    //System.out.println("You lose.");
+                    return true;
                     //System.exit(0);
                 }
             }
@@ -202,6 +230,8 @@ public final class GameField extends JPanel implements KeyListener {
                 }
             }
         }
+        
+        return false;
     }
 
     public void generatePowerup(Enemy enemy) {

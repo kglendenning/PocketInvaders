@@ -55,17 +55,17 @@ public class SideBar extends JPanel {
         bottom.add(ammoLabel);
     }
 
-    public void update(GameField field) {
-        health = field.player.getHealth();
-        maxHealth = field.player.getMaxHealth();
-        if(field.target != null){
-            targetHealth = field.target.getHealth();
-            targetMaxHealth = field.target.getMaxHealth();
+    public void update(Player player, Weapon weapon, Enemy target) {
+        health = player.getHealth();
+        maxHealth = player.getMaxHealth();
+        if(target != null){
+            targetHealth = target.getHealth();
+            targetMaxHealth = target.getMaxHealth();
         }
         
         healthLabel.setText("" + health + "/" + maxHealth);
-        ammoLabel.setText("" + field.player.getWeaponAmmo()[field.player.getActiveWeapon()]);
-        weaponLabel.setText(field.weapon.getWeaponName(field.player.getActiveWeapon()));
+        ammoLabel.setText("" + player.getWeaponAmmo()[player.getActiveWeapon()]);
+        weaponLabel.setText(weapon.getWeaponName(player.getActiveWeapon()));
         if(targetHealth > 0){
             targetLabel.setText("Target");
             top.target = true;
@@ -73,7 +73,7 @@ public class SideBar extends JPanel {
             targetLabel.setText("");
             top.target = false;
         }
-        lower.setMiddle(new ImageIcon("images/Big" + field.weapon.getWeaponName(field.player.getActiveWeapon()) + "Icon.jpg"));
+        lower.setMiddle(new ImageIcon("images/Big" + weapon.getWeaponName(player.getActiveWeapon()) + "Icon.jpg"));
         
         top.draw(this);
         upper.draw(this);

@@ -1,9 +1,9 @@
-
 package gameapp;
 
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.util.Scanner;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,10 +12,25 @@ import javax.swing.JPanel;
  * @author Kurt & Chris
  */
 public class GameApp {
-    public static GameField field = new GameField();
-    public static SideBar sideBar = new SideBar();
+    public static GameField field;
+    //public static SideBar sideBar;
     public static final int WINDOW_HEIGHT = 900, WINDOW_WIDTH = 1600;
+    public static final int HEIGHT_DIFF = 55, WIDTH_DIFF = 320;
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        
+        do{
+            //field = new GameField(WIDTH_DIFF, HEIGHT_DIFF);
+            field = new GameField(WIDTH_DIFF, HEIGHT_DIFF);
+            //sideBar = new SideBar();
+            startGame();
+            System.out.print("Continue? (y/n): ");
+        }while(in.nextLine().equalsIgnoreCase("y") ? true : false);
+        
+        System.exit(0);
+    }
+    
+    public static boolean startGame(){
         //create main frame
         JFrame frame = new JFrame("Pocket Invaders");
         frame.setLayout(null);
@@ -25,23 +40,33 @@ public class GameApp {
         center(frame);
         frame.setResizable(true);
         
-        field.setBounds(0, 0, WINDOW_WIDTH-320, WINDOW_HEIGHT-55);
+        //field.setBounds(0, 0, WINDOW_WIDTH-320, WINDOW_HEIGHT-55);
+        field.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.add(field);
+        field.setSideBarBounds();
+        frame.add(field.sideBar);
         field.startGame("games/BiggerTest.txt");
         frame.addKeyListener(field);
         
-        sideBar.setBounds(WINDOW_WIDTH-320, 0, 300, WINDOW_HEIGHT-52);
-        frame.add(sideBar);
+        //sideBar.setBounds(WINDOW_WIDTH-320, 0, 300, WINDOW_HEIGHT-52);
+        //frame.add(sideBar);
         frame.setVisible(true);
         
-        
+        int code = 0;
         
         while(true){
             pause();
-            field.update();
-            sideBar.update(field);
+            code = field.update();
+            if(code > 0){
+                break;
+            }
+            //sideBar.update(field);
             //field.getFocusListeners();
         }
+        
+        frame.setVisible(false);
+        
+        return true;
     }
     
     public static void pause(){
