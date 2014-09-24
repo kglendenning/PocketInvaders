@@ -1,12 +1,9 @@
 package gameapp;
 
-import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.util.Scanner;
-import javax.swing.GroupLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  * @author Kurt & Chris
@@ -16,6 +13,7 @@ public class GameApp {
     //public static SideBar sideBar;
     public static final int WINDOW_HEIGHT = 900, WINDOW_WIDTH = 1600;
     public static final int HEIGHT_DIFF = 55, WIDTH_DIFF = 320;
+    
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         

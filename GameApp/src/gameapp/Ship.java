@@ -2,9 +2,7 @@
 package gameapp;
 
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.Rectangle;
-import javax.swing.ImageIcon;
 
 /**
  *

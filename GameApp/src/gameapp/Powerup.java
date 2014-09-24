@@ -1,10 +1,7 @@
 
 package gameapp;
 
-import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
-import javax.swing.ImageIcon;
 
 /**
  * @author Kurt

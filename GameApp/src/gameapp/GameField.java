@@ -6,10 +6,6 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -25,7 +21,7 @@ public final class GameField extends JPanel implements KeyListener {
     public ArrayList<Powerup> powerups = new ArrayList<>();
     public Scanner in;
     public int levelCount, enemyCount, spawnDelay, level;
-    public boolean debug = false, pause = false;
+    public boolean debug = true, pause = false;
     public String debugInfo = "";
     public Weapon weapon = new Weapon();
     public SideBar sideBar;

@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Rocket extends Projectile {
-    public int acceleration, limit;
+    public int acceleration, limit = 5;
     
     public Rocket(int x, int y, boolean up){
         super(x, y, up);
@@ -18,7 +18,7 @@ public class Rocket extends Projectile {
         setHeight(icon.getIconHeight());
 
         setRise(up ? -3 : 3);
-        setLimit(5);
+        //setLimit(5);
         setType(2);
         setDamage(weapon.getDamage(getType()));
         setAcceleration(up ? -1 : 1);

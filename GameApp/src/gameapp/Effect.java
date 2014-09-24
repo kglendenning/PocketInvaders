@@ -4,14 +4,13 @@ package gameapp;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import javax.swing.JPanel;
 
 /**
  * @author Kurt
  */
 public class Effect extends Entity{
-    private int timer, damage;
-    private boolean harmful;
+    private int timer = 3, damage;
+    private boolean harmful = false;
     
     public Effect(Projectile projectile){
         Point center = projectile.getCenter();
@@ -20,8 +19,8 @@ public class Effect extends Entity{
         setY(center.y);
         setWidth(10);
         setHeight(10);
-        setHarmful(false);
-        setTimer(3);
+        //setHarmful(false);
+        //setTimer(3);
     }
     
     public void setTimer(int timer){

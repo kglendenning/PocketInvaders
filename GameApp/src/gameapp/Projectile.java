@@ -1,9 +1,7 @@
 
 package gameapp;
 
-import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 /**
@@ -11,7 +9,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Projectile extends Entity{
-    private int damage, type;
+    private int damage = weapon.getDamage(0), type = 0;
     
     public Projectile(int x, int y, boolean up){
         ImageIcon icon = new ImageIcon("images/Projectile.gif");
@@ -23,8 +21,8 @@ public class Projectile extends Entity{
         setRun(0);
         setRise(up ? -10 : 10);
         setImage(icon);
-        setType(0);
-        setDamage(weapon.getDamage(getType()));
+        //setType(0);
+        //setDamage(weapon.getDamage(getType()));
     }
     
     public void setDamage(int damage){
