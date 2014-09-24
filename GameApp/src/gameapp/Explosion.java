@@ -24,7 +24,7 @@ public class Explosion extends Effect {
         setTimer(15);
 
         try {
-            image = ImageIO.read(new File("images/explode_4.png"));
+            image = ImageIO.read(new File("images/explosion_1.png"));
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
@@ -52,6 +52,6 @@ public class Explosion extends Effect {
         //g.drawOval(getX()-(getWidth())/2, getY()-(getHeight())/2, getWidth(), getHeight());
         int row = currentFrame / 4;
         int col = currentFrame % 4;
-        g.drawImage(image.getSubimage(col * frameWidth, row * frameHeight, frameWidth, frameHeight), getX()-(getWidth())/2, getY()-(getHeight())/2, Color.BLACK, null);
+        g.drawImage(image.getSubimage(col * frameWidth, row * frameHeight, frameWidth, frameHeight), getX()-(getWidth())/2, getY()-(getHeight())/2, null);
     }
 }
