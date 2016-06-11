@@ -6,5 +6,3 @@ remote bomb
 sticky bomb
 beam lazer
 new enemies
-
-boob
