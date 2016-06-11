@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package gameapp.Projectile;
-
-import gameapp.Projectile.Projectile;
 import java.util.ArrayList;
 
 /**

@@ -5,6 +5,7 @@ import gameapp.Projectile.Buff;
 import gameapp.Effect.Effect;
 import gameapp.Enemy.Enemy;
 import gameapp.Enemy.Boss;
+import gameapp.Enemy.Fighter4;
 import gameapp.Player.Player;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Powerup;
@@ -90,10 +91,16 @@ public final class GameField extends JPanel implements KeyListener {
     }
 
     public void addEnemy(int type) {
-        if(type == 2){
-            enemies.add(new Boss(getWidth(), getHeight(), type));
-        } else {
-            enemies.add(new Enemy(getWidth(), getHeight(), type));
+        switch (type) {
+            case 2:
+                enemies.add(new Boss(getWidth(), getHeight(), type));
+                break;
+            case 3:
+                enemies.add(new Fighter4(getWidth(), getHeight(), type));
+                break;
+            default:
+                enemies.add(new Enemy(getWidth(), getHeight(), type));
+                break;
         }
     }
 
@@ -164,7 +171,8 @@ public final class GameField extends JPanel implements KeyListener {
         int action = enemy.update();
 
         if (action == 1) {
-            projectiles.add(enemy.shootProjectile());
+            //projectiles.add(enemy.shootProjectile());
+            enemy.shootProjectile();
         }
     }
 

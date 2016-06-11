@@ -2,6 +2,7 @@
 package gameapp.Enemy;
 
 import gameapp.General.Entity;
+import gameapp.General.GameField;
 import gameapp.Projectile.Projectile;
 import gameapp.General.Ship;
 import java.awt.Graphics;
@@ -66,8 +67,8 @@ public class Enemy extends Ship{
         return action > Villain.getFireRate(getType()) ? 1 : 0;
     }
     
-    public Projectile shootProjectile(){
-        return new Projectile(getX()+(getWidth()/2), getY()+getHeight(), false);
+    public void shootProjectile(){
+        GameField.projectiles.add(new Projectile(getX()+(getWidth()/2), getY()+getHeight(), false));
     }
     
     //public boolean isHit(Projectile shot){

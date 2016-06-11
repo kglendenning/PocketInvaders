@@ -28,6 +28,7 @@ public class Boss extends Enemy {
         //setWeapon(Villain.getWeapon(type));
         
         setWeaponCallbackIndex(Weapon.addShotCallback(new ShotCallback(){
+            @Override
             public ArrayList<Projectile> getShot(int x, int y, boolean up) {
                 ArrayList<Projectile> weaponShots = new ArrayList<>();
                 
