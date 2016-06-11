@@ -79,8 +79,10 @@ public class GameApp {
                         level_name = "games/Test.txt";
                     else if(startMenu.level == 2)
                         level_name = "games/BiggerTest.txt";
-                    else
+                    else if(startMenu.level == 3)
                         level_name = "games/BossTest.txt";
+                    else
+                        level_name = "games/AlinaTest.txt";
                     
                     field.startGame(level_name);
                 } else if(code == 2) {

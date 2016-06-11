@@ -1,0 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gameapp.Projectile;
+
+import gameapp.Projectile.Projectile;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Kurt
+ */
+public interface ShotCallback {
+    public ArrayList<Projectile> getShot(int x, int y, boolean up);
+}

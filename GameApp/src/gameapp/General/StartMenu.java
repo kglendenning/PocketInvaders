@@ -80,13 +80,13 @@ class StartMenu extends JPanel implements KeyListener{
             }
         } else if (key == KeyEvent.VK_RIGHT) {
             if(selection == Option.LEVEL) {
-                if(++level > 3)
+                if(++level > 4)
                     level = 1;
             }
         } else if (key == KeyEvent.VK_LEFT) {
             if(selection == Option.LEVEL) {
                 if(--level < 1)
-                    level = 3;
+                    level = 4;
             }
         } else if (key == KeyEvent.VK_DOWN) {
             if(null != selection)

@@ -11,7 +11,7 @@ public class Villain {
     private static final double[] RISE = {0, 0, 0};
     private static final int[] HEALTH = {200, 300, 5000};
     private static final double[] FIRE_RATE = {0.98, 0.95, 0.95};
-    private static final int[] WEAPON = {0, 0, 3};
+    private static final int[] WEAPON = {0, 0, 0};
     //private int damage[] = {20, 35};
     
     public static String getEnemyName(int type){

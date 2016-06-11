@@ -1,6 +1,7 @@
 
 package gameapp.Enemy;
 
+import gameapp.General.Entity;
 import gameapp.Projectile.Projectile;
 import gameapp.General.Ship;
 import java.awt.Graphics;
@@ -18,13 +19,14 @@ public class Enemy extends Ship{
         ImageIcon icon = new ImageIcon("images/"+Villain.getEnemyName(type)+".png");
         //ImageIcon bottom = new ImageIcon("images/Fighter1Bottom.png");
         //ImageIcon top = new ImageIcon("images/Fighter1Top.png");
+        int seed = (int) (Math.random()*1000.0);
         
         setPanelWidth(panelWidth);
         setPanelHeight(panelHeight);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setRun(Villain.getRun(type));
-        setRise(Villain.getRise(type));
+        setRun(((seed & 1) > 0 ? 1 : -1) * Villain.getRun(type));
+        setRise(((seed & 2) > 0 ? 1 : -1) * Villain.getRise(type));
         setLevel(Villain.getLevel(type));
         setMaxHealth(Villain.getHealth(type));
         setHealth(Villain.getHealth(type));
@@ -68,15 +70,14 @@ public class Enemy extends Ship{
         return new Projectile(getX()+(getWidth()/2), getY()+getHeight(), false);
     }
     
-    /*Override
-    public boolean isHit(Projectile shot){
-        if(shot.getBoundingBox().intersects(new Rectangle(getX(), getY(), getWidth(), parts.get(0).getIconHeight()))){
-            return true;
-        }else{
-            return shot.getBoundingBox().intersects(new Rectangle(getX()+getWidth()/2-parts.get(1).getIconWidth()/2, parts.get(0).getIconHeight(),
-                    parts.get(1).getIconWidth(), parts.get(1).getIconHeight()));
-        }
-    }*/
+    //public boolean isHit(Projectile shot){
+        //if(shot.getBoundingBox().intersects(new Rectangle(getX(), getY(), getWidth(), parts.get(0).getIconHeight()))){
+        //    return true;
+        //}else{
+        //    return shot.getBoundingBox().intersects(new Rectangle(getX()+getWidth()/2-parts.get(1).getIconWidth()/2, parts.get(0).getIconHeight(),
+        //            parts.get(1).getIconWidth(), parts.get(1).getIconHeight()));
+        //}
+    //}
     
     @Override
     public void move(){

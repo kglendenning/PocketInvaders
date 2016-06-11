@@ -19,6 +19,7 @@ public class Weapon {
     private static final int[] MAX = {0, 25, 15, 20};
     private static final int[] RELOAD = {0, 10, 5, 6};
     private static final int[] EFFECT = {0, 0, 2, 0};
+    private static final ArrayList<ShotCallback> shotCallbacks = new ArrayList<>();
     
     public static String getWeaponName(int type){
         return NAME[type];
@@ -55,6 +56,12 @@ public class Weapon {
         }
     }
     
+    //add a weapon to the list dynamically
+    public static int addShotCallback(ShotCallback callback){
+        shotCallbacks.add(callback);
+        return shotCallbacks.indexOf(callback);
+    }
+    
     public static ArrayList<Projectile> getShot(int type, int x, int y, boolean up){
         ArrayList<Projectile> weaponShots = new ArrayList<>();
         
@@ -80,5 +87,9 @@ public class Weapon {
         }
         
         return weaponShots;
+    }
+    
+    public static ArrayList<Projectile> getCallbackShot(int index, int x, int y, boolean up){
+        return shotCallbacks.get(index).getShot(x, y, up);
     }
 }

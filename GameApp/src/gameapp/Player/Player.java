@@ -19,7 +19,7 @@ public class Player extends Ship {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     public boolean shooting = false, moveLeft = false, moveRight = false,
             moveUp = false, moveDown = false, speed = true;
-    private int shotDelay = 0, activeWeapon;
+    private int shotDelay = 0;
     private int weaponAmmo[] = new int[20];
 
     public Player(int panelWidth, int panelHeight) {
@@ -32,7 +32,8 @@ public class Player extends Ship {
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setActiveWeapon(0);
+        //setActiveWeapon(0);
+        setWeapon(0);
         setMaxHealth(200);
         setHealth(200);//testing with default for now
     }
@@ -79,17 +80,17 @@ public class Player extends Ship {
         this.shooting = shooting;
     }
 
-    public void setActiveWeapon(int activeWeapon) {
-        this.activeWeapon = activeWeapon;
-    }
+    //public void setActiveWeapon(int activeWeapon) {
+    //    this.weapon = activeWeapon;
+    //}
 
     public int[] getWeaponAmmo() {
         return weaponAmmo;
     }
 
-    public int getActiveWeapon() {
-        return activeWeapon;
-    }
+    //public int getActiveWeapon() {
+    //    return weapon;
+    //}
 
     public void shootCheck() {
         if (shooting) {
@@ -134,11 +135,11 @@ public class Player extends Ship {
     }
 
     public void shootWeapon() {
-        if (weaponAmmo[activeWeapon] > 0) {
-            projectiles.addAll(Weapon.getShot(activeWeapon, getX() + (getWidth() / 2), getY(), true));
-            weaponAmmo[activeWeapon]--;
+        if (weaponAmmo[getWeapon()] > 0) {
+            projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
+            weaponAmmo[getWeapon()]--;
             
-            if(weaponAmmo[activeWeapon] == 0){
+            if(weaponAmmo[getWeapon()] == 0){
                 shiftWeapon(true);
             }
         }
@@ -167,18 +168,18 @@ public class Player extends Ship {
 
     public void shiftWeapon(boolean right) {
         if (right) {
-            setActiveWeapon(getActiveWeapon() + 1);
-            if (getActiveWeapon() >= Weapon.getNumWeapons()) {
-                setActiveWeapon(0);
+            setWeapon(getWeapon() + 1);
+            if (getWeapon() >= Weapon.getNumWeapons()) {
+                setWeapon(0);
             }
         } else {
-            setActiveWeapon(getActiveWeapon() - 1);
-            if (getActiveWeapon() <= -1) {
-                setActiveWeapon(Weapon.getNumWeapons() - 1);
+            setWeapon(getWeapon() - 1);
+            if (getWeapon() <= -1) {
+                setWeapon(Weapon.getNumWeapons() - 1);
             }
         }
         
-        if(weaponAmmo[getActiveWeapon()] == 0 && getActiveWeapon() != 0){
+        if(weaponAmmo[getWeapon()] == 0 && getWeapon() != 0){
             shiftWeapon(right);
         }
     }
@@ -186,7 +187,7 @@ public class Player extends Ship {
     public void collect(int type, Class className) {
         if(className == Ammo.class){
             if(weaponAmmo[type] <= 0){
-                setActiveWeapon(type);
+                setWeapon(type);
             }
         
             weaponAmmo[type] += Weapon.getReload(type);

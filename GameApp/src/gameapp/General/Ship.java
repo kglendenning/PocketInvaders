@@ -9,18 +9,26 @@ import java.awt.Rectangle;
  * @author Kurt
  */
 public class Ship extends Entity{
-    private int health, maxHealth;
+    private int health, maxHealth, weapon, weaponCallbackIndex;
     
     public Ship(){
-        int randX = (int) Math.random() * 1200;
-        int randY = (int) Math.random() * 800;
-        setX(randX);
-        setY(randY);
+        //int randX = (int) (Math.random() * 1200);
+        //int randY = (int) (Math.random() * 800);
+        setX(0);
+        setY(0);
     }
     
     public Ship(int x, int y){
         setX(x);
         setY(y);
+    }
+    
+    public void setWeaponCallbackIndex(int index){
+        this.weaponCallbackIndex = index;
+    }
+    
+    public void setWeapon(int weapon){
+        this.weapon = weapon;
     }
     
     public void setHealth(int health){
@@ -29,6 +37,14 @@ public class Ship extends Entity{
     
     public void setMaxHealth(int health){
         this.maxHealth = health;
+    }
+    
+    public int getWeaponCallbackIndex(){
+        return weaponCallbackIndex;
+    }
+    
+    public int getWeapon(){
+        return weapon;
     }
     
     public int getHealth(){
