@@ -19,7 +19,7 @@ public class Bomb extends Projectile{
         setType(4);
 
         setRise(up ? -6 : 6);
-        setDamage(weapon.getDamage(getType()));
+        setDamage(Weapon.getDamage(getType()));
     }
     
     @Override

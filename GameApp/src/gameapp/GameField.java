@@ -23,7 +23,6 @@ public final class GameField extends JPanel implements KeyListener {
     public int levelCount, enemyCount, spawnDelay, level;
     public boolean debug = true, pause = false;
     public String debugInfo = "";
-    public Weapon weapon = new Weapon();
     public SideBar sideBar;
     public int widthDiff, heightDiff;
 
@@ -51,6 +50,8 @@ public final class GameField extends JPanel implements KeyListener {
     }
 
     public void startGame(String fileName) {
+        
+        
         player = new Player(getWidth(), getHeight());
 
         try {
@@ -123,7 +124,7 @@ public final class GameField extends JPanel implements KeyListener {
                     if (enemies.isEmpty()) {
                         if (levelCount == 0) {
                             //game end
-                            return 2;
+                            return 2; //win
                             //System.out.println("You win.");
                             //System.exit(0);
                         } else {
@@ -141,7 +142,7 @@ public final class GameField extends JPanel implements KeyListener {
             
         }
 
-        sideBar.update(player, weapon, target);
+        sideBar.update(player, target);
         repaint();
         return 0;
     }
@@ -158,7 +159,7 @@ public final class GameField extends JPanel implements KeyListener {
         //detect player collision
         for (int i = 0; i < projectiles.size(); i++) {
             if (player.isHit(projectiles.get(i))) {
-                effects.add(weapon.getEffect(projectiles.get(i)));
+                effects.add(Weapon.getEffect(projectiles.get(i)));
 
                 //player is killed
                 if (player.takeDamage(projectiles.get(i).getDamage()) == 1) {
@@ -199,7 +200,7 @@ public final class GameField extends JPanel implements KeyListener {
             for (int j = 0; j < enemies.size(); j++) {
                 if (enemies.get(j).isHit(playerShots.get(i))) {
                     target = enemies.get(j);
-                    effects.add(weapon.getEffect(playerShots.get(i)));
+                    effects.add(Weapon.getEffect(playerShots.get(i)));
 
                     //enemy is killed
                     if (enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1) {
@@ -221,7 +222,7 @@ public final class GameField extends JPanel implements KeyListener {
                     //enemy is killed
                     if (enemies.get(j).takeDamage(effects.get(i).getDamage()) == 1) {
                         generatePowerup(enemies.get(j));
-                        enemies.remove(j);  
+                        enemies.remove(j);
                     }
                 }
             }
@@ -231,9 +232,9 @@ public final class GameField extends JPanel implements KeyListener {
     }
 
     public void generatePowerup(Enemy enemy) {
-        int level = enemy.getLevel();
-        double chance = Math.random() + ((double) level * 0.10);
-        int type = (int) (Math.random() * 4.0) + 1;
+        int enemyLevel = enemy.getLevel();
+        double chance = Math.random() + ((double) enemyLevel * 0.10);
+        int type = (int) (Math.random() * ((double) Weapon.getNumWeapons()-1.0)) + 1;
 
         if(chance >= 0.80) {
             powerups.add(new Ammo(enemy.getCenter(), type));
@@ -294,7 +295,7 @@ public final class GameField extends JPanel implements KeyListener {
                 + "Effects: " + effects.size() + "\t"
                 + "Level: " + (level-levelCount)
                 + "";
-        for(int i = 1; i < weapon.getNumWeapons(); i++){
+        for(int i = 1; i < Weapon.getNumWeapons(); i++){
             player.collect(i, Ammo.class);
         }
         String lines[] = debugInfo.split("\t");
@@ -310,51 +311,55 @@ public final class GameField extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_A) {
+        int key;
+        
+        if ((key = e.getKeyCode()) == KeyEvent.VK_A) {
             //move left
             player.setMoveLeft(true);
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
+        } else if (key == KeyEvent.VK_D) {
             //move right
             player.setMoveRight(true);
-        } else if (e.getKeyCode() == KeyEvent.VK_W) {
+        } else if (key == KeyEvent.VK_W) {
             //move up
             player.setMoveUp(true);
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
+        } else if (key == KeyEvent.VK_S) {
             //move down
             player.setMoveDown(true);
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        } else if (key == KeyEvent.VK_SPACE) {
             //shoot standard projectile
             player.setShooting(true);
-        } else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+        } else if (key == KeyEvent.VK_SHIFT) {
             //speed up
             player.setSpeed(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+        } else if (key == KeyEvent.VK_UP) {
             //shoot weapon
             player.shootWeapon();
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+        } else if (key == KeyEvent.VK_LEFT) {
             player.shiftWeapon(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        } else if (key == KeyEvent.VK_RIGHT) {
             player.shiftWeapon(true);
-        } else if (e.getKeyCode() == KeyEvent.VK_P) {
+        } else if (key == KeyEvent.VK_P) {
             pause = !pause;
-        } else if (e.getKeyCode() == KeyEvent.VK_F8) {
+        } else if (key == KeyEvent.VK_F8) {
             debug = !debug;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_A) {
+        int key;
+        
+        if ((key = e.getKeyCode()) == KeyEvent.VK_A) {
             player.setMoveLeft(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
+        } else if (key == KeyEvent.VK_D) {
             player.setMoveRight(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_W) {
+        } else if (key == KeyEvent.VK_W) {
             player.setMoveUp(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
+        } else if (key == KeyEvent.VK_S) {
             player.setMoveDown(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        } else if (key == KeyEvent.VK_SPACE) {
             player.setShooting(false);
-        } else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+        } else if (key == KeyEvent.VK_SHIFT) {
             player.setSpeed(true);
         }
     }

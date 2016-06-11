@@ -19,6 +19,6 @@ public class Spread extends Projectile{
 
         setRun(run);
         setRise(up ? (-1*rise) : rise);
-        setDamage(weapon.getDamage(getType()));
+        setDamage(Weapon.getDamage(getType()));
     }
 }

@@ -7,37 +7,42 @@ import java.util.ArrayList;
  * @author Kurt
  */
 public class Weapon {
-    private String name[] = {"", "Burst", "Rocket", "Spread", "Bomb"};
-    private int damage[] = {20, 35, 150, 35, 50};
-    private int max[] = {0, 25, 15, 20, 15};
-    private int reload[] = {0, 10, 5, 6, 5};
-    private int effect[] = {0, 0, 1, 0, 2};
+//    private static String name[] = {"", "Burst", "Rocket", "Spread", "Bomb"};
+//    private static int damage[] = {20, 35, 150, 35, 50};
+//    private static int max[] = {0, 25, 15, 20, 15};
+//    private static int reload[] = {0, 10, 5, 6, 5};
+//    private static int effect[] = {0, 0, 2, 0, 2};
+    private static String name[] = {"", "Burst", "Rocket", "Spread"};
+    private static int damage[] = {20, 35, 150, 35};
+    private static int max[] = {0, 25, 15, 20};
+    private static int reload[] = {0, 10, 5, 6};
+    private static int effect[] = {0, 0, 2, 0};
     
-    public String getWeaponName(int type){
+    public static String getWeaponName(int type){
         return name[type];
     }
     
-    public int getDamage(int type){
+    public static int getDamage(int type){
         return damage[type];
     }
     
-    public int getMax(int type){
+    public static int getMax(int type){
         return max[type];
     }
     
-    public int getReload(int type){
+    public static int getReload(int type){
         return reload[type];
     }
     
-    public int getEffect(int type){
+    public static int getEffect(int type){
         return effect[type];
     };
     
-    public int getNumWeapons(){
+    public static int getNumWeapons(){
         return name.length;
     }
     
-    public Effect getEffect(Projectile projectile){
+    public static Effect getEffect(Projectile projectile){
         switch (effect[projectile.getType()]){
             case 1:
                 return new Effect(projectile);
@@ -48,7 +53,7 @@ public class Weapon {
         }
     }
     
-    public ArrayList<Projectile> getShot(int type, int x, int y, boolean up){
+    public static ArrayList<Projectile> getShot(int type, int x, int y, boolean up){
         ArrayList<Projectile> weaponShots = new ArrayList<>();
         
         switch (type){

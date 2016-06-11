@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Projectile extends Entity{
-    private int damage = weapon.getDamage(0), type = 0;
+    private int damage = Weapon.getDamage(0), type = 0;
     
     public Projectile(int x, int y, boolean up){
         ImageIcon icon = new ImageIcon("images/Projectile.gif");

@@ -9,10 +9,9 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Entity {
-    private int x, y, width, height, run, rise, panelWidth, panelHeight;
+    private int x, y, width, height, panelWidth, panelHeight;
+    double rise, run;
     private ImageIcon image;
-    public Weapon weapon = new Weapon();
-    public Villain villain = new Villain();
     
     public void setX(int x){
         this.x = x;
@@ -30,11 +29,11 @@ public class Entity {
         this.height = height;
     }
     
-    public void setRun(int run){
+    public void setRun(double run){
         this.run = run;
     }
     
-    public void setRise(int rise){
+    public void setRise(double rise){
         this.rise = rise;
     }
     
@@ -66,11 +65,11 @@ public class Entity {
         return height;
     }
     
-    public int getRun(){
+    public double getRun(){
         return run;
     }
     
-    public int getRise(){
+    public double getRise(){
         return rise;
     }
     

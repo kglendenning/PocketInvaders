@@ -10,20 +10,19 @@ import javax.swing.JFrame;
  */
 public class GameApp {
     public static GameField field;
-    //public static SideBar sideBar;
+    public static StartMenu startMenu;
     public static final int WINDOW_HEIGHT = 900, WINDOW_WIDTH = 1600;
     public static final int HEIGHT_DIFF = 55, WIDTH_DIFF = 320;
     
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         
-        do{
+        //do{
             //field = new GameField(WIDTH_DIFF, HEIGHT_DIFF);
-            field = new GameField(WIDTH_DIFF, HEIGHT_DIFF);
-            //sideBar = new SideBar();
+            startMenu = new StartMenu();
             startGame();
-            System.out.print("Continue? (y/n): ");
-        }while(in.nextLine().equalsIgnoreCase("y") ? true : false);
+            //System.out.print("Continue? (y/n): ");
+        //}while(in.nextLine().equalsIgnoreCase("y") ? true : false);
         
         System.exit(0);
     }
@@ -36,30 +35,66 @@ public class GameApp {
         frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         center(frame);
-        frame.setResizable(true);
+        frame.setResizable(false);
         
-        //field.setBounds(0, 0, WINDOW_WIDTH-320, WINDOW_HEIGHT-55);
-        field.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-        frame.add(field);
-        field.setSideBarBounds();
-        frame.add(field.sideBar);
-        field.startGame("games/BiggerTest.txt");
-        frame.addKeyListener(field);
+        //initialize start menu
+        startMenu.setBounds(WINDOW_WIDTH/2 - WINDOW_WIDTH/12, 
+                            WINDOW_HEIGHT/2 - WINDOW_HEIGHT/6, 
+                            WINDOW_WIDTH/6, 
+                            WINDOW_HEIGHT/3);
+        frame.add(startMenu);
+        frame.addKeyListener(startMenu);
         
-        //sideBar.setBounds(WINDOW_WIDTH-320, 0, 300, WINDOW_HEIGHT-52);
-        //frame.add(sideBar);
         frame.setVisible(true);
         
+        boolean in_game = false;
         int code = 0;
+        String level_name;
         
         while(true){
             pause();
-            code = field.update();
-            if(code > 0){
-                break;
+            if(in_game){
+                code = field.update();
+            } else {
+                code = startMenu.update();
             }
-            //sideBar.update(field);
-            //field.getFocusListeners();
+            
+            if(code > 0){
+                if(code == 1) {
+                    frame.remove(startMenu);
+                    frame.removeKeyListener(startMenu);
+                    
+                    field = new GameField(WIDTH_DIFF, HEIGHT_DIFF);
+                    
+                    //initialize field
+                    field.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+                    field.setSideBarBounds();
+                    
+                    in_game = true;
+                    frame.add(field);
+                    frame.add(field.sideBar);
+                    frame.addKeyListener(field);
+                    
+                    if(startMenu.level == 1)
+                        level_name = "games/Test.txt";
+                    else if(startMenu.level == 2)
+                        level_name = "games/BiggerTest.txt";
+                    else
+                        level_name = "games/HugeTest.txt";
+                    
+                    field.startGame(level_name);
+                } else if(code == 2) {
+                    frame.remove(field);
+                    frame.remove(field.sideBar);
+                    frame.removeKeyListener(field);
+                    
+                    in_game = false;
+                    frame.add(startMenu);
+                    frame.addKeyListener(startMenu);
+                } else if(code == 3) {
+                    break;
+                }
+            }
         }
         
         frame.setVisible(false);

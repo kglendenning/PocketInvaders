@@ -40,6 +40,7 @@ public class Section extends JPanel{
         repaint();
     }
     
+    @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         
@@ -60,19 +61,21 @@ public class Section extends JPanel{
         
         //health bar
         if(top){
-            int playerHealth = (int) (((double) sideBar.health/ (double)sideBar.maxHealth) * 250.0);
-            
-            g.setColor(new Color(0, 204, 0));
-            g.fillRect(25, 75, playerHealth, 50);
-            g.setColor(new Color(204, 0, 0));
-            g.fillRect(25+playerHealth, 75, 250-playerHealth, 50);
-            
-            if(target){
-                int enemyHealth = (int) (((double) sideBar.targetHealth/ (double)sideBar.targetMaxHealth) * 250.0);
+            if (sideBar != null) {
+                int playerHealth = (int) (((double) sideBar.health / (double) sideBar.maxHealth) * 250.0);
+
                 g.setColor(new Color(0, 204, 0));
-                g.fillRect(25, 165, enemyHealth, 30);
+                g.fillRect(25, 75, playerHealth, 50);
                 g.setColor(new Color(204, 0, 0));
-                g.fillRect(25+enemyHealth, 165, 250-enemyHealth, 30);
+                g.fillRect(25 + playerHealth, 75, 250 - playerHealth, 50);
+
+                if (target) {
+                    int enemyHealth = (int) (((double) sideBar.targetHealth / (double) sideBar.targetMaxHealth) * 250.0);
+                    g.setColor(new Color(0, 204, 0));
+                    g.fillRect(25, 165, enemyHealth, 30);
+                    g.setColor(new Color(204, 0, 0));
+                    g.fillRect(25 + enemyHealth, 165, 250 - enemyHealth, 30);
+                }
             }
         }
     }

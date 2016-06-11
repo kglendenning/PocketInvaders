@@ -13,7 +13,7 @@ public class Enemy extends Ship{
     //private ArrayList<ImageIcon> parts = new ArrayList<>();
     
     public Enemy(int panelWidth, int panelHeight, int type){
-        ImageIcon icon = new ImageIcon("images/"+villain.getEnemyName(type)+".jpg");
+        ImageIcon icon = new ImageIcon("images/"+Villain.getEnemyName(type)+".png");
         //ImageIcon bottom = new ImageIcon("images/Fighter1Bottom.png");
         //ImageIcon top = new ImageIcon("images/Fighter1Top.png");
         
@@ -21,11 +21,11 @@ public class Enemy extends Ship{
         setPanelHeight(panelHeight);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setRun(villain.getRun(type));
-        setRise(villain.getRise(type));
-        setLevel(villain.getLevel(type));
-        setMaxHealth(villain.getHealth(type));
-        setHealth(villain.getHealth(type));
+        setRun(Villain.getRun(type));
+        setRise(Villain.getRise(type));
+        setLevel(Villain.getLevel(type));
+        setMaxHealth(Villain.getHealth(type));
+        setHealth(Villain.getHealth(type));
         setType(type);
         setImage(icon);
         setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
@@ -59,7 +59,7 @@ public class Enemy extends Ship{
         move();
         
         double action = Math.random();
-        return action > villain.getFireRate(getType()) ? 1 : 0;
+        return action > Villain.getFireRate(getType()) ? 1 : 0;
     }
     
     public Projectile shootProjectile(){
@@ -86,15 +86,13 @@ public class Enemy extends Ship{
             setRun(0-getRun());
         }
         
-        setX(getX()+getRun());
-        setY(getY()+getRise());
+        setX((int)(getX()+getRun()));
+        setY((int)(getY()+getRise()));
     }
 
     @Override
     public void draw(Graphics g) {
         //draw self
         g.drawImage(getImageIcon().getImage(), getX(), getY(), null);
-        //g.drawImage(parts.get(0).getImage(), getX(), getY(), null);
-        //g.drawImage(parts.get(1).getImage(), getX()+getWidth()/2-parts.get(1).getIconWidth()/2, getY()+parts.get(0).getIconHeight(), null);
     }
 }

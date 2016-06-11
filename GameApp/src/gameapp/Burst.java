@@ -21,6 +21,6 @@ public class Burst extends Projectile{
         setType(1);
 
         setRise(up ? -8 : 8);
-        setDamage(weapon.getDamage(getType()));
+        setDamage(Weapon.getDamage(getType()));
     }
 }

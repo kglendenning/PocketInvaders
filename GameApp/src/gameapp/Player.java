@@ -100,7 +100,7 @@ public class Player extends Ship {
 
     public void moveCheck() {
         if (moveLeft && !moveRight) {
-            setX(getX() - (speed ? 7 : 4));
+            setX((int)(getX() - (speed ? 6.5 : 4.0)));
             if (getX() <= 0) {
                 setX(0);
             }
@@ -130,7 +130,7 @@ public class Player extends Ship {
 
     public void shootWeapon() {
         if (weaponAmmo[activeWeapon] > 0) {
-            projectiles.addAll(weapon.getShot(activeWeapon, getX() + (getWidth() / 2), getY(), true));
+            projectiles.addAll(Weapon.getShot(activeWeapon, getX() + (getWidth() / 2), getY(), true));
             weaponAmmo[activeWeapon]--;
             
             if(weaponAmmo[activeWeapon] == 0){
@@ -163,13 +163,13 @@ public class Player extends Ship {
     public void shiftWeapon(boolean right) {
         if (right) {
             setActiveWeapon(getActiveWeapon() + 1);
-            if (getActiveWeapon() >= weapon.getNumWeapons()) {
+            if (getActiveWeapon() >= Weapon.getNumWeapons()) {
                 setActiveWeapon(0);
             }
         } else {
             setActiveWeapon(getActiveWeapon() - 1);
             if (getActiveWeapon() <= -1) {
-                setActiveWeapon(weapon.getNumWeapons() - 1);
+                setActiveWeapon(Weapon.getNumWeapons() - 1);
             }
         }
         
@@ -184,9 +184,9 @@ public class Player extends Ship {
                 setActiveWeapon(type);
             }
         
-            weaponAmmo[type] += weapon.getReload(type);
-            if (weaponAmmo[type] > weapon.getMax(type)) {
-                weaponAmmo[type] = weapon.getMax(type);
+            weaponAmmo[type] += Weapon.getReload(type);
+            if (weaponAmmo[type] > Weapon.getMax(type)) {
+                weaponAmmo[type] = Weapon.getMax(type);
             }
         } else {
             int health = getHealth()+50;

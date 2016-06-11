@@ -16,7 +16,7 @@ public class Ammo extends Powerup{
         super(center);
         
         setType(type);
-        setImage(new ImageIcon("images/"+weapon.getWeaponName(type)+"Icon.jpg"));
+        setImage(new ImageIcon("images/"+Weapon.getWeaponName(type)+"Icon.jpg"));
         setWidth(getImageIcon().getIconWidth());
         setHeight(getImageIcon().getIconHeight());
     }
