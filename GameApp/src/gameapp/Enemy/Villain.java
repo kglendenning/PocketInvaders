@@ -6,7 +6,7 @@ package gameapp.Enemy;
  */
 public class Villain {
     private static final String[] NAME = {"Fighter1", "Fighter2", "Boss1", "Fighter4"};
-    private static final int[] LEVEL = {0, 1, 2, 0};
+    private static final int[] LEVEL = {0, 2, 5, 1};
     private static final double[] RUN = {3.5, 3.0, 2.0, 4.5};
     private static final double[] RISE = {0, 0, 0, 0};
     private static final int[] HEALTH = {200, 300, 5000, 100};
