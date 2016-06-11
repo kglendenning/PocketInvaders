@@ -1,8 +1,6 @@
 
 package gameapp.Projectile;
 
-import gameapp.Projectile.Weapon;
-import gameapp.Projectile.Projectile;
 import javax.swing.ImageIcon;
 
 /**

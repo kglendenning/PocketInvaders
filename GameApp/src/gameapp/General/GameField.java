@@ -4,6 +4,7 @@ import gameapp.Projectile.Weapon;
 import gameapp.Projectile.Buff;
 import gameapp.Effect.Effect;
 import gameapp.Enemy.Enemy;
+import gameapp.Enemy.Boss;
 import gameapp.Player.Player;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Powerup;
@@ -23,13 +24,13 @@ public final class GameField extends JPanel implements KeyListener {
 
     public Player player;
     public Enemy target;
-    public ArrayList<Enemy> enemies = new ArrayList<>();
-    public ArrayList<Projectile> projectiles = new ArrayList<>();
-    public ArrayList<Effect> effects = new ArrayList<>();
-    public ArrayList<Powerup> powerups = new ArrayList<>();
+    public static ArrayList<Enemy> enemies = new ArrayList<>();
+    public static ArrayList<Projectile> projectiles = new ArrayList<>();
+    public static ArrayList<Effect> effects = new ArrayList<>();
+    public static ArrayList<Powerup> powerups = new ArrayList<>();
     public Scanner in;
     public int levelCount, enemyCount, spawnDelay, level;
-    public boolean debug = true, pause = false;
+    public boolean debug = false, pause = false;
     public String debugInfo = "";
     public SideBar sideBar;
     public int widthDiff, heightDiff;
@@ -89,7 +90,11 @@ public final class GameField extends JPanel implements KeyListener {
     }
 
     public void addEnemy(int type) {
-        enemies.add(new Enemy(getWidth(), getHeight(), type));
+        if(type == 2){
+            enemies.add(new Boss(getWidth(), getHeight(), type));
+        } else {
+            enemies.add(new Enemy(getWidth(), getHeight(), type));
+        }
     }
 
     public int update() {
@@ -125,7 +130,7 @@ public final class GameField extends JPanel implements KeyListener {
             }
 
             if(detectHits()){
-                return 1;
+                return 2;
             }
             if (spawnDelay == 0) {
                 if (enemyCount == 0) {

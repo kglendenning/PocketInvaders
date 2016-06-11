@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 /**
  *
@@ -66,12 +64,20 @@ class StartMenu extends JPanel implements KeyListener{
         int key;
         
         if ((key = e.getKeyCode()) == KeyEvent.VK_UP) {
-            if(selection == Option.START)
-                selection = Option.EXIT;
-            else if(selection == Option.LEVEL)
-                selection = Option.START;
-            else if(selection == Option.EXIT)
-                selection = Option.LEVEL;
+            if(null != selection)
+                switch (selection) {
+                case START:
+                    selection = Option.EXIT;
+                    break;
+                case LEVEL:
+                    selection = Option.START;
+                    break;
+                case EXIT:
+                    selection = Option.LEVEL;
+                    break;
+                default:
+                    break;
+            }
         } else if (key == KeyEvent.VK_RIGHT) {
             if(selection == Option.LEVEL) {
                 if(++level > 3)
@@ -83,12 +89,20 @@ class StartMenu extends JPanel implements KeyListener{
                     level = 3;
             }
         } else if (key == KeyEvent.VK_DOWN) {
-            if(selection == Option.START)
-                selection = Option.LEVEL;
-            else if(selection == Option.LEVEL)
-                selection = Option.EXIT;
-            else if(selection == Option.EXIT)
-                selection = Option.START;
+            if(null != selection)
+                switch (selection) {
+                case START:
+                    selection = Option.LEVEL;
+                    break;
+                case LEVEL:
+                    selection = Option.EXIT;
+                    break;
+                case EXIT:
+                    selection = Option.START;
+                    break;
+                default:
+                    break;
+            }
         } else if (key == KeyEvent.VK_ENTER) {
             enter = true;
         }

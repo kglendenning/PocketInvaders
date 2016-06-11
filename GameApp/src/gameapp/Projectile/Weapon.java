@@ -3,10 +3,6 @@ package gameapp.Projectile;
 
 import gameapp.Effect.Explosion;
 import gameapp.Effect.Effect;
-import gameapp.Projectile.Bomb;
-import gameapp.Projectile.Projectile;
-import gameapp.Projectile.Rocket;
-import gameapp.Projectile.Spread;
 import java.util.ArrayList;
 
 /**
@@ -18,38 +14,38 @@ public class Weapon {
 //    private static int max[] = {0, 25, 15, 20, 15};
 //    private static int reload[] = {0, 10, 5, 6, 5};
 //    private static int effect[] = {0, 0, 2, 0, 2};
-    private static String name[] = {"", "Burst", "Rocket", "Spread"};
-    private static int damage[] = {20, 35, 150, 35};
-    private static int max[] = {0, 25, 15, 20};
-    private static int reload[] = {0, 10, 5, 6};
-    private static int effect[] = {0, 0, 2, 0};
+    private static final String[] NAME = {"", "Burst", "Rocket", "Spread"};
+    private static final int[] DAMAGE = {20, 35, 150, 35};
+    private static final int[] MAX = {0, 25, 15, 20};
+    private static final int[] RELOAD = {0, 10, 5, 6};
+    private static final int[] EFFECT = {0, 0, 2, 0};
     
     public static String getWeaponName(int type){
-        return name[type];
+        return NAME[type];
     }
     
     public static int getDamage(int type){
-        return damage[type];
+        return DAMAGE[type];
     }
     
     public static int getMax(int type){
-        return max[type];
+        return MAX[type];
     }
     
     public static int getReload(int type){
-        return reload[type];
+        return RELOAD[type];
     }
     
     public static int getEffect(int type){
-        return effect[type];
+        return EFFECT[type];
     };
     
     public static int getNumWeapons(){
-        return name.length;
+        return NAME.length;
     }
     
     public static Effect getEffect(Projectile projectile){
-        switch (effect[projectile.getType()]){
+        switch (EFFECT[projectile.getType()]){
             case 1:
                 return new Effect(projectile);
             case 2:

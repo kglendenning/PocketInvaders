@@ -1,0 +1,11 @@
+<# levels>
+<# enemies in first level>
+<1st enemy delay> <1st enemy type>
+<2nd enemy delay> <2nd enemy type>
+...
+<last enemy delay> <last enemy type>
+<# enemies in 2nd level>
+<1st enemy delay> <1st enemy type>
+...
+<# enemies in last level>
+...

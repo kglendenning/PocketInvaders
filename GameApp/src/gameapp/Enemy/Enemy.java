@@ -68,10 +68,6 @@ public class Enemy extends Ship{
         return new Projectile(getX()+(getWidth()/2), getY()+getHeight(), false);
     }
     
-    public void shootWeapon(){
-        
-    }
-    
     /*Override
     public boolean isHit(Projectile shot){
         if(shot.getBoundingBox().intersects(new Rectangle(getX(), getY(), getWidth(), parts.get(0).getIconHeight()))){

@@ -80,13 +80,19 @@ public class GameApp {
                     else if(startMenu.level == 2)
                         level_name = "games/BiggerTest.txt";
                     else
-                        level_name = "games/HugeTest.txt";
+                        level_name = "games/BossTest.txt";
                     
                     field.startGame(level_name);
                 } else if(code == 2) {
                     frame.remove(field);
                     frame.remove(field.sideBar);
                     frame.removeKeyListener(field);
+                    
+                    //comment out for fun mode
+                    GameField.projectiles.clear();
+                    GameField.enemies.clear();
+                    GameField.effects.clear();
+                    GameField.powerups.clear();
                     
                     in_game = false;
                     frame.add(startMenu);
