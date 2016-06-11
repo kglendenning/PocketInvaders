@@ -1,5 +1,5 @@
 
-package gameapp;
+package gameapp.Projectile;
 
 import java.awt.Point;
 import javax.swing.ImageIcon;

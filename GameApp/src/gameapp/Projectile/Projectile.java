@@ -1,6 +1,7 @@
 
-package gameapp;
+package gameapp.Projectile;
 
+import gameapp.General.Entity;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 

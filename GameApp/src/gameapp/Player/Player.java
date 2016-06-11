@@ -1,5 +1,10 @@
-package gameapp;
+package gameapp.Player;
 
+import gameapp.General.Entity;
+import gameapp.Projectile.Projectile;
+import gameapp.Projectile.Ammo;
+import gameapp.General.Ship;
+import gameapp.Projectile.Weapon;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.util.ArrayList;

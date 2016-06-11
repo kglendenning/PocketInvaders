@@ -1,5 +1,13 @@
-package gameapp;
+package gameapp.General;
 
+import gameapp.Projectile.Weapon;
+import gameapp.Projectile.Buff;
+import gameapp.Effect.Effect;
+import gameapp.Enemy.Enemy;
+import gameapp.Player.Player;
+import gameapp.Projectile.Projectile;
+import gameapp.Projectile.Powerup;
+import gameapp.Projectile.Ammo;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

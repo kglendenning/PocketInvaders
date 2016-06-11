@@ -1,6 +1,8 @@
 
-package gameapp;
+package gameapp.Effect;
 
+import gameapp.General.Entity;
+import gameapp.Projectile.Projectile;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;

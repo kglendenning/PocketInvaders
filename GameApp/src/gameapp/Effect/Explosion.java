@@ -1,5 +1,7 @@
-package gameapp;
+package gameapp.Effect;
 
+import gameapp.Effect.Effect;
+import gameapp.Projectile.Projectile;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

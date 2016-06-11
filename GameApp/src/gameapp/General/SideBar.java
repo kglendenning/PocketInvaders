@@ -1,5 +1,8 @@
-package gameapp;
+package gameapp.General;
 
+import gameapp.Projectile.Weapon;
+import gameapp.Enemy.Enemy;
+import gameapp.Player.Player;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.BoxLayout;

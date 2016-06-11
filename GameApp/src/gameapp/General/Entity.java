@@ -1,5 +1,5 @@
 
-package gameapp;
+package gameapp.General;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;

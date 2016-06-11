@@ -1,6 +1,7 @@
 
-package gameapp;
+package gameapp.Projectile;
 
+import gameapp.Projectile.Powerup;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 

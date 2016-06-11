@@ -1,5 +1,5 @@
 
-package gameapp;
+package gameapp.General;
 
 import java.awt.Color;
 import java.awt.Graphics;

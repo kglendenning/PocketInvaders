@@ -1,6 +1,12 @@
 
-package gameapp;
+package gameapp.Projectile;
 
+import gameapp.Effect.Explosion;
+import gameapp.Effect.Effect;
+import gameapp.Projectile.Bomb;
+import gameapp.Projectile.Projectile;
+import gameapp.Projectile.Rocket;
+import gameapp.Projectile.Spread;
 import java.util.ArrayList;
 
 /**

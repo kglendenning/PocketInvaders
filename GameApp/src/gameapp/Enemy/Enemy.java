@@ -1,6 +1,8 @@
 
-package gameapp;
+package gameapp.Enemy;
 
+import gameapp.Projectile.Projectile;
+import gameapp.General.Ship;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 

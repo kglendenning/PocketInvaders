@@ -1,5 +1,5 @@
 
-package gameapp;
+package gameapp.Enemy;
 
 /**
  * @author Kurt

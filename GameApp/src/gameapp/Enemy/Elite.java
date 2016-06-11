@@ -1,5 +1,5 @@
 
-package gameapp;
+package gameapp.Enemy;
 
 import java.awt.Graphics;
 import java.awt.Polygon;
