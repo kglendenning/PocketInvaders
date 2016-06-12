@@ -2,7 +2,6 @@ package gameapp.General;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
-import java.util.Scanner;
 import javax.swing.JFrame;
 
 /**
@@ -11,19 +10,12 @@ import javax.swing.JFrame;
 public class GameApp {
     public static GameField field;
     public static StartMenu startMenu;
+    public static Results resultsMenu;
     public static final int WINDOW_HEIGHT = 900, WINDOW_WIDTH = 1600;
     public static final int HEIGHT_DIFF = 55, WIDTH_DIFF = 320;
     
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        
-        //do{
-            //field = new GameField(WIDTH_DIFF, HEIGHT_DIFF);
-            startMenu = new StartMenu();
-            startGame();
-            //System.out.print("Continue? (y/n): ");
-        //}while(in.nextLine().equalsIgnoreCase("y") ? true : false);
-        
+        startGame();
         System.exit(0);
     }
     
@@ -38,25 +30,34 @@ public class GameApp {
         frame.setResizable(false);
         
         //initialize start menu
+        startMenu = new StartMenu();
         startMenu.setBounds(WINDOW_WIDTH/2 - WINDOW_WIDTH/12, 
-                            WINDOW_HEIGHT/2 - WINDOW_HEIGHT/6, 
+                            WINDOW_HEIGHT/2 - WINDOW_HEIGHT/4, 
                             WINDOW_WIDTH/6, 
-                            WINDOW_HEIGHT/3);
+                            WINDOW_HEIGHT/2);
         frame.add(startMenu);
         frame.addKeyListener(startMenu);
         
+        resultsMenu = new Results();
+        resultsMenu.setBounds(WINDOW_WIDTH/2 - WINDOW_WIDTH/12, 
+                            WINDOW_HEIGHT/2 - WINDOW_HEIGHT/4, 
+                            WINDOW_WIDTH/6, 
+                            WINDOW_HEIGHT/2);
+        
         frame.setVisible(true);
         
-        boolean in_game = false;
+        int game_state = 0;
         int code = 0;
         String level_name;
         
         while(true){
             pause();
-            if(in_game){
+            if(game_state == 0){
+                code = startMenu.update();
+            } else if(game_state == 1) {
                 code = field.update();
             } else {
-                code = startMenu.update();
+                code = resultsMenu.update();
             }
             
             if(code > 0){
@@ -70,7 +71,7 @@ public class GameApp {
                     field.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
                     field.setSideBarBounds();
                     
-                    in_game = true;
+                    game_state = 1;
                     frame.add(field);
                     frame.add(field.sideBar);
                     frame.addKeyListener(field);
@@ -96,10 +97,19 @@ public class GameApp {
                     GameField.effects.clear();
                     GameField.powerups.clear();
                     
-                    in_game = false;
+                    game_state = 2;
+                    frame.add(resultsMenu);
+                    frame.addKeyListener(resultsMenu);
+                } else if(code == 3) {
+                    frame.remove(resultsMenu);
+                    frame.addKeyListener(resultsMenu);
+                    
+                    Logger.resetLogger();
+                    
+                    game_state = 0;
                     frame.add(startMenu);
                     frame.addKeyListener(startMenu);
-                } else if(code == 3) {
+                } else {
                     break;
                 }
             }

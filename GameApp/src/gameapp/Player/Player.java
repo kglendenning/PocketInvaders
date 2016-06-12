@@ -1,6 +1,7 @@
 package gameapp.Player;
 
 import gameapp.General.Entity;
+import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Ammo;
 import gameapp.General.Ship;
@@ -32,7 +33,6 @@ public class Player extends Ship {
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        //setActiveWeapon(0);
         setWeapon(0);
         setMaxHealth(200);
         setHealth(200);//testing with default for now
@@ -80,17 +80,9 @@ public class Player extends Ship {
         this.shooting = shooting;
     }
 
-    //public void setActiveWeapon(int activeWeapon) {
-    //    this.weapon = activeWeapon;
-    //}
-
     public int[] getWeaponAmmo() {
         return weaponAmmo;
     }
-
-    //public int getActiveWeapon() {
-    //    return weapon;
-    //}
 
     public void shootCheck() {
         if (shooting) {
@@ -132,6 +124,7 @@ public class Player extends Ship {
 
     public void shootProjectile() {
         projectiles.add(new Projectile(getX() + (getWidth() / 2), getY(), true));
+        Logger.playerShots++;
     }
 
     public void shootWeapon() {
@@ -157,13 +150,14 @@ public class Player extends Ship {
      * @return 0 - if nothing, 1 - if killed
      */
     @Override
-    public int takeDamage(int damage) {
+    public boolean takeDamage(int damage) {
         setHealth(getHealth() - damage);
         if (getHealth() < 0) {
             setHealth(0);
         }
 
-        return getHealth() > 0 ? 0 : 1;
+        Logger.damageTaken += damage;
+        return getHealth() <= 0;
     }
 
     public void shiftWeapon(boolean right) {
@@ -197,6 +191,7 @@ public class Player extends Ship {
         } else {
             int health = getHealth()+50;
             setHealth(health < 200 ? health : 200);
+            Logger.healingReceived += 50;
         }
     }
 

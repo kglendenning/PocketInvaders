@@ -22,7 +22,6 @@ import javax.swing.JPanel;
  * @author Kurt
  */
 public final class GameField extends JPanel implements KeyListener {
-
     public Player player;
     public Enemy target;
     public static ArrayList<Enemy> enemies = new ArrayList<>();
@@ -137,6 +136,7 @@ public final class GameField extends JPanel implements KeyListener {
             }
 
             if(detectHits()){
+                Logger.won = false;
                 return 2;
             }
             if (spawnDelay == 0) {
@@ -144,6 +144,7 @@ public final class GameField extends JPanel implements KeyListener {
                     if (enemies.isEmpty()) {
                         if (levelCount == 0) {
                             //game end
+                            Logger.won = true;
                             return 2; //win
                             //System.out.println("You win.");
                             //System.exit(0);
@@ -181,9 +182,11 @@ public final class GameField extends JPanel implements KeyListener {
         for (int i = 0; i < projectiles.size(); i++) {
             if (player.isHit(projectiles.get(i))) {
                 effects.add(Weapon.getEffect(projectiles.get(i)));
+                Logger.damageTaken += projectiles.get(i).getDamage();
+                Logger.hitsTaken++;
 
                 //player is killed
-                if (player.takeDamage(projectiles.get(i).getDamage()) == 1) {
+                if (player.takeDamage(projectiles.get(i).getDamage())) {
                     //System.out.println("You lose.");
                     return true;
                     //System.exit(0);
@@ -197,8 +200,9 @@ public final class GameField extends JPanel implements KeyListener {
         //detect effect collisions
         for(int i = 0; i < effects.size(); i++){
             if(effects.get(i).isHarmful() && player.isHit(effects.get(i))){
+                Logger.damageTaken += effects.get(i).getDamage();
                 //player is killed
-                if(player.takeDamage(effects.get(i).getDamage()) == 1){
+                if(player.takeDamage(effects.get(i).getDamage())){
                     //System.out.println("You lose.");
                     return true;
                     //System.exit(0);
@@ -212,6 +216,7 @@ public final class GameField extends JPanel implements KeyListener {
                 player.collect(powerups.get(i).getType(), powerups.get(i).getClass());
                 powerups.remove(i);
                 i--;
+                Logger.powerupsCollected++;
             }
         }
 
@@ -222,11 +227,14 @@ public final class GameField extends JPanel implements KeyListener {
                 if (enemies.get(j).isHit(playerShots.get(i))) {
                     target = enemies.get(j);
                     effects.add(Weapon.getEffect(playerShots.get(i)));
-
+                    Logger.playerHits++;
+                    Logger.damageDealt += playerShots.get(i).getDamage();
+                    
                     //enemy is killed
-                    if (enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1) {
+                    if (enemies.get(j).takeDamage(playerShots.get(i).getDamage())) {
                         generatePowerup(enemies.get(j));
                         enemies.remove(j);
+                        Logger.enemiesKilled++;
                     }
 
                     playerShots.remove(i);
@@ -241,10 +249,13 @@ public final class GameField extends JPanel implements KeyListener {
             for(int j = 0; j < enemies.size(); j++){
                 if(effects.get(i).isHarmful() && enemies.get(j).isHit(effects.get(i))){
                     //enemy is killed
-                    if (enemies.get(j).takeDamage(effects.get(i).getDamage()) == 1) {
+                    if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
                         generatePowerup(enemies.get(j));
                         enemies.remove(j);
+                        Logger.enemiesKilled++;
                     }
+                    
+                    Logger.damageDealt += effects.get(i).getDamage();
                 }
             }
         }
@@ -259,8 +270,10 @@ public final class GameField extends JPanel implements KeyListener {
 
         if(chance >= 0.80) {
             powerups.add(new Ammo(enemy.getCenter(), type));
+            Logger.powerupsSpawned++;
         } else if(chance >= 0.70) {
             powerups.add(new Buff(enemy.getCenter(), type));
+            Logger.powerupsSpawned++;
         }
     }
 
@@ -315,7 +328,18 @@ public final class GameField extends JPanel implements KeyListener {
                 + "Player hp: " + player.getHealth() + "\t"
                 + "Effects: " + effects.size() + "\t"
                 + "Level: " + (level-levelCount)
-                + "";
+                + "\n"
+                + "Player Shots: " + Logger.playerShots + "\t"
+                + "Player Hits: " + Logger.playerHits + "\t"
+                + "Hits Taken: " + Logger.hitsTaken + "\t"
+                + "Damage Taken: " + Logger.damageTaken + "\t"
+                + "Enemies Killed: " + Logger.enemiesKilled + "\t"
+                + "Score: " + Logger.score + "\t"
+                + "Enemy Shots Fired: " + Logger.enemyShotsFired + "\t"
+                + "Healing Received: " + Logger.healingReceived + "\t"
+                + "Powerups Spawned: " + Logger.powerupsSpawned + "\t"
+                + "Powerups Collected: " + Logger.powerupsCollected + "\t"
+                + "Damage Dealt: " + Logger.damageDealt;
         for(int i = 1; i < Weapon.getNumWeapons(); i++){
             player.collect(i, Ammo.class);
         }

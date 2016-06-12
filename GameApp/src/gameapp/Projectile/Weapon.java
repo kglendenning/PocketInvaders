@@ -4,6 +4,7 @@ package gameapp.Projectile;
 import gameapp.Effect.Explosion;
 import gameapp.Effect.Effect;
 import gameapp.Effect.LongExplosion;
+import gameapp.General.Logger;
 import java.util.ArrayList;
 
 /**
@@ -73,9 +74,17 @@ public class Weapon {
                 weaponShots.add(new Burst(x, y, up));
                 weaponShots.add(new Burst(x, y, up));
                 weaponShots.add(new Burst(x, y, up));
+                if(up)
+                    Logger.playerShots += 3;
+                else 
+                    Logger.enemyShotsFired += 3;
                 break;
             case 2:
                 weaponShots.add(new Rocket(x, y, up));
+                if(up)
+                    Logger.playerShots++;
+                else
+                    Logger.enemyShotsFired++;
                 break;
             case 3:
                 weaponShots.add(new Spread(x, y, -1.0, 7.0, up));
@@ -83,9 +92,17 @@ public class Weapon {
                 weaponShots.add(new Spread(x, y, 0.0, 8.0, up));
                 weaponShots.add(new Spread(x, y, 2.0, 6.0, up));
                 weaponShots.add(new Spread(x, y, 1.0, 7.0, up));
+                if(up)
+                    Logger.playerShots += 5;
+                else 
+                    Logger.enemyShotsFired += 5;
                 break;
             case 4:
                 weaponShots.add(new Boomer(x, y, up));
+                if(up)
+                    Logger.playerShots++;
+                else
+                    Logger.enemyShotsFired++;
                 break;
         }
         

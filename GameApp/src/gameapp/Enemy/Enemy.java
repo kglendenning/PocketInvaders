@@ -3,6 +3,7 @@ package gameapp.Enemy;
 
 import gameapp.General.Entity;
 import gameapp.General.GameField;
+import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import gameapp.General.Ship;
 import java.awt.Graphics;
@@ -69,6 +70,7 @@ public class Enemy extends Ship{
     
     public void shootProjectile(){
         GameField.projectiles.add(new Projectile(getX()+(getWidth()/2), getY()+getHeight(), false));
+        Logger.enemyShotsFired++;
     }
     
     //public boolean isHit(Projectile shot){
