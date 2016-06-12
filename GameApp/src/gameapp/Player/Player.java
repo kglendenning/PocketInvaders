@@ -1,9 +1,11 @@
 package gameapp.Player;
 
 import gameapp.General.Entity;
+import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Ammo;
 import gameapp.General.Ship;
+import gameapp.Projectile.Boomer;
 import gameapp.Projectile.Weapon;
 import java.awt.Graphics;
 import java.awt.Polygon;
@@ -20,6 +22,7 @@ public class Player extends Ship {
     public boolean shooting = false, moveLeft = false, moveRight = false,
             moveUp = false, moveDown = false, speed = true;
     private int shotDelay = 0;
+    private int weaponDelay = 0;
     private int weaponAmmo[] = new int[20];
 
     public Player(int panelWidth, int panelHeight) {
@@ -32,7 +35,6 @@ public class Player extends Ship {
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        //setActiveWeapon(0);
         setWeapon(0);
         setMaxHealth(200);
         setHealth(200);//testing with default for now
@@ -80,17 +82,9 @@ public class Player extends Ship {
         this.shooting = shooting;
     }
 
-    //public void setActiveWeapon(int activeWeapon) {
-    //    this.weapon = activeWeapon;
-    //}
-
     public int[] getWeaponAmmo() {
         return weaponAmmo;
     }
-
-    //public int getActiveWeapon() {
-    //    return weapon;
-    //}
 
     public void shootCheck() {
         if (shooting) {
@@ -101,6 +95,10 @@ public class Player extends Ship {
             shotDelay--;
         } else {
             shotDelay = 0;
+        }
+        
+        if (weaponDelay > 0){
+            weaponDelay--;
         }
     }
 
@@ -132,9 +130,27 @@ public class Player extends Ship {
 
     public void shootProjectile() {
         projectiles.add(new Projectile(getX() + (getWidth() / 2), getY(), true));
+        Logger.playerShots++;
     }
 
     public void shootWeapon() {
+        //if boomer
+        if(getWeapon() == 4){
+            for(int i = 0; i < projectiles.size(); i++){
+                if(projectiles.get(i) instanceof Boomer){
+                    if(weaponDelay == 0){
+                        ((Boomer) projectiles.get(i)).detonate();
+                        projectiles.remove(i);
+                        Logger.playerHits++;
+                        i--;
+                    }
+                    
+                    return;
+                }
+            }
+            
+            weaponDelay = 100;
+        }
         if (weaponAmmo[getWeapon()] > 0) {
             projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
             weaponAmmo[getWeapon()]--;
@@ -157,13 +173,14 @@ public class Player extends Ship {
      * @return 0 - if nothing, 1 - if killed
      */
     @Override
-    public int takeDamage(int damage) {
+    public boolean takeDamage(int damage) {
         setHealth(getHealth() - damage);
         if (getHealth() < 0) {
             setHealth(0);
         }
 
-        return getHealth() > 0 ? 0 : 1;
+        Logger.damageTaken += damage;
+        return getHealth() <= 0;
     }
 
     public void shiftWeapon(boolean right) {
@@ -197,6 +214,7 @@ public class Player extends Ship {
         } else {
             int health = getHealth()+50;
             setHealth(health < 200 ? health : 200);
+            Logger.healingReceived += 50;
         }
     }
 

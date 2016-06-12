@@ -29,7 +29,7 @@ class StartMenu extends JPanel implements KeyListener{
         
         if(enter) {
             enter = false;
-            return selection == Option.START ? 1 : selection == Option.EXIT ? 3 : 0;
+            return selection == Option.START ? 1 : selection == Option.EXIT ? 4 : 0;
         }
         
         return 0;

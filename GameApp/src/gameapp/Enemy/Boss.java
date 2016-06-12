@@ -7,6 +7,7 @@ package gameapp.Enemy;
 
 import gameapp.General.Entity;
 import gameapp.General.GameField;
+import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.ShotCallback;
 import gameapp.Projectile.Spread;
@@ -37,6 +38,7 @@ public class Boss extends Enemy {
                 weaponShots.add(new Spread(x, y, 0, 16, up));
                 weaponShots.add(new Spread(x, y, 4, 12, up));
                 weaponShots.add(new Spread(x, y, 2, 14, up));
+                Logger.enemyShotsFired += 5;
                 
                 return weaponShots;
             }
@@ -71,6 +73,6 @@ public class Boss extends Enemy {
         }
         
         double action = Math.random();
-        return action > Villain.getFireRate(getType()) ? 1 : 0;
+        return action > Villain.getFireRate(getWeaponTypeIndex()) ? 1 : 0;
     }
 }

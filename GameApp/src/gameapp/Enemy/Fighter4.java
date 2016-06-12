@@ -3,6 +3,7 @@ package gameapp.Enemy;
 
 import gameapp.General.Entity;
 import gameapp.General.GameField;
+import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import java.awt.Rectangle;
 
@@ -25,5 +26,6 @@ public class Fighter4 extends Enemy {
     public void shootProjectile(){
         GameField.projectiles.add(new Projectile(getX(), getY()+getHeight(), false));
         GameField.projectiles.add(new Projectile(getX()+getWidth(), getY()+getHeight(), false));
+        Logger.enemyShotsFired += 2;
     }
 }

@@ -2,6 +2,7 @@
 package gameapp.Enemy;
 
 import gameapp.General.GameField;
+import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import gameapp.General.Ship;
 import gameapp.Projectile.Weapon;
@@ -14,7 +15,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Enemy extends Ship{
-    private int level, type;
+    private int level, weaponTableIndex;
     //private ArrayList<ImageIcon> parts = new ArrayList<>();
     
     public Enemy(int panelWidth, int panelHeight, int type){
@@ -32,7 +33,7 @@ public class Enemy extends Ship{
         setLevel(Villain.getLevel(type));
         setMaxHealth(Villain.getHealth(type));
         setHealth(Villain.getHealth(type));
-        setType(type);
+        setWeaponTypeIndex(type);
         setImage(icon);
         setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
         setY((int) (Math.random()*(panelHeight/4)));
@@ -61,16 +62,16 @@ public class Enemy extends Ship{
         this.level = level;
     }
     
-    public void setType(int type){
-        this.type = type;
+    public void setWeaponTypeIndex(int weaponTableIndex){
+        this.weaponTableIndex = weaponTableIndex;
     }
     
     public int getLevel(){
         return level;
     }
     
-    public int getType(){
-        return type;
+    public int getWeaponTypeIndex(){
+        return weaponTableIndex;
     }
     
     
@@ -82,11 +83,12 @@ public class Enemy extends Ship{
         move();
         
         double action = Math.random();
-        return action > Villain.getFireRate(getType()) ? 1 : 0;
+        return action > Villain.getFireRate(getWeaponTypeIndex()) ? 1 : 0;
     }
     
     public void shootProjectile(){
         GameField.projectiles.add(new Projectile(getX()+(getWidth()/2), getY()+getHeight(), false));
+        Logger.enemyShotsFired++;
     }
     
     //public boolean isHit(Projectile shot){

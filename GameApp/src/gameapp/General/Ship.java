@@ -87,8 +87,8 @@ public class Ship extends Entity{
      * @param damage Damage of projectile
      * @return 0 - if nothing, 1 - if killed
      */
-    public int takeDamage(int damage){
+    public boolean takeDamage(int damage){
         health -= damage;
-        return health > 0 ? 0 : 1;
+        return health <= 0;
     }
 }

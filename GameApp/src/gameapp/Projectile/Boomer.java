@@ -5,6 +5,7 @@
  */
 package gameapp.Projectile;
 
+import gameapp.General.GameField;
 import javax.swing.ImageIcon;
 
 /**
@@ -26,4 +27,7 @@ public class Boomer extends Projectile{
         setDamage(Weapon.getDamage(getType()));
     }
     
+    public void detonate(){
+        GameField.effects.add(Weapon.getEffect(this));
+    }
 }
