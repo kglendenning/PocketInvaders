@@ -10,6 +10,7 @@ import gameapp.Player.Player;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Powerup;
 import gameapp.Projectile.Ammo;
+import gameapp.Projectile.Boomer;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -226,8 +227,10 @@ public final class GameField extends JPanel implements KeyListener {
             for (int j = 0; j < enemies.size(); j++) {
                 if (enemies.get(j).isHit(playerShots.get(i))) {
                     target = enemies.get(j);
-                    effects.add(Weapon.getEffect(playerShots.get(i)));
-                    Logger.playerHits++;
+                    if(playerShots.get(i).getType() != 4){
+                        effects.add(Weapon.getEffect(playerShots.get(i)));
+                        Logger.playerHits++;
+                    }
                     Logger.damageDealt += playerShots.get(i).getDamage();
                     
                     //enemy is killed
@@ -237,8 +240,10 @@ public final class GameField extends JPanel implements KeyListener {
                         Logger.enemiesKilled++;
                     }
 
-                    playerShots.remove(i);
-                    i--;
+                    if(playerShots.get(i).getType() != 4){
+                        playerShots.remove(i);
+                        i--;
+                    }
                     break;
                 }
             }

@@ -11,13 +11,8 @@ import java.util.ArrayList;
  * @author Kurt
  */
 public class Weapon {
-//    private static String name[] = {"", "Burst", "Rocket", "Spread", "Bomb"};
-//    private static int damage[] = {20, 35, 150, 35, 50};
-//    private static int max[] = {0, 25, 15, 20, 15};
-//    private static int reload[] = {0, 10, 5, 6, 5};
-//    private static int effect[] = {0, 0, 2, 0, 2};
     private static final String[] NAME = {"", "Burst", "Rocket", "Spread", "Boomer"};
-    private static final int[] DAMAGE = {20, 35, 150, 35, 75};
+    private static final int[] DAMAGE = {20, 35, 150, 35, 1};
     private static final int[] MAX = {0, 25, 15, 20, 5};
     private static final int[] RELOAD = {0, 10, 5, 6, 2};
     private static final int[] EFFECT = {0, 0, 2, 0, 3};

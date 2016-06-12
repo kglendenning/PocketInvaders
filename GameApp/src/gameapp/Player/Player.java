@@ -5,6 +5,7 @@ import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Ammo;
 import gameapp.General.Ship;
+import gameapp.Projectile.Boomer;
 import gameapp.Projectile.Weapon;
 import java.awt.Graphics;
 import java.awt.Polygon;
@@ -21,6 +22,7 @@ public class Player extends Ship {
     public boolean shooting = false, moveLeft = false, moveRight = false,
             moveUp = false, moveDown = false, speed = true;
     private int shotDelay = 0;
+    private int weaponDelay = 0;
     private int weaponAmmo[] = new int[20];
 
     public Player(int panelWidth, int panelHeight) {
@@ -94,6 +96,10 @@ public class Player extends Ship {
         } else {
             shotDelay = 0;
         }
+        
+        if (weaponDelay > 0){
+            weaponDelay--;
+        }
     }
 
     public void moveCheck() {
@@ -128,6 +134,23 @@ public class Player extends Ship {
     }
 
     public void shootWeapon() {
+        //if boomer
+        if(getWeapon() == 4){
+            for(int i = 0; i < projectiles.size(); i++){
+                if(projectiles.get(i) instanceof Boomer){
+                    if(weaponDelay == 0){
+                        ((Boomer) projectiles.get(i)).detonate();
+                        projectiles.remove(i);
+                        Logger.playerHits++;
+                        i--;
+                    }
+                    
+                    return;
+                }
+            }
+            
+            weaponDelay = 100;
+        }
         if (weaponAmmo[getWeapon()] > 0) {
             projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
             weaponAmmo[getWeapon()]--;
