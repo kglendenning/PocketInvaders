@@ -1,10 +1,11 @@
 
 package gameapp.Enemy;
 
-import gameapp.General.Entity;
 import gameapp.General.GameField;
 import gameapp.Projectile.Projectile;
 import gameapp.General.Ship;
+import gameapp.Projectile.Weapon;
+import gameapp.Projectile.Powerup;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
@@ -35,6 +36,21 @@ public class Enemy extends Ship{
         setImage(icon);
         setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
         setY((int) (Math.random()*(panelHeight/4)));
+        double chance = Math.random();
+                            int tier = 0;
+             if(chance < 00.60) tier = 1;
+        else if(chance < 00.70) tier = 2;
+        else if(chance < 00.80) tier = 3;
+        else if(chance < 00.90) tier = 4;
+        else if(chance < 11.11) tier = 5;
+        switch(tier){
+            case 0: setDrop("Ammo");
+            case 1: setDrop("");
+            case 2: setDrop("");
+            case 3: setDrop("");
+            case 4: setDrop("Health");
+            case 5: setDrop("Health");
+        }
         //parts.add(bottom);
         //parts.add(top);
         //setWidth(bottom.getIconWidth());
@@ -56,6 +72,8 @@ public class Enemy extends Ship{
     public int getType(){
         return type;
     }
+    
+    
     
     /**
      * @return 0 - do nothing, 1 - add projectile

@@ -12,7 +12,7 @@ Entity: name, x, y, movement_type, movement_speed, angle, model (one class that 
                *Weapons*
             Buff: duration, duration_max
                 *Buffs*
-            Projectile: damage
+            Projectile: damage, penetration_limit, penetration_spent
     Effect: duration
         *Effects*
     Ship: health, health_max, weapons, weapon_current, buffs, buff_current, fire_rate_factor, affinity, invuln,  

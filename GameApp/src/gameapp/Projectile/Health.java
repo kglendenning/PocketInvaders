@@ -7,9 +7,9 @@ import javax.swing.ImageIcon;
 /**
  * @author Kurt
  */
-public class Buff extends Powerup{
+public class Health extends Powerup{
     
-    public Buff(Point center, int type){
+    public Health(Point center, int type){
         super(center);
         
         switch (type){

@@ -1,7 +1,6 @@
 package gameapp.General;
 
 import gameapp.Projectile.Weapon;
-import gameapp.Projectile.Buff;
 import gameapp.Effect.Effect;
 import gameapp.Enemy.Enemy;
 import gameapp.Enemy.Boss;
@@ -225,10 +224,24 @@ public final class GameField extends JPanel implements KeyListener {
 
                     //enemy is killed
                     if (enemies.get(j).takeDamage(playerShots.get(i).getDamage()) == 1) {
-                        generatePowerup(enemies.get(j));
+                        if (enemies.get(j).getHasDrop()){    
+                            if (enemies.get(j).getDrop().equals("Explosion")){        // the enemy generates some explosion
+                                break;
+                            }
+                            if (enemies.get(j).getDrop().equals("Enemy")){          // enemy transformation on death
+                                enemies.add(new Enemy(getWidth(), getHeight(), 1));
+                                break;
+                            }
+                            if (enemies.get(j).getDrop().equals("Ammo")){       // the enemy drops a powerup
+                                powerups.add(new Ammo(enemies.get(j).getCenter(),((int) (Math.random() * ((double) Weapon.getNumWeapons()-1.0)) + 1)));
+                                break;
+                            }
+                            if (enemies.get(j).getDrop().equals("Projectile")){      // the enemy fires a projectile on death
+                                break;
+                            }
+                        }
                         enemies.remove(j);
                     }
-
                     playerShots.remove(i);
                     i--;
                     break;
@@ -242,7 +255,8 @@ public final class GameField extends JPanel implements KeyListener {
                 if(effects.get(i).isHarmful() && enemies.get(j).isHit(effects.get(i))){
                     //enemy is killed
                     if (enemies.get(j).takeDamage(effects.get(i).getDamage()) == 1) {
-                        generatePowerup(enemies.get(j));
+                        
+                        //generatePowerup(enemies.get(j));
                         enemies.remove(j);
                     }
                 }
@@ -250,18 +264,6 @@ public final class GameField extends JPanel implements KeyListener {
         }
         
         return false;
-    }
-
-    public void generatePowerup(Enemy enemy) {
-        int enemyLevel = enemy.getLevel();
-        double chance = Math.random() + ((double) enemyLevel * 0.10);
-        int type = (int) (Math.random() * ((double) Weapon.getNumWeapons()-1.0)) + 1;
-
-        if(chance >= 0.80) {
-            powerups.add(new Ammo(enemy.getCenter(), type));
-        } else if(chance >= 0.70) {
-            powerups.add(new Buff(enemy.getCenter(), type));
-        }
     }
 
     @Override
