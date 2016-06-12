@@ -1,6 +1,8 @@
 
 package gameapp.General;
 
+import gameapp.Enemy.Enemy;
+import gameapp.Projectile.Projectile;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -10,6 +12,8 @@ import java.awt.Rectangle;
  */
 public class Ship extends Entity{
     private int health, maxHealth, weapon, weaponCallbackIndex;
+    private boolean hasDrop;
+    private String drop;
     
     public Ship(){
         //int randX = (int) (Math.random() * 1200);
@@ -39,6 +43,22 @@ public class Ship extends Entity{
         this.maxHealth = health;
     }
     
+    public void setHasDrop(boolean hasDrop){
+        this.hasDrop = hasDrop;
+    }
+            
+    public boolean getHasDrop(){
+        return this.hasDrop;
+    }
+    
+    public void setDrop(String drop){
+        this.drop=drop;
+    }
+        
+    public String getDrop(){
+        return this.drop;
+    }
+      
     public int getWeaponCallbackIndex(){
         return weaponCallbackIndex;
     }
