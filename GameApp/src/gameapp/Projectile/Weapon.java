@@ -11,11 +11,11 @@ import java.util.ArrayList;
  * @author Kurt
  */
 public class Weapon {
-    private static final String[] NAME = {"", "Burst", "Rocket", "Spread", "Boomer"};
-    private static final int[] DAMAGE = {20, 35, 150, 35, 1};
-    private static final int[] MAX = {0, 25, 15, 20, 5};
-    private static final int[] RELOAD = {0, 10, 5, 6, 2};
-    private static final int[] EFFECT = {0, 0, 2, 0, 3};
+    private static final String[] NAME = {"", "Burst", "Rocket", "Spread", "Boomer", "Repair"};
+    private static final int[] DAMAGE = {20, 35, 150, 35, 1, -50};
+    private static final int[] MAX = {0, 25, 15, 20, 5, 3};
+    private static final int[] RELOAD = {0, 10, 5, 6, 2, 1};
+    private static final int[] EFFECT = {0, 0, 2, 0, 3, 0};
     private static final ArrayList<ShotCallback> shotCallbacks = new ArrayList<>();
     
     public static String getWeaponName(int type){
@@ -98,6 +98,9 @@ public class Weapon {
                     Logger.playerShots++;
                 else
                     Logger.enemyShotsFired++;
+                break;
+            case 5:
+                weaponShots.add(new Repair(x, y, up));
                 break;
         }
         

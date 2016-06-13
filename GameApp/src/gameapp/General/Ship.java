@@ -83,6 +83,16 @@ public class Ship extends Entity{
         return new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(entity.getBoundingBox());
     }
     
+    //easier to assume positive param is damage for now
+    public void alterHealth(int damage){
+        setHealth(getHealth() - damage);
+        if (getHealth() < 0) {
+            setHealth(0);
+        } else if(getHealth() > getMaxHealth()) {
+            setHealth(getMaxHealth());
+        }
+    }
+    
     /**
      * @param damage Damage of projectile
      * @return 0 - if nothing, 1 - if killed

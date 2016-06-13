@@ -1,6 +1,7 @@
 package gameapp.Player;
 
 import gameapp.General.Entity;
+import gameapp.General.GameField;
 import gameapp.General.Logger;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Ammo;
@@ -152,7 +153,11 @@ public class Player extends Ship {
             weaponDelay = 100;
         }
         if (weaponAmmo[getWeapon()] > 0) {
-            projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
+            if(getWeapon() == 5){
+                GameField.projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
+            } else {
+                projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
+            }
             weaponAmmo[getWeapon()]--;
             
             if(weaponAmmo[getWeapon()] == 0){
@@ -174,12 +179,12 @@ public class Player extends Ship {
      */
     @Override
     public boolean takeDamage(int damage) {
-        setHealth(getHealth() - damage);
-        if (getHealth() < 0) {
-            setHealth(0);
-        }
+        //setHealth(getHealth() - damage);
+        alterHealth(damage);
+        //if (getHealth() < 0) {
+        //    setHealth(0);
+        //}
 
-        Logger.damageTaken += damage;
         return getHealth() <= 0;
     }
 
@@ -212,8 +217,9 @@ public class Player extends Ship {
                 weaponAmmo[type] = Weapon.getMax(type);
             }
         } else {
-            int health = getHealth()+50;
-            setHealth(health < 200 ? health : 200);
+            //int health = getHealth()+50;
+            //setHealth(health < 200 ? health : 200);
+            alterHealth(50);
             Logger.healingReceived += 50;
         }
     }

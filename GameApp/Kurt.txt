@@ -1,8 +1,11 @@
-title screen
 player death
-last hit enemy hp bar
+player repair powerup
+duration powerup (improved standard attack power)
 
-remote bomb
 sticky bomb
 beam lazer
+   give power
+   standard shot take ~25 power (charges up)
+   can hold Up to charge to ~100 power
+   shoots beam from player doing damage/frame to enemies touching
 new enemies

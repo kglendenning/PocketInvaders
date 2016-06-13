@@ -135,7 +135,7 @@ public final class GameField extends JPanel implements KeyListener {
                 handleAction(enemy);
             }
 
-            if(detectHits()){                            // array out of bounds?  
+            if(detectHits()){
                 Logger.won = false;
                 return 2;
             }
@@ -265,11 +265,8 @@ public final class GameField extends JPanel implements KeyListener {
 
                     if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
                         //generatePowerup(enemies.get(j));
-                        if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
-                            enemies.remove(j);
-                            Logger.enemiesKilled++;
-                        }
-                    
+                        enemies.remove(j);
+                        Logger.enemiesKilled++;
                         Logger.damageDealt += effects.get(i).getDamage();
                     }
                 }
