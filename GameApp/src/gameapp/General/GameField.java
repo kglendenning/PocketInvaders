@@ -9,6 +9,7 @@ import gameapp.Player.Player;
 import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Powerup;
 import gameapp.Projectile.Ammo;
+import gameapp.Projectile.Health;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -134,7 +135,7 @@ public final class GameField extends JPanel implements KeyListener {
                 handleAction(enemy);
             }
 
-            if(detectHits()){
+            if(detectHits()){                            // array out of bounds?  
                 Logger.won = false;
                 return 2;
             }
@@ -228,34 +229,24 @@ public final class GameField extends JPanel implements KeyListener {
                     Logger.damageDealt += playerShots.get(i).getDamage();
                     
                     //enemy is killed
-
+         
                     if (enemies.get(j).takeDamage(playerShots.get(i).getDamage())) {
                         if (enemies.get(j).getHasDrop()){    
-                            if (enemies.get(j).getDrop().equals("Explosion")){        // the enemy generates some explosion
-                                break;
+                            if (enemies.get(j).getDrop().equals("Health")){        
+                                powerups.add(new Health(enemies.get(j).getCenter()));
+                                Logger.powerupsSpawned++;
                             }
-                            if (enemies.get(j).getDrop().equals("Enemy")){          // enemy transformation on death
-                                enemies.add(new Enemy(getWidth(), getHeight(), 1));
-                                break;
-                            }
-                            if (enemies.get(j).getDrop().equals("Ammo")){       // the enemy drops a powerup
+                            if (enemies.get(j).getDrop().equals("Ammo")){       
                                 powerups.add(new Ammo(enemies.get(j).getCenter(),((int) (Math.random() * ((double) Weapon.getNumWeapons()-1.0)) + 1)));
-                                break;
-                            }
-                            if (enemies.get(j).getDrop().equals("Projectile")){      // the enemy fires a projectile on death
-                                break;
+                                Logger.powerupsSpawned++;
                             }
                         }
-
-                    if (enemies.get(j).takeDamage(playerShots.get(i).getDamage())) {
-                        
                         enemies.remove(j);
                         Logger.enemiesKilled++;
                     }
 
                     playerShots.remove(i);
                     i--;
-
 
                     if(playerShots.get(i).getWeaponTypeIndex() != 4){
                         effects.add(Weapon.getEffect(playerShots.get(i)));
@@ -268,7 +259,7 @@ public final class GameField extends JPanel implements KeyListener {
                 }
             }
         }
-        }
+        
         //detect enemy effect collisions
         for(int i = 0; i < effects.size(); i++){
             for(int j = 0; j < enemies.size(); j++){
