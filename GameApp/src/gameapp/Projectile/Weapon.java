@@ -43,7 +43,7 @@ public class Weapon {
     }
     
     public static Effect getEffect(Projectile projectile){
-        switch (EFFECT[projectile.getType()]){
+        switch (EFFECT[projectile.getWeaponTypeIndex()]){
             case 1:
                 return new Effect(projectile);
             case 2:

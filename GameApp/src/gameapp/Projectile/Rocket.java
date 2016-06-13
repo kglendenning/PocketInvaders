@@ -19,8 +19,8 @@ public class Rocket extends Projectile {
 
         setRise(up ? -3 : 3);
         //setLimit(5);
-        setType(2);
-        setDamage(Weapon.getDamage(getType()));
+        setWeaponTypeIndex(2);
+        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
         setAcceleration(up ? -1 : 1);
     }
     

@@ -16,10 +16,10 @@ public class Bomb extends Projectile{
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setType(4);
+        setWeaponTypeIndex(4);
 
         setRise(up ? -6 : 6);
-        setDamage(Weapon.getDamage(getType()));
+        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
     }
     
     @Override

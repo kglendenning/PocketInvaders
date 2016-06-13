@@ -257,7 +257,7 @@ public final class GameField extends JPanel implements KeyListener {
                     i--;
 
 
-                    if(playerShots.get(i).getType() != 4){
+                    if(playerShots.get(i).getWeaponTypeIndex() != 4){
                         effects.add(Weapon.getEffect(playerShots.get(i)));
                         Logger.playerHits++;
                         playerShots.remove(i);

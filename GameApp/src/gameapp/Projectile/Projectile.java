@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Projectile extends Entity{
-    private int damage = Weapon.getDamage(0), type = 0;
+    private int damage = Weapon.getDamage(0), weaponTypeIndex = 0;
     
     public Projectile(int x, int y, boolean up){
         ImageIcon icon = new ImageIcon("images/Projectile.gif");
@@ -30,16 +30,16 @@ public class Projectile extends Entity{
         this.damage = damage;
     }
     
-    public void setType(int type){
-        this.type = type;
+    public void setWeaponTypeIndex(int type){
+        this.weaponTypeIndex = type;
     }
     
     public int getDamage(){
         return damage;
     }
     
-    public int getType(){
-        return type;
+    public int getWeaponTypeIndex(){
+        return weaponTypeIndex;
     }
     
     public Point getCenter(){

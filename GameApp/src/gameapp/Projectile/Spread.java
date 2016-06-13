@@ -15,10 +15,10 @@ public class Spread extends Projectile{
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setType(3);
+        setWeaponTypeIndex(3);
 
         setRun(run);
         setRise(up ? (-1*rise) : rise);
-        setDamage(Weapon.getDamage(getType()));
+        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
     }
 }

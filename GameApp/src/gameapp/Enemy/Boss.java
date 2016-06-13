@@ -73,6 +73,6 @@ public class Boss extends Enemy {
         }
         
         double action = Math.random();
-        return action > Villain.getFireRate(getWeaponTypeIndex()) ? 1 : 0;
+        return action > Villain.getFireRate(getVillainTypeIndex()) ? 1 : 0;
     }
 }

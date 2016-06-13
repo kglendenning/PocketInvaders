@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Enemy extends Ship{
-    private int level, weaponTableIndex;
+    private int level, villainTableIndex;
     //private ArrayList<ImageIcon> parts = new ArrayList<>();
     
     public Enemy(int panelWidth, int panelHeight, int type){
@@ -33,7 +33,7 @@ public class Enemy extends Ship{
         setLevel(Villain.getLevel(type));
         setMaxHealth(Villain.getHealth(type));
         setHealth(Villain.getHealth(type));
-        setWeaponTypeIndex(type);
+        setVillainTypeIndex(type);
         setImage(icon);
         setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
         setY((int) (Math.random()*(panelHeight/4)));
@@ -62,16 +62,16 @@ public class Enemy extends Ship{
         this.level = level;
     }
     
-    public void setWeaponTypeIndex(int weaponTableIndex){
-        this.weaponTableIndex = weaponTableIndex;
+    public void setVillainTypeIndex(int weaponTableIndex){
+        this.villainTableIndex = weaponTableIndex;
     }
     
     public int getLevel(){
         return level;
     }
     
-    public int getWeaponTypeIndex(){
-        return weaponTableIndex;
+    public int getVillainTypeIndex(){
+        return villainTableIndex;
     }
     
     
@@ -83,7 +83,7 @@ public class Enemy extends Ship{
         move();
         
         double action = Math.random();
-        return action > Villain.getFireRate(getWeaponTypeIndex()) ? 1 : 0;
+        return action > Villain.getFireRate(getVillainTypeIndex()) ? 1 : 0;
     }
     
     public void shootProjectile(){

@@ -18,9 +18,9 @@ public class Burst extends Projectile{
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setType(1);
+        setWeaponTypeIndex(1);
 
         setRise(up ? -8 : 8);
-        setDamage(Weapon.getDamage(getType()));
+        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
     }
 }

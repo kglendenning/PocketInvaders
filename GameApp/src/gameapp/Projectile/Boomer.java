@@ -21,10 +21,10 @@ public class Boomer extends Projectile{
         setImage(icon);
         setWidth(icon.getIconWidth());
         setHeight(icon.getIconHeight());
-        setType(4);
+        setWeaponTypeIndex(4);
 
         setRise(up ? -3 : 3);
-        setDamage(Weapon.getDamage(getType()));
+        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
     }
     
     public void detonate(){
