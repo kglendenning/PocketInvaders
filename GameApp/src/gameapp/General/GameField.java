@@ -264,23 +264,20 @@ public final class GameField extends JPanel implements KeyListener {
                     //enemy is killed
 
                     if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
-                        
                         //generatePowerup(enemies.get(j));
-
-                    if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
-                
-
-                        enemies.remove(j);
-                        Logger.enemiesKilled++;
-                    }
+                        if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
+                            enemies.remove(j);
+                            Logger.enemiesKilled++;
+                        }
                     
-                    Logger.damageDealt += effects.get(i).getDamage();
+                        Logger.damageDealt += effects.get(i).getDamage();
+                    }
                 }
             }
         }
+        
+        return false;
     }
-return false;
-}
 
     @Override
     public void paintComponent(Graphics g) {
