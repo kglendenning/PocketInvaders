@@ -264,11 +264,21 @@ public final class GameField extends JPanel implements KeyListener {
                     //enemy is killed
 
                     if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
-                        //generatePowerup(enemies.get(j));
+                        if (enemies.get(j).getHasDrop()){    
+                            if (enemies.get(j).getDrop().equals("Health")){        
+                                powerups.add(new Health(enemies.get(j).getCenter()));
+                                Logger.powerupsSpawned++;
+                            }
+                            if (enemies.get(j).getDrop().equals("Ammo")){       
+                                powerups.add(new Ammo(enemies.get(j).getCenter(),((int) (Math.random() * ((double) Weapon.getNumWeapons()-1.0)) + 1)));
+                                Logger.powerupsSpawned++;
+                            }
+                        }
                         enemies.remove(j);
                         Logger.enemiesKilled++;
-                        Logger.damageDealt += effects.get(i).getDamage();
                     }
+                    
+                    Logger.damageDealt += effects.get(i).getDamage(); 
                 }
             }
         }
