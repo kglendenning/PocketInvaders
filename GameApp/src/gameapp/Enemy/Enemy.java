@@ -38,19 +38,14 @@ public class Enemy extends Ship{
         setX((int) (Math.random()*(panelWidth-icon.getIconWidth())));
         setY((int) (Math.random()*(panelHeight/4)));
         double chance = Math.random();
-                            int tier = 0;
-             if(chance < 00.60) tier = 1;
-        else if(chance < 00.70) tier = 2;
-        else if(chance < 00.80) tier = 3;
-        else if(chance < 00.90) tier = 4;
-        else if(chance < 11.11) tier = 5;
+        int tier = 0;
+             if(chance < 00.30) tier = 0;
+        else if(chance < 00.60) tier = 1;
+        else if(chance < 99.99) tier = 2;
         switch(tier){
-            case 0: setDrop("Ammo");
-            case 1: setDrop("");
-            case 2: setDrop("");
-            case 3: setDrop("");
-            case 4: setDrop("Health");
-            case 5: setDrop("Health");
+            case 0: setHasDrop(false);
+            case 1: setHasDrop(true); setDrop("Health");
+            case 2: setHasDrop(true); setDrop("Ammo");
         }
         //parts.add(bottom);
         //parts.add(top);

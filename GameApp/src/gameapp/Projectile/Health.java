@@ -9,15 +9,11 @@ import javax.swing.ImageIcon;
  */
 public class Health extends Powerup{
     
-    public Health(Point center, int type){
+    public Health(Point center){
         super(center);
-        
-        switch (type){
-            default:
-                setImage(new ImageIcon("images/HealthIcon.jpg"));
-                setWidth(getImageIcon().getIconWidth());
-                setHeight(getImageIcon().getIconHeight());
-                break;
-        }
+        setImage(new ImageIcon("images/HealthIcon.jpg"));
+        setWidth(getImageIcon().getIconWidth());
+        setHeight(getImageIcon().getIconHeight());
     }
 }
+
