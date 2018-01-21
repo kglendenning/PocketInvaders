@@ -13,17 +13,17 @@ public class Bomb extends Projectile{
         super(x, y, up);
         ImageIcon icon = new ImageIcon("images/Bomb.png");
         
-        setImage(icon);
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
-        setWeaponTypeIndex(4);
+        SetImage(icon);
+        SetWidth(icon.getIconWidth());
+        SetHeight(icon.getIconHeight());
+        SetWeaponTypeIndex(4);
 
-        setRise(up ? -6 : 6);
-        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
+        SetRise(up ? -6 : 6);
+        SetDamage(WeaponData.GetWeaponInfo().GetDamage(GetWeaponTypeIndex()));
     }
     
     @Override
-    public Point getCenter(){
-        return new Point(getX()+getWidth()/2, getY());
+    public Point GetCenter(){
+        return new Point(GetX()+GetWidth()/2, GetY());
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameapp.Projectile;
 
 import gameapp.General.GameField;
@@ -18,16 +13,16 @@ public class Boomer extends Projectile{
         super(x, y, up);
         ImageIcon icon = new ImageIcon("images/Boomer.gif");
         
-        setImage(icon);
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
-        setWeaponTypeIndex(4);
+        SetImage(icon);
+        SetWidth(icon.getIconWidth());
+        SetHeight(icon.getIconHeight());
+        SetWeaponTypeIndex(4);
 
-        setRise(up ? -3 : 3);
-        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
+        SetRise(up ? -3 : 3);
+        SetDamage(WeaponData.GetWeaponInfo().GetDamage(GetWeaponTypeIndex()));
     }
     
-    public void detonate(){
-        GameField.effects.add(Weapon.getEffect(this));
+    public void Detonate(){
+        GameField.mEffects.add(WeaponData.GetWeaponInfo().getEffect(this));
     }
 }

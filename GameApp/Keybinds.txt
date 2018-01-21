@@ -5,3 +5,4 @@ up - shoot weapon
 left, right - toggle weapons
 space - shoot
 shift - slow
+enter - select menu option

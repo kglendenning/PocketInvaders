@@ -11,9 +11,9 @@ public class Health extends Powerup{
     
     public Health(Point center){
         super(center);
-        setImage(new ImageIcon("images/HealthIcon.jpg"));
-        setWidth(getImageIcon().getIconWidth());
-        setHeight(getImageIcon().getIconHeight());
+        SetImage(new ImageIcon("images/HealthIcon.jpg"));
+        SetWidth(GetImageIcon().getIconWidth());
+        SetHeight(GetImageIcon().getIconHeight());
     }
 }
 

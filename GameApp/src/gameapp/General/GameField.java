@@ -1,6 +1,6 @@
 package gameapp.General;
 
-import gameapp.Projectile.Weapon;
+import gameapp.Projectile.WeaponData;
 import gameapp.Effect.Effect;
 import gameapp.Enemy.Enemy;
 import gameapp.Enemy.Boss;
@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JPanel;
@@ -22,232 +23,235 @@ import javax.swing.JPanel;
  * @author Kurt
  */
 public final class GameField extends JPanel implements KeyListener {
-    public Player player;
-    public Enemy target;
-    public static ArrayList<Enemy> enemies = new ArrayList<>();
-    public static ArrayList<Projectile> projectiles = new ArrayList<>();
-    public static ArrayList<Effect> effects = new ArrayList<>();
-    public static ArrayList<Powerup> powerups = new ArrayList<>();
-    public Scanner in;
-    public int levelCount, enemyCount, spawnDelay, level;
-    public boolean debug = false, pause = false;
-    public String debugInfo = "";
-    public SideBar sideBar;
-    public int widthDiff, heightDiff;
+    public Player mPlayer;
+    public Enemy mTarget;
+    public static ArrayList<Enemy> mEnemies = new ArrayList<>();
+    public static ArrayList<Projectile> mProjectiles = new ArrayList<>();
+    public static ArrayList<Effect> mEffects = new ArrayList<>();
+    public static ArrayList<Powerup> mPowerups = new ArrayList<>();
+    public Scanner mScanner;
+    public int mLevelCount, mEnemyCount, mSpawnDelay, mLevel;
+    public boolean mDebug = false, mPause = false;
+    public String mDebugInfo = "";
+    public SideBar mSideBar;
+    public int mWidthDiff, mHeightDiff;
 
     public GameField(int widthDiff, int heightDiff) {
         super();
         
-        this.widthDiff = widthDiff;
-        this.heightDiff = heightDiff;
-        sideBar = new SideBar();
+        mWidthDiff = widthDiff;
+        mHeightDiff = heightDiff;
+        mSideBar = new SideBar();
     }
     
     /**
      * These allow sideBar to be contained in GameField. Less overhead to update
      */
-    public void setSideBarBounds(){
-        sideBar.setBounds(super.getWidth()-widthDiff, 0, 300, super.getHeight()-heightDiff+3);
+    public void SetSideBarBounds(){
+        mSideBar.setBounds(super.getWidth()-mWidthDiff, 0, 300, super.getHeight()-mHeightDiff+3);
     }
     @Override
     public int getHeight(){
-        return super.getHeight()-heightDiff;
+        return super.getHeight()-mHeightDiff;
     }
     @Override
     public int getWidth(){
-        return super.getWidth()-widthDiff;
+        return super.getWidth()-mWidthDiff;
     }
 
-    public void startGame(String fileName) {
-        
-        
-        player = new Player(getWidth(), getHeight());
+    public void StartGame(String fileName) {
+        mPlayer = new Player(getWidth(), getHeight());
 
         try {
-            in = new Scanner(new File(fileName));
-            levelCount = level = in.nextInt();
-            nextLevel();
-        } catch (Exception e) {
+            mScanner = new Scanner(new File(fileName));
+            mLevelCount = mLevel = mScanner.nextInt();
+            NextLevel();
+        } catch (FileNotFoundException e) {
             System.out.println("Error: " + e);
             System.exit(0);
         }
     }
 
-    public void nextLevel() {
-        enemyCount = in.nextInt();
-        if (levelCount > 0) {
-            spawnDelay = in.nextInt();
+    public void NextLevel() {
+        mEnemyCount = mScanner.nextInt();
+        if (mLevelCount > 0) {
+            mSpawnDelay = mScanner.nextInt();
         }
-        levelCount--;
+        mLevelCount--;
     }
 
-    public void nextEnemy() {
-        addEnemy(in.nextInt());
-        enemyCount--;
-        if (enemyCount > 0) {
-            spawnDelay = in.nextInt();
+    public void NextEnemy() {
+        AddEnemy(mScanner.nextInt());
+        mEnemyCount--;
+        if (mEnemyCount > 0) {
+            mSpawnDelay = mScanner.nextInt();
         }
     }
 
-    public void addEnemy(int type) {
+    public void AddEnemy(int type) {
         switch (type) {
             case 2:
-                enemies.add(new Boss(getWidth(), getHeight(), type));
+                mEnemies.add(new Boss(getWidth(), getHeight(), type));
                 break;
             case 3:
-                enemies.add(new Fighter4(getWidth(), getHeight(), type));
+                mEnemies.add(new Fighter4(getWidth(), getHeight(), type));
                 break;
             default:
-                enemies.add(new Enemy(getWidth(), getHeight(), type));
+                mEnemies.add(new Enemy(getWidth(), getHeight(), type));
                 break;
         }
     }
 
-    public int update() {
-        if (!pause) {
-            player.update();
+    public int Update() {
+        if (!mPause) {
+            mPlayer.Update();
 
-            for (int i = 0; i < effects.size(); i++) {
-                if (effects.get(i).update() == 1) {
-                    effects.remove(i);
+            for (int i = 0; i < mEffects.size(); i++) {
+                if (mEffects.get(i).Update() == 1) {
+                    mEffects.remove(i);
                     i--;
                 }
             }
 
-            for (int i = 0; i < powerups.size(); i++) {
-                powerups.get(i).update();
-                if (powerups.get(i).getY() > getHeight()) {
-                    powerups.remove(i);
+            for (int i = 0; i < mPowerups.size(); i++) {
+                mPowerups.get(i).Update();
+                if (mPowerups.get(i).GetY() > getHeight()) {
+                    mPowerups.remove(i);
                     i--;
                 }
             }
 
-            for (int i = 0; i < projectiles.size(); i++) {
-                Projectile shot = projectiles.get(i);
-                shot.move();
-                if (shot.getY() + shot.getHeight() >= this.getHeight()) {
-                    projectiles.remove(i);
+            for (int i = 0; i < mProjectiles.size(); i++) {
+                Projectile shot = mProjectiles.get(i);
+                shot.Move();
+                if (shot.GetY() + shot.GetHeight() >= this.getHeight()) {
+                    mProjectiles.remove(i);
                     i--;
                 }
             }
 
-            for (Enemy enemy : enemies) {
-                handleAction(enemy);
+            for (Enemy enemy : mEnemies) {
+                HandleAction(enemy);
             }
 
-            if(detectHits()){
-                Logger.won = false;
+            if(DetectHits()){
+                Logger.mWon = false;
                 return 2;
             }
-            if (spawnDelay == 0) {
-                if (enemyCount == 0) {
-                    if (enemies.isEmpty()) {
-                        if (levelCount == 0) {
+            if (mSpawnDelay == 0) {
+                if (mEnemyCount == 0) {
+                    if (mEnemies.isEmpty()) {
+                        if (mLevelCount == 0) {
                             //game end
-                            Logger.won = true;
+                            Logger.mWon = true;
                             return 2; //win
                             //System.out.println("You win.");
                             //System.exit(0);
                         } else {
-                            nextLevel();
+                            NextLevel();
                         }
                     }
                 } else {
-                    nextEnemy();
+                    NextEnemy();
                 }
             } else {
-                spawnDelay--;
+                mSpawnDelay--;
             }
         } else {
             //display pause
             
         }
 
-        sideBar.update(player, target);
+        mSideBar.Update(mPlayer, mTarget);
         repaint();
         return 0;
     }
 
-    public void handleAction(Enemy enemy) {
-        int action = enemy.update();
+    public void HandleAction(Enemy enemy) {
+        int action = enemy.Update();
 
         if (action == 1) {
             //projectiles.add(enemy.shootProjectile());
-            enemy.shootProjectile();
+            enemy.ShootProjectile();
         }
     }
 
-    public boolean detectHits() {
+    public boolean DetectHits() {
         //detect player collision
-        for (int i = 0; i < projectiles.size(); i++) {
-            if (player.isHit(projectiles.get(i))) {
-                effects.add(Weapon.getEffect(projectiles.get(i)));
-                Logger.damageTaken += projectiles.get(i).getDamage();
-                Logger.hitsTaken++;
-
-                //player is killed
-                if (player.takeDamage(projectiles.get(i).getDamage())) {
-                    //System.out.println("You lose.");
-                    return true;
-                    //System.exit(0);
+        for (int i = 0; i < mProjectiles.size(); i++) {
+            if (mPlayer.IsHit(mProjectiles.get(i))) {
+                mEffects.add(WeaponData.GetWeaponInfo().getEffect(mProjectiles.get(i)));
+                if(mProjectiles.get(i).GetDamage() >= 0){
+                    Logger.mDamageTaken += mProjectiles.get(i).GetDamage();
+                    Logger.mHitsTaken++;
+                } else {
+                    Logger.mHealingReceived -= mProjectiles.get(i).GetDamage();
                 }
 
-                projectiles.remove(i);
+                //player is killed
+                if (mPlayer.TakeDamage(mProjectiles.get(i).GetDamage())) {
+                    return true;
+                }
+
+                mProjectiles.remove(i);
                 i--;
             }
         }
         
         //detect effect collisions
-        for(int i = 0; i < effects.size(); i++){
-            if(effects.get(i).isHarmful() && player.isHit(effects.get(i))){
-                Logger.damageTaken += effects.get(i).getDamage();
+        for(int i = 0; i < mEffects.size(); i++){
+            if(mEffects.get(i).IsHarmful() && mPlayer.IsHit(mEffects.get(i))){
+                if(mEffects.get(i).GetDamage() >= 0){
+                    Logger.mDamageTaken += mEffects.get(i).GetDamage();
+                } else {
+                    Logger.mHealingReceived -= mEffects.get(i).GetDamage();
+                }
+                
                 //player is killed
-                if(player.takeDamage(effects.get(i).getDamage())){
-                    //System.out.println("You lose.");
+                if(mPlayer.TakeDamage(mEffects.get(i).GetDamage())){
                     return true;
-                    //System.exit(0);
                 }
             }
         }
 
         //detect powerup collection
-        for (int i = 0; i < powerups.size(); i++) {
-            if (player.isHit(powerups.get(i))) {
-                player.collect(powerups.get(i).getType(), powerups.get(i).getClass());
-                powerups.remove(i);
+        for (int i = 0; i < mPowerups.size(); i++) {
+            if (mPlayer.IsHit(mPowerups.get(i))) {
+                mPlayer.Collect(mPowerups.get(i).GetType(), mPowerups.get(i).getClass());
+                mPowerups.remove(i);
                 i--;
-                Logger.powerupsCollected++;
+                Logger.mPowerupsCollected++;
             }
         }
 
         //detect enemy collision
-        ArrayList<Projectile> playerShots = player.getProjectiles();
+        ArrayList<Projectile> playerShots = mPlayer.GetProjectiles();
         for (int i = 0; i < playerShots.size(); i++) {
-            for (int j = 0; j < enemies.size(); j++) {
-                if (enemies.get(j).isHit(playerShots.get(i))) {
-                    target = enemies.get(j);
-                    Logger.damageDealt += playerShots.get(i).getDamage();
+            for (int j = 0; j < mEnemies.size(); j++) {
+                if (mEnemies.get(j).IsHit(playerShots.get(i))) {
+                    mTarget = mEnemies.get(j);
+                    Logger.mDamageDealt += playerShots.get(i).GetDamage();
                     
                     //enemy is killed
          
-                    if (enemies.get(j).takeDamage(playerShots.get(i).getDamage())) {
-                        if (enemies.get(j).getHasDrop()){    
-                            if (enemies.get(j).getDrop().equals("Health")){        
-                                powerups.add(new Health(enemies.get(j).getCenter()));
-                                Logger.powerupsSpawned++;
+                    if (mEnemies.get(j).TakeDamage(playerShots.get(i).GetDamage())) {
+                        if (mEnemies.get(j).GetHasDrop()){    
+                            if (mEnemies.get(j).GetDrop().equals("Health")){        
+                                mPowerups.add(new Health(mEnemies.get(j).GetCenter()));
+                                Logger.mPowerupsSpawned++;
                             }
-                            if (enemies.get(j).getDrop().equals("Ammo")){       
-                                powerups.add(new Ammo(enemies.get(j).getCenter(),((int) (Math.random() * ((double) Weapon.getNumWeapons()-1.0)) + 1)));
-                                Logger.powerupsSpawned++;
+                            if (mEnemies.get(j).GetDrop().equals("Ammo")){       
+                                mPowerups.add(new Ammo(mEnemies.get(j).GetCenter(),((int) (Math.random() * ((double) WeaponData.GetWeaponInfo().GetNumWeapons()-1.0)) + 1)));
+                                Logger.mPowerupsSpawned++;
                             }
                         }
-                        enemies.remove(j);
-                        Logger.enemiesKilled++;
+                        mEnemies.remove(j);
+                        Logger.mEnemiesKilled++;
                     }
 
-                    if(playerShots.get(i).getWeaponTypeIndex() != 4){
-                        effects.add(Weapon.getEffect(playerShots.get(i)));
-                        Logger.playerHits++;
+                    if(playerShots.get(i).GetWeaponTypeIndex() != 4){
+                        mEffects.add(WeaponData.GetWeaponInfo().getEffect(playerShots.get(i)));
+                        Logger.mPlayerHits++;
                         playerShots.remove(i);
                         i--;
                     }
@@ -258,27 +262,27 @@ public final class GameField extends JPanel implements KeyListener {
         }
         
         //detect enemy effect collisions
-        for(int i = 0; i < effects.size(); i++){
-            for(int j = 0; j < enemies.size(); j++){
-                if(effects.get(i).isHarmful() && enemies.get(j).isHit(effects.get(i))){
+        for(int i = 0; i < mEffects.size(); i++){
+            for(int j = 0; j < mEnemies.size(); j++){
+                if(mEffects.get(i).IsHarmful() && mEnemies.get(j).IsHit(mEffects.get(i))){
                     //enemy is killed
 
-                    if (enemies.get(j).takeDamage(effects.get(i).getDamage())) {
-                        if (enemies.get(j).getHasDrop()){    
-                            if (enemies.get(j).getDrop().equals("Health")){        
-                                powerups.add(new Health(enemies.get(j).getCenter()));
-                                Logger.powerupsSpawned++;
+                    if (mEnemies.get(j).TakeDamage(mEffects.get(i).GetDamage())) {
+                        if (mEnemies.get(j).GetHasDrop()){    
+                            if (mEnemies.get(j).GetDrop().equals("Health")){        
+                                mPowerups.add(new Health(mEnemies.get(j).GetCenter()));
+                                Logger.mPowerupsSpawned++;
                             }
-                            if (enemies.get(j).getDrop().equals("Ammo")){       
-                                powerups.add(new Ammo(enemies.get(j).getCenter(),((int) (Math.random() * ((double) Weapon.getNumWeapons()-1.0)) + 1)));
-                                Logger.powerupsSpawned++;
+                            if (mEnemies.get(j).GetDrop().equals("Ammo")){       
+                                mPowerups.add(new Ammo(mEnemies.get(j).GetCenter(),((int) (Math.random() * ((double) WeaponData.GetWeaponInfo().GetNumWeapons()-1.0)) + 1)));
+                                Logger.mPowerupsSpawned++;
                             }
                         }
-                        enemies.remove(j);
-                        Logger.enemiesKilled++;
+                        mEnemies.remove(j);
+                        Logger.mEnemiesKilled++;
                     }
                     
-                    Logger.damageDealt += effects.get(i).getDamage(); 
+                    Logger.mDamageDealt += mEffects.get(i).GetDamage(); 
                 }
             }
         }
@@ -295,32 +299,32 @@ public final class GameField extends JPanel implements KeyListener {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         //paint enemies
-        for (Enemy enemy : enemies) {
-            enemy.draw(g);
+        for (Enemy enemy : mEnemies) {
+            enemy.Draw(g);
         }
 
         //paint player objects
-        player.draw(g);
+        mPlayer.Draw(g);
 
         //draw projectiles
-        for (Projectile shot : projectiles) {
-            shot.draw(g);
+        for (Projectile shot : mProjectiles) {
+            shot.Draw(g);
         }
 
         //draw effects
-        for (Effect effect : effects) {
-            effect.draw(g);
+        for (Effect effect : mEffects) {
+            effect.Draw(g);
         }
 
         //draw powerups
-        for (Powerup powerup : powerups) {
-            powerup.draw(g);
+        for (Powerup powerup : mPowerups) {
+            powerup.Draw(g);
         }
 
-        if (debug) {
-            showDebug(g);
+        if (mDebug) {
+            ShowDebug(g);
         }
-        if(pause){
+        if(mPause){
             g.setColor(new Color(0.5f, 0.5f, 0.5f, 0.4f));
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.BLACK);
@@ -330,29 +334,29 @@ public final class GameField extends JPanel implements KeyListener {
         
     }
 
-    public void showDebug(Graphics g) {
-        debugInfo = "Enemies: " + enemies.size() + "\t"
-                + "Projectiles: " + projectiles.size() + "\t"
-                + "Player shots: " + player.getProjectiles().size() + "\t"
-                + "Player hp: " + player.getHealth() + "\t"
-                + "Effects: " + effects.size() + "\t"
-                + "Level: " + (level-levelCount)
+    public void ShowDebug(Graphics g) {
+        mDebugInfo = "Enemies: " + mEnemies.size() + "\t"
+                + "Projectiles: " + mProjectiles.size() + "\t"
+                + "Player shots: " + mPlayer.GetProjectiles().size() + "\t"
+                + "Player hp: " + mPlayer.GetHealth() + "\t"
+                + "Effects: " + mEffects.size() + "\t"
+                + "Level: " + (mLevel-mLevelCount)
                 + "\n"
-                + "Player Shots: " + Logger.playerShots + "\t"
-                + "Player Hits: " + Logger.playerHits + "\t"
-                + "Hits Taken: " + Logger.hitsTaken + "\t"
-                + "Damage Taken: " + Logger.damageTaken + "\t"
-                + "Enemies Killed: " + Logger.enemiesKilled + "\t"
-                + "Score: " + Logger.score + "\t"
-                + "Enemy Shots Fired: " + Logger.enemyShotsFired + "\t"
-                + "Healing Received: " + Logger.healingReceived + "\t"
-                + "Powerups Spawned: " + Logger.powerupsSpawned + "\t"
-                + "Powerups Collected: " + Logger.powerupsCollected + "\t"
-                + "Damage Dealt: " + Logger.damageDealt;
-        for(int i = 1; i < Weapon.getNumWeapons(); i++){
-            player.collect(i, Ammo.class);
+                + "Player Shots: " + Logger.mPlayerShots + "\t"
+                + "Player Hits: " + Logger.mPlayerHits + "\t"
+                + "Hits Taken: " + Logger.mHitsTaken + "\t"
+                + "Damage Taken: " + Logger.mDamageTaken + "\t"
+                + "Enemies Killed: " + Logger.mEnemiesKilled + "\t"
+                + "Score: " + Logger.mScore + "\t"
+                + "Enemy Shots Fired: " + Logger.mEnemyShotsFired + "\t"
+                + "Healing Received: " + Logger.mHealingReceived + "\t"
+                + "Powerups Spawned: " + Logger.mPowerupsSpawned + "\t"
+                + "Powerups Collected: " + Logger.mPowerupsCollected + "\t"
+                + "Damage Dealt: " + Logger.mDamageDealt;
+        for(int i = 1; i < WeaponData.GetWeaponInfo().GetNumWeapons(); i++){
+            mPlayer.Collect(i, Ammo.class);
         }
-        String lines[] = debugInfo.split("\t");
+        String lines[] = mDebugInfo.split("\t");
         g.setColor(Color.YELLOW);
         for (int i = 0; i < lines.length; i++) {
             g.drawString(lines[i], 10, 20 + i * 10);
@@ -369,33 +373,33 @@ public final class GameField extends JPanel implements KeyListener {
         
         if ((key = e.getKeyCode()) == KeyEvent.VK_A) {
             //move left
-            player.setMoveLeft(true);
+            mPlayer.SetMoveLeft(true);
         } else if (key == KeyEvent.VK_D) {
             //move right
-            player.setMoveRight(true);
+            mPlayer.SetMoveRight(true);
         } else if (key == KeyEvent.VK_W) {
             //move up
-            player.setMoveUp(true);
+            mPlayer.SetMoveUp(true);
         } else if (key == KeyEvent.VK_S) {
             //move down
-            player.setMoveDown(true);
+            mPlayer.SetMoveDown(true);
         } else if (key == KeyEvent.VK_SPACE) {
             //shoot standard projectile
-            player.setShooting(true);
+            mPlayer.SetShooting(true);
         } else if (key == KeyEvent.VK_SHIFT) {
             //speed up
-            player.setSpeed(false);
+            mPlayer.SetSpeed(false);
         } else if (key == KeyEvent.VK_UP) {
             //shoot weapon
-            player.shootWeapon();
+            mPlayer.ShootWeapon();
         } else if (key == KeyEvent.VK_LEFT) {
-            player.shiftWeapon(false);
+            mPlayer.ShiftWeapon(false);
         } else if (key == KeyEvent.VK_RIGHT) {
-            player.shiftWeapon(true);
+            mPlayer.ShiftWeapon(true);
         } else if (key == KeyEvent.VK_P) {
-            pause = !pause;
+            mPause = !mPause;
         } else if (key == KeyEvent.VK_F8) {
-            debug = !debug;
+            mDebug = !mDebug;
         }
     }
 
@@ -404,17 +408,17 @@ public final class GameField extends JPanel implements KeyListener {
         int key;
         
         if ((key = e.getKeyCode()) == KeyEvent.VK_A) {
-            player.setMoveLeft(false);
+            mPlayer.SetMoveLeft(false);
         } else if (key == KeyEvent.VK_D) {
-            player.setMoveRight(false);
+            mPlayer.SetMoveRight(false);
         } else if (key == KeyEvent.VK_W) {
-            player.setMoveUp(false);
+            mPlayer.SetMoveUp(false);
         } else if (key == KeyEvent.VK_S) {
-            player.setMoveDown(false);
+            mPlayer.SetMoveDown(false);
         } else if (key == KeyEvent.VK_SPACE) {
-            player.setShooting(false);
+            mPlayer.SetShooting(false);
         } else if (key == KeyEvent.VK_SHIFT) {
-            player.setSpeed(true);
+            mPlayer.SetSpeed(true);
         }
     }
 }

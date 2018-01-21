@@ -10,26 +10,26 @@ import javax.swing.JPanel;
  *
  * @author Kurt
  */
-class StartMenu extends JPanel implements KeyListener{
-    enum Option {START, LEVEL, EXIT};
-    public Option selection;
-    public int level;
-    public boolean enter;
+public class StartMenu extends JPanel implements KeyListener{
+    private enum Option {START, LEVEL, EXIT};
+    private Option mSelection;
+    public int mLevel;
+    public boolean mEnter;
     
     public StartMenu() {
         super();
         
-        selection = Option.START;
-        level = 1;
-        enter = false;
+        mSelection = Option.START;
+        mLevel = 1;
+        mEnter = false;
     }
     
-    public int update() {
+    public int Update() {
         repaint();
         
-        if(enter) {
-            enter = false;
-            return selection == Option.START ? 1 : selection == Option.EXIT ? 4 : 0;
+        if(mEnter) {
+            mEnter = false;
+            return mSelection == Option.START ? 1 : mSelection == Option.EXIT ? 4 : 0;
         }
         
         return 0;
@@ -47,11 +47,11 @@ class StartMenu extends JPanel implements KeyListener{
         String exit_game = "Exit Game";
         g.setFont(new Font("Serif", Font.BOLD, 40));
         
-        g.setColor(selection == Option.START ? Color.YELLOW : Color.WHITE);
+        g.setColor(mSelection == Option.START ? Color.YELLOW : Color.WHITE);
         g.drawString(start_game, 10, 50);
-        g.setColor(selection == Option.LEVEL ? Color.YELLOW : Color.WHITE);
-        g.drawString("Level " + level, 10, 110);
-        g.setColor(selection == Option.EXIT ? Color.YELLOW : Color.WHITE);
+        g.setColor(mSelection == Option.LEVEL ? Color.YELLOW : Color.WHITE);
+        g.drawString("Level " + mLevel, 10, 110);
+        g.setColor(mSelection == Option.EXIT ? Color.YELLOW : Color.WHITE);
         g.drawString(exit_game, 10, 170);
     }
 
@@ -64,47 +64,47 @@ class StartMenu extends JPanel implements KeyListener{
         int key;
         
         if ((key = e.getKeyCode()) == KeyEvent.VK_UP) {
-            if(null != selection)
-                switch (selection) {
+            if(null != mSelection)
+                switch (mSelection) {
                 case START:
-                    selection = Option.EXIT;
+                    mSelection = Option.EXIT;
                     break;
                 case LEVEL:
-                    selection = Option.START;
+                    mSelection = Option.START;
                     break;
                 case EXIT:
-                    selection = Option.LEVEL;
+                    mSelection = Option.LEVEL;
                     break;
                 default:
                     break;
             }
         } else if (key == KeyEvent.VK_RIGHT) {
-            if(selection == Option.LEVEL) {
-                if(++level > 4)
-                    level = 1;
+            if(mSelection == Option.LEVEL) {
+                if(++mLevel > 4)
+                    mLevel = 1;
             }
         } else if (key == KeyEvent.VK_LEFT) {
-            if(selection == Option.LEVEL) {
-                if(--level < 1)
-                    level = 4;
+            if(mSelection == Option.LEVEL) {
+                if(--mLevel < 1)
+                    mLevel = 4;
             }
         } else if (key == KeyEvent.VK_DOWN) {
-            if(null != selection)
-                switch (selection) {
+            if(null != mSelection)
+                switch (mSelection) {
                 case START:
-                    selection = Option.LEVEL;
+                    mSelection = Option.LEVEL;
                     break;
                 case LEVEL:
-                    selection = Option.EXIT;
+                    mSelection = Option.EXIT;
                     break;
                 case EXIT:
-                    selection = Option.START;
+                    mSelection = Option.START;
                     break;
                 default:
                     break;
             }
         } else if (key == KeyEvent.VK_ENTER) {
-            enter = true;
+            mEnter = true;
         }
     }
 

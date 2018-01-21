@@ -1,52 +1,76 @@
 
 package gameapp.Enemy;
 
+import java.util.ArrayList;
+
 /**
  * @author Kurt
  */
 public class Villain {
-    private static final String[] NAME = {"Fighter1", "Fighter2", "Boss1", "Fighter4"};
-    private static final int[] LEVEL = {0, 2, 5, 1};
-    private static final double[] RUN = {3.5, 3.0, 2.0, 4.5};
-    private static final double[] RISE = {0, 0, 0, 0};
-    private static final int[] HEALTH = {200, 300, 5000, 100};
-    private static final double[] FIRE_RATE = {0.98, 0.95, 0.95, 0.98};
-    private static final int[] WEAPON = {0, 0, 0, 0};
-    private static final int[] DAMAGE = {20, 20, 25, 10};
-    
-    public static String getEnemyName(int type){
-        return NAME[type];
+    private class VillainInfo {
+        public VillainInfo(String name, int level, double run, double rise, int health, double fireRate, int weapon, int damage) {
+            mName = name;
+            mLevel = level;
+            mRun = run;
+            mRise = rise;
+            mHealth = health;
+            mFireRate = fireRate;
+            mWeapon = weapon;
+            mDamage = damage;
+        }
+        
+        String mName;
+        int mLevel;
+        double mRun;
+        double mRise;
+        int mHealth;
+        double mFireRate;
+        int mWeapon;
+        int mDamage;
     }
     
-    public static int getLevel(int type){
-        return LEVEL[type];
+    private static final ArrayList<VillainInfo> mVillainInfo = new ArrayList<>();
+    
+    public Villain() {
+        mVillainInfo.add(new VillainInfo("Fighter1", 0, 3.5, 0, 200, 0.98, 0, 20));
+        mVillainInfo.add(new VillainInfo("Fighter2", 2, 3.0, 0, 300, 0.95, 0, 20));
+        mVillainInfo.add(new VillainInfo("Boss1", 5, 2.0, 0, 5000, 0.95, 0, 25));
+        mVillainInfo.add(new VillainInfo("Fighter4", 1, 4.5, 0, 100, 0.98, 0, 10));
     }
     
-    public static double getRun(int type){
-        return RUN[type];
+    public static String GetEnemyName(int type){
+        return mVillainInfo.get(type).mName;
     }
     
-    public static double getRise(int type){
-        return RISE[type];
+    public static int GetLevel(int type){
+        return mVillainInfo.get(type).mLevel;
+    }
+    
+    public static double GetRun(int type){
+        return mVillainInfo.get(type).mRun;
+    }
+    
+    public static double GetRise(int type){
+        return mVillainInfo.get(type).mRise;
     };
     
-    public static int getHealth(int type){
-        return HEALTH[type];
+    public static int GetHealth(int type){
+        return mVillainInfo.get(type).mHealth;
     }
     
-    public static double getFireRate(int type){
-        return FIRE_RATE[type];
+    public static double GetFireRate(int type){
+        return mVillainInfo.get(type).mFireRate;
     }
     
-    public static int getWeapon(int type){
-        return WEAPON[type];
+    public static int GetWeapon(int type){
+        return mVillainInfo.get(type).mWeapon;
     }
     
-    public int getDamage(int type){
-        return DAMAGE[type];
+    public int GetDamage(int type){
+        return mVillainInfo.get(type).mDamage;
     }
     
-    public static int getEnemyCount(){
-        return NAME.length;
+    public static int GetEnemyCount(){
+        return mVillainInfo.size();
     }
 }

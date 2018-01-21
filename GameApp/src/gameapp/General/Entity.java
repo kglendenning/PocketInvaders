@@ -9,93 +9,93 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Entity {
-    private int x, y, width, height, panelWidth, panelHeight;
-    double rise, run;
-    private ImageIcon image;
+    private int mX, mY, mWidth, mHeight, mPanelWidth, mPanelHeight;
+    double mRise, mRun;
+    private ImageIcon mImage;
     
-    public void setX(int x){
-        this.x = x;
+    public final void SetX(int x){
+        mX = x;
     }
     
-    public void setY(int y){
-        this.y = y;
+    public final void SetY(int y){
+        mY = y;
     }
     
-    public void setWidth(int width){
-        this.width = width;
+    public final void SetWidth(int width){
+        mWidth = width;
     }
     
-    public void setHeight(int height){
-        this.height = height;
+    public final void SetHeight(int height){
+        mHeight = height;
     }
     
-    public void setRun(double run){
-        this.run = run;
+    public final void SetRun(double run){
+        mRun = run;
     }
     
-    public void setRise(double rise){
-        this.rise = rise;
+    public final void SetRise(double rise){
+        mRise = rise;
     }
     
-    public void setImage(ImageIcon image){
-        this.image = image;
+    public final void SetImage(ImageIcon image){
+        mImage = image;
     }
     
-    public void setPanelWidth(int panelWidth){
-        this.panelWidth = panelWidth;
+    public final void SetPanelWidth(int panelWidth){
+        mPanelWidth = panelWidth;
     }
     
-    public void setPanelHeight(int panelHeight){
-        this.panelHeight = panelHeight;
+    public final void SetPanelHeight(int panelHeight){
+        mPanelHeight = panelHeight;
     }
     
-    public int getX(){
-        return x;
+    public final int GetX(){
+        return mX;
     }
     
-    public int getY(){
-        return y;
+    public final int GetY(){
+        return mY;
     }
     
-    public int getWidth(){
-        return width;
+    public final int GetWidth(){
+        return mWidth;
     }
     
-    public int getHeight(){
-        return height;
+    public final int GetHeight(){
+        return mHeight;
     }
     
-    public double getRun(){
-        return run;
+    public final double GetRun(){
+        return mRun;
     }
     
-    public double getRise(){
-        return rise;
+    public final double GetRise(){
+        return mRise;
     }
     
-    public ImageIcon getImageIcon(){
-        return image;
+    public final ImageIcon GetImageIcon(){
+        return mImage;
     }
     
-    public int getPanelWidth(){
-        return panelWidth;
+    public final int GetPanelWidth(){
+        return mPanelWidth;
     }
     
-    public int getPanelHeight(){
-        return panelHeight;
+    public final int GetPanelHeight(){
+        return mPanelHeight;
     }
     
-    public Rectangle getBoundingBox(){
-        return new Rectangle(x, y, width, height);
+    public Rectangle GetBoundingBox(){
+        return new Rectangle(mX, mY, mWidth, mHeight);
     }
     
-    public void move(){
-        x += run;
-        y += rise;
+    public void Move(){
+        mX += mRun;
+        mY += mRise;
     }
     
-    public void draw(Graphics g) {
+    public void Draw(Graphics g) {
         //draw self
-        g.drawImage(getImageIcon().getImage(), getX(), getY(), null);
+        g.drawImage(GetImageIcon().getImage(), GetX(), GetY(), null);
     }
 }

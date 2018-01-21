@@ -7,7 +7,7 @@ import gameapp.Projectile.Projectile;
 import gameapp.Projectile.Ammo;
 import gameapp.General.Ship;
 import gameapp.Projectile.Boomer;
-import gameapp.Projectile.Weapon;
+import gameapp.Projectile.WeaponData;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.util.ArrayList;
@@ -19,130 +19,130 @@ import javax.swing.ImageIcon;
  */
 public class Player extends Ship {
 
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
-    public boolean shooting = false, moveLeft = false, moveRight = false,
-            moveUp = false, moveDown = false, speed = true;
-    private int shotDelay = 0;
-    private int weaponDelay = 0;
-    private int weaponAmmo[] = new int[20];
+    private final ArrayList<Projectile> mProjectiles = new ArrayList<>();
+    private boolean mShooting = false, mMoveLeft = false, mMoveRight = false,
+            mMoveUp = false, mMoveDown = false, mSpeed = true;
+    private int mShotDelay = 0;
+    private int mWeaponDelay = 0;
+    private final int[] mWeaponAmmo = new int[20];
 
     public Player(int panelWidth, int panelHeight) {
         ImageIcon icon = new ImageIcon("images/Player.jpg");
 
-        setPanelWidth(panelWidth);
-        setPanelHeight(panelHeight);
-        setX(panelWidth / 2 - icon.getIconWidth() / 2);
-        setY(panelHeight - icon.getIconHeight());
-        setImage(icon);
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
-        setWeapon(0);
-        setMaxHealth(200);
-        setHealth(200);//testing with default for now
+        SetPanelWidth(panelWidth);
+        SetPanelHeight(panelHeight);
+        SetX(panelWidth / 2 - icon.getIconWidth() / 2);
+        SetY(panelHeight - icon.getIconHeight());
+        SetImage(icon);
+        SetWidth(icon.getIconWidth());
+        SetHeight(icon.getIconHeight());
+        SetWeapon(0);
+        SetMaxHealth(200);
+        SetHealth(200);//testing with default for now
     }
 
-    public ArrayList<Projectile> getProjectiles() {
-        return projectiles;
+    public ArrayList<Projectile> GetProjectiles() {
+        return mProjectiles;
     }
 
-    public void update() {
-        for (int i = 0; i < projectiles.size(); i++) {
-            Projectile shot = projectiles.get(i);
-            shot.move();
-            if (shot.getY() + shot.getHeight() <= 0) {
-                projectiles.remove(i);
+    public void Update() {
+        for (int i = 0; i < mProjectiles.size(); i++) {
+            Projectile shot = mProjectiles.get(i);
+            shot.Move();
+            if (shot.GetY() + shot.GetHeight() <= 0) {
+                mProjectiles.remove(i);
                 i--;
             }
         }
 
-        shootCheck();
-        moveCheck();
+        ShootCheck();
+        MoveCheck();
     }
 
-    public void setMoveLeft(boolean moveLeft) {
-        this.moveLeft = moveLeft;
+    public final void SetMoveLeft(boolean aMoveLeft) {
+        mMoveLeft = aMoveLeft;
     }
 
-    public void setMoveRight(boolean moveRight) {
-        this.moveRight = moveRight;
+    public final void SetMoveRight(boolean aMoveRight) {
+        mMoveRight = aMoveRight;
     }
 
-    public void setMoveUp(boolean moveUp) {
-        this.moveUp = moveUp;
+    public final void SetMoveUp(boolean aMoveUp) {
+        mMoveUp = aMoveUp;
     }
 
-    public void setMoveDown(boolean moveDown) {
-        this.moveDown = moveDown;
+    public final void SetMoveDown(boolean aMoveDown) {
+        mMoveDown = aMoveDown;
     }
 
-    public void setSpeed(boolean speed) {
-        this.speed = speed;
+    public final void SetSpeed(boolean aSpeed) {
+        mSpeed = aSpeed;
     }
 
-    public void setShooting(boolean shooting) {
-        this.shooting = shooting;
+    public final void SetShooting(boolean aShooting) {
+        mShooting = aShooting;
     }
 
-    public int[] getWeaponAmmo() {
-        return weaponAmmo;
+    public final int[] GetWeaponAmmo() {
+        return mWeaponAmmo;
     }
 
-    public void shootCheck() {
-        if (shooting) {
-            if (shotDelay == 0) {
-                shootProjectile();
-                shotDelay = 5;
+    public void ShootCheck() {
+        if (mShooting) {
+            if (mShotDelay == 0) {
+                ShootProjectile();
+                mShotDelay = 5;
             }
-            shotDelay--;
+            mShotDelay--;
         } else {
-            shotDelay = 0;
+            mShotDelay = 0;
         }
         
-        if (weaponDelay > 0){
-            weaponDelay--;
+        if (mWeaponDelay > 0){
+            mWeaponDelay--;
         }
     }
 
-    public void moveCheck() {
-        if (moveLeft && !moveRight) {
-            setX((int)(getX() - (speed ? 6.5 : 4.0)));
-            if (getX() <= 0) {
-                setX(0);
+    public void MoveCheck() {
+        if (mMoveLeft && !mMoveRight) {
+            SetX((int)(GetX() - (mSpeed ? 6.5 : 4.0)));
+            if (GetX() <= 0) {
+                SetX(0);
             }
-        } else if (moveRight && !moveLeft) {
-            setX(getX() + (speed ? 7 : 4));
-            if (getX() >= getPanelWidth() - getWidth()) {
-                setX(getPanelWidth() - getWidth());
+        } else if (mMoveRight && !mMoveLeft) {
+            SetX(GetX() + (mSpeed ? 7 : 4));
+            if (GetX() >= GetPanelWidth() - GetWidth()) {
+                SetX(GetPanelWidth() - GetWidth());
             }
         }
 
-        if (moveUp && !moveDown) {
-            setY(getY() - (speed ? 7 : 4));
-            if (getY() <= 3 * getPanelHeight() / 5) {
-                setY(3 * getPanelHeight() / 5);
+        if (mMoveUp && !mMoveDown) {
+            SetY(GetY() - (mSpeed ? 7 : 4));
+            if (GetY() <= 3 * GetPanelHeight() / 5) {
+                SetY(3 * GetPanelHeight() / 5);
             }
-        } else if (moveDown && !moveUp) {
-            setY(getY() + (speed ? 7 : 4));
-            if (getY() >= getPanelHeight() - getHeight()) {
-                setY(getPanelHeight() - getHeight());
+        } else if (mMoveDown && !mMoveUp) {
+            SetY(GetY() + (mSpeed ? 7 : 4));
+            if (GetY() >= GetPanelHeight() - GetHeight()) {
+                SetY(GetPanelHeight() - GetHeight());
             }
         }
     }
 
-    public void shootProjectile() {
-        projectiles.add(new Projectile(getX() + (getWidth() / 2), getY(), true));
-        Logger.playerShots++;
+    protected void ShootProjectile() {
+        mProjectiles.add(new Projectile(GetX() + (GetWidth() / 2), GetY(), true));
+        Logger.mPlayerShots++;
     }
 
-    public void shootWeapon() {
+    public void ShootWeapon() {
         //if boomer
-        if(getWeapon() == 4){
-            for(int i = 0; i < projectiles.size(); i++){
-                if(projectiles.get(i) instanceof Boomer){
-                    if(weaponDelay == 0){
-                        ((Boomer) projectiles.get(i)).detonate();
-                        projectiles.remove(i);
-                        Logger.playerHits++;
+        if(GetWeapon() == 4){
+            for(int i = 0; i < mProjectiles.size(); i++){
+                if(mProjectiles.get(i) instanceof Boomer){
+                    if(mWeaponDelay == 0){
+                        ((Boomer) mProjectiles.get(i)).Detonate();
+                        mProjectiles.remove(i);
+                        Logger.mPlayerHits++;
                         i--;
                     }
                     
@@ -150,27 +150,27 @@ public class Player extends Ship {
                 }
             }
             
-            weaponDelay = 100;
+            mWeaponDelay = 100;
         }
-        if (weaponAmmo[getWeapon()] > 0) {
-            if(getWeapon() == 5){
-                GameField.projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
+        if (mWeaponAmmo[GetWeapon()] > 0) {
+            if(GetWeapon() == 5){
+                GameField.mProjectiles.addAll(WeaponData.GetWeaponInfo().getShot(GetWeapon(), GetX() + (GetWidth() / 2), GetY(), true));
             } else {
-                projectiles.addAll(Weapon.getShot(getWeapon(), getX() + (getWidth() / 2), getY(), true));
+                mProjectiles.addAll(WeaponData.GetWeaponInfo().getShot(GetWeapon(), GetX() + (GetWidth() / 2), GetY(), true));
             }
-            weaponAmmo[getWeapon()]--;
+            mWeaponAmmo[GetWeapon()]--;
             
-            if(weaponAmmo[getWeapon()] == 0){
-                shiftWeapon(true);
+            if(mWeaponAmmo[GetWeapon()] == 0){
+                ShiftWeapon(true);
             }
         }
     }
 
     @Override
-    public boolean isHit(Entity entity) {
-        int xpoints[] = {getX(), getX() + getWidth(), getX() + getWidth() / 2};
-        int ypoints[] = {getY() + getHeight(), getY() + getHeight(), getY()};
-        return new Polygon(xpoints, ypoints, 3).intersects(entity.getBoundingBox());
+    public boolean IsHit(Entity entity) {
+        int xpoints[] = {GetX(), GetX() + GetWidth(), GetX() + GetWidth() / 2};
+        int ypoints[] = {GetY() + GetHeight(), GetY() + GetHeight(), GetY()};
+        return new Polygon(xpoints, ypoints, 3).intersects(entity.GetBoundingBox());
     }
 
     /**
@@ -178,60 +178,56 @@ public class Player extends Ship {
      * @return 0 - if nothing, 1 - if killed
      */
     @Override
-    public boolean takeDamage(int damage) {
-        //setHealth(getHealth() - damage);
-        alterHealth(damage);
-        //if (getHealth() < 0) {
-        //    setHealth(0);
-        //}
+    public boolean TakeDamage(int damage) {
+        AlterHealth(damage);
 
-        return getHealth() <= 0;
+        return GetHealth() <= 0;
     }
 
-    public void shiftWeapon(boolean right) {
+    public void ShiftWeapon(boolean right) {
         if (right) {
-            setWeapon(getWeapon() + 1);
-            if (getWeapon() >= Weapon.getNumWeapons()) {
-                setWeapon(0);
+            SetWeapon(GetWeapon() + 1);
+            if (GetWeapon() >= WeaponData.GetWeaponInfo().GetNumWeapons()) {
+                SetWeapon(0);
             }
         } else {
-            setWeapon(getWeapon() - 1);
-            if (getWeapon() <= -1) {
-                setWeapon(Weapon.getNumWeapons() - 1);
+            SetWeapon(GetWeapon() - 1);
+            if (GetWeapon() <= -1) {
+                SetWeapon(WeaponData.GetWeaponInfo().GetNumWeapons() - 1);
             }
         }
         
-        if(weaponAmmo[getWeapon()] == 0 && getWeapon() != 0){
-            shiftWeapon(right);
+        if(mWeaponAmmo[GetWeapon()] == 0 && GetWeapon() != 0){
+            ShiftWeapon(right);
         }
     }
 
-    public void collect(int type, Class className) {
+    public void Collect(int type, Class className) {
         if(className == Ammo.class){
-            if(weaponAmmo[type] <= 0){
-                setWeapon(type);
+            if(mWeaponAmmo[type] <= 0){
+                SetWeapon(type);
             }
         
-            weaponAmmo[type] += Weapon.getReload(type);
-            if (weaponAmmo[type] > Weapon.getMax(type)) {
-                weaponAmmo[type] = Weapon.getMax(type);
+            mWeaponAmmo[type] += WeaponData.GetWeaponInfo().GetReload(type);
+            if (mWeaponAmmo[type] > WeaponData.GetWeaponInfo().GetMax(type)) {
+                mWeaponAmmo[type] = WeaponData.GetWeaponInfo().GetMax(type);
             }
         } else {
             //int health = getHealth()+50;
             //setHealth(health < 200 ? health : 200);
-            alterHealth(50);
-            Logger.healingReceived += 50;
+            AlterHealth(50);
+            Logger.mHealingReceived += 50;
         }
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void Draw(Graphics g) {
         //draw projectiles
-        for (Projectile shot : projectiles) {
-            g.drawImage(shot.getImageIcon().getImage(), shot.getX(), shot.getY(), null);
+        for (Projectile shot : mProjectiles) {
+            g.drawImage(shot.GetImageIcon().getImage(), shot.GetX(), shot.GetY(), null);
         }
 
         //draw self
-        g.drawImage(getImageIcon().getImage(), getX(), getY(), null);
+        g.drawImage(GetImageIcon().getImage(), GetX(), GetY(), null);
     }
 }

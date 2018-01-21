@@ -9,40 +9,40 @@ import javax.swing.ImageIcon;
  *
  * @author Kurt
  */
-public class Projectile extends Entity{
-    private int damage = Weapon.getDamage(0), weaponTypeIndex = 0;
+public class Projectile extends Entity {
+    private int mDamage = WeaponData.GetWeaponInfo().GetDamage(0), mWeaponTypeIndex = 0;
     
     public Projectile(int x, int y, boolean up){
         ImageIcon icon = new ImageIcon("images/Projectile.gif");
         
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
-        setX(x-(getWidth()/2));
-        setY(y);
-        setRun(0);
-        setRise(up ? -10 : 10);
-        setImage(icon);
+        SetWidth(icon.getIconWidth());
+        SetHeight(icon.getIconHeight());
+        SetX(x-(GetWidth()/2));
+        SetY(y);
+        SetRun(0);
+        SetRise(up ? -10 : 10);
+        SetImage(icon);
         //setType(0);
         //setDamage(weapon.getDamage(getType()));
     }
     
-    public void setDamage(int damage){
-        this.damage = damage;
+    public final void SetDamage(int damage){
+        mDamage = damage;
     }
     
-    public void setWeaponTypeIndex(int type){
-        this.weaponTypeIndex = type;
+    public final void SetWeaponTypeIndex(int type){
+        mWeaponTypeIndex = type;
     }
     
-    public int getDamage(){
-        return damage;
+    public final int GetDamage(){
+        return mDamage;
     }
     
-    public int getWeaponTypeIndex(){
-        return weaponTypeIndex;
+    public final int GetWeaponTypeIndex(){
+        return mWeaponTypeIndex;
     }
     
-    public Point getCenter(){
-        return new Point(getX()+getWidth()/2, getY()+getHeight()/2);
+    public Point GetCenter(){
+        return new Point(GetX()+GetWidth()/2, GetY()+GetHeight()/2);
     }
 }

@@ -11,5 +11,5 @@ import java.util.ArrayList;
  * @author Kurt
  */
 public interface ShotCallback {
-    public ArrayList<Projectile> getShot(int x, int y, boolean up);
+    public ArrayList<Projectile> GetShot(int x, int y, boolean up);
 }

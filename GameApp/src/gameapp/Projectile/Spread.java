@@ -12,13 +12,13 @@ public class Spread extends Projectile{
         super(x, y, up);
         ImageIcon icon = new ImageIcon("images/BurstShot.gif");
         
-        setImage(icon);
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
-        setWeaponTypeIndex(3);
+        SetImage(icon);
+        SetWidth(icon.getIconWidth());
+        SetHeight(icon.getIconHeight());
+        SetWeaponTypeIndex(3);
 
-        setRun(run);
-        setRise(up ? (-1*rise) : rise);
-        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
+        SetRun(run);
+        SetRise(up ? (-1*rise) : rise);
+        SetDamage(WeaponData.GetWeaponInfo().GetDamage(GetWeaponTypeIndex()));
     }
 }

@@ -13,14 +13,14 @@ public class Burst extends Projectile{
         super(x, y, up);
         ImageIcon icon = new ImageIcon("images/BurstShot.gif");
         
-        setX(getX() + ((int) (Math.random() * 20.0)) - 10);
-        setY(getY() + ((int) (Math.random() * 30.0)) - 15);
-        setImage(icon);
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
-        setWeaponTypeIndex(1);
+        SetX(GetX() + ((int) (Math.random() * 20.0)) - 10);
+        SetY(GetY() + ((int) (Math.random() * 30.0)) - 15);
+        SetImage(icon);
+        SetWidth(icon.getIconWidth());
+        SetHeight(icon.getIconHeight());
+        SetWeaponTypeIndex(1);
 
-        setRise(up ? -8 : 8);
-        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
+        SetRise(up ? -8 : 8);
+        SetDamage(WeaponData.GetWeaponInfo().GetDamage(GetWeaponTypeIndex()));
     }
 }

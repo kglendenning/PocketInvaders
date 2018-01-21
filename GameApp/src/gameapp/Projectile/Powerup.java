@@ -8,48 +8,48 @@ import java.awt.Point;
  * @author Kurt
  */
 public class Powerup extends Entity{
-    private int acceleration, type, timer;
+    private int mAcceleration, mType, mTimer;
     
     public Powerup(Point center){
-        setX(center.x);
-        setY(center.y);
-        setRise(-2);
-        setRun(1);
-        setAcceleration(1);
-        setTimer(5);
+        SetX(center.x);
+        SetY(center.y);
+        SetRise(-2);
+        SetRun(1);
+        SetAcceleration(1);
+        SetTimer(5);
     }
     
-    public void setAcceleration(int acceleration){
-        this.acceleration = acceleration;
+    public final void SetAcceleration(int acceleration){
+        mAcceleration = acceleration;
     }
     
-    public void setType(int type){
-        this.type = type;
+    public final void SetType(int type){
+        mType = type;
     }
     
-    public void setTimer(int timer){
-        this.timer = timer;
+    public final void SetTimer(int timer){
+        mTimer = timer;
     }
     
-    public int getAcceleration(){
-        return acceleration;
+    public final int GetAcceleration(){
+        return mAcceleration;
     }
     
-    public int getType(){
-        return type;
+    public final int GetType(){
+        return mType;
     }
     
-    public int getTimer(){
-        return timer;
+    public final int GetTimer(){
+        return mTimer;
     }
     
-    public void update() {
-        move();
+    public void Update() {
+        Move();
         
-        timer--;
-        if(timer == 0){
-            setRise(getRise() + acceleration);
-            timer = 5;
+        mTimer--;
+        if(mTimer == 0){
+            SetRise(GetRise() + mAcceleration);
+            mTimer = 5;
         }
     }
 }

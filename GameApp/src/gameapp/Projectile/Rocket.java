@@ -7,47 +7,47 @@ import javax.swing.ImageIcon;
  * @author Kurt
  */
 public class Rocket extends Projectile {
-    public int acceleration, limit = 5;
+    public int mAcceleration, mLimit = 5;
     
     public Rocket(int x, int y, boolean up){
         super(x, y, up);
         ImageIcon icon = new ImageIcon("images/Rocket.jpg");
         
-        setImage(icon);
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
+        SetImage(icon);
+        SetWidth(icon.getIconWidth());
+        SetHeight(icon.getIconHeight());
 
-        setRise(up ? -3 : 3);
+        SetRise(up ? -3 : 3);
         //setLimit(5);
-        setWeaponTypeIndex(2);
-        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
-        setAcceleration(up ? -1 : 1);
+        SetWeaponTypeIndex(2);
+        SetDamage(WeaponData.GetWeaponInfo().GetDamage(GetWeaponTypeIndex()));
+        SetAcceleration(up ? -1 : 1);
     }
     
-    public void setLimit(int limit){
-        this.limit = limit;
+    public final void SetLimit(int limit){
+        this.mLimit = limit;
     }
     
-    public void setAcceleration(int acceleration){
-        this.acceleration = acceleration;
+    public final void SetAcceleration(int acceleration){
+        this.mAcceleration = acceleration;
     }
     
-    public int getLimit(){
-        return limit;
+    public final int GetLimit(){
+        return mLimit;
     }
     
-    public int getAcceleration(){
-        return acceleration;
+    public final int GetAcceleration(){
+        return mAcceleration;
     }
     
     @Override
-    public void move(){
-        super.move();
+    public void Move(){
+        super.Move();
         
-        limit--;
-        if(limit == 0){
-            setLimit(5);
-            setRise(getRise()+getAcceleration());
+        mLimit--;
+        if(mLimit == 0){
+            SetLimit(5);
+            SetRise(GetRise()+GetAcceleration());
         }
     }
 }

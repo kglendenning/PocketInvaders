@@ -15,9 +15,9 @@ public class Ammo extends Powerup{
     public Ammo(Point center, int type){
         super(center);
         
-        setType(type);
-        setImage(new ImageIcon("images/"+Weapon.getWeaponName(type)+"Icon.jpg"));
-        setWidth(getImageIcon().getIconWidth());
-        setHeight(getImageIcon().getIconHeight());
+        SetType(type);
+        SetImage(new ImageIcon("images/"+WeaponData.GetWeaponInfo().GetWeaponName(type)+"Icon.jpg"));
+        SetWidth(GetImageIcon().getIconWidth());
+        SetHeight(GetImageIcon().getIconHeight());
     }
 }

@@ -1,8 +1,6 @@
 
 package gameapp.General;
 
-import gameapp.Enemy.Enemy;
-import gameapp.Projectile.Projectile;
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -11,94 +9,92 @@ import java.awt.Rectangle;
  * @author Kurt
  */
 public class Ship extends Entity{
-    private int health, maxHealth, weapon, weaponCallbackIndex;
-    private boolean hasDrop;
-    private String drop;
+    protected int mHealth, mMaxHealth, mWeapon, mWeaponCallbackIndex;
+    private boolean mHasDrop;
+    private String mDrop;
     
     public Ship(){
-        //int randX = (int) (Math.random() * 1200);
-        //int randY = (int) (Math.random() * 800);
-        setX(0);
-        setY(0);
+        SetX(0);
+        SetY(0);
     }
     
     public Ship(int x, int y){
-        setX(x);
-        setY(y);
+        SetX(x);
+        SetY(y);
     }
     
-    public void setWeaponCallbackIndex(int index){
-        this.weaponCallbackIndex = index;
+    public final void SetWeaponCallbackIndex(int aIndex){
+        this.mWeaponCallbackIndex = aIndex;
     }
     
-    public void setWeapon(int weapon){
-        this.weapon = weapon;
+    public final void SetWeapon(int aWeapon){
+        mWeapon = aWeapon;
     }
     
-    public void setHealth(int health){
-        this.health = health;
+    public final void SetHealth(int aHealth){
+        mHealth = aHealth;
     }
     
-    public void setMaxHealth(int health){
-        this.maxHealth = health;
+    public final void SetMaxHealth(int aHealth){
+        mMaxHealth = aHealth;
     }
     
-    public void setHasDrop(boolean hasDrop){
-        this.hasDrop = hasDrop;
+    public final void SetHasDrop(boolean aHasDrop){
+        mHasDrop = aHasDrop;
+    }
+    
+    public final void SetDrop(String aDrop){
+        mDrop = aDrop;
     }
             
-    public boolean getHasDrop(){
-        return this.hasDrop;
-    }
-    
-    public void setDrop(String drop){
-        this.drop=drop;
+    public final boolean GetHasDrop(){
+        return mHasDrop;
     }
         
-    public String getDrop(){
-        return this.drop;
+    public final String GetDrop(){
+        return mDrop;
     }
       
-    public int getWeaponCallbackIndex(){
-        return weaponCallbackIndex;
+    public final int GetWeaponCallbackIndex(){
+        return mWeaponCallbackIndex;
     }
     
-    public int getWeapon(){
-        return weapon;
+    public final int GetWeapon(){
+        return mWeapon;
     }
     
-    public int getHealth(){
-        return health;
+    public final int GetHealth(){
+        return mHealth;
     }
     
-    public int getMaxHealth(){
-        return maxHealth;
+    public final int GetMaxHealth(){
+        return mMaxHealth;
     }
     
-    public Point getCenter(){
-        return new Point(getX()+getWidth()/2, getY()+getHeight()/2);
+    public Point GetCenter(){
+        return new Point(GetX()+GetWidth()/2, GetY()+GetHeight()/2);
     }
     
-    public boolean isHit(Entity entity){
-        return new Rectangle(getX(), getY(), getWidth(), getHeight()).intersects(entity.getBoundingBox());
+    public boolean IsHit(Entity entity){
+        return new Rectangle(GetX(), GetY(), GetWidth(), GetHeight()).intersects(entity.GetBoundingBox());
     }
     
     //easier to assume positive param is damage for now
-    public void alterHealth(int damage){
-        setHealth(getHealth() - damage);
-        if (getHealth() < 0) {
-            setHealth(0);
-        } else if(getHealth() > getMaxHealth()) {
-            setHealth(getMaxHealth());
+    public void AlterHealth(int damage){
+        SetHealth(GetHealth() - damage);
+        if (GetHealth() < 0) {
+            SetHealth(0);
+        } else if(GetHealth() > GetMaxHealth()) {
+            SetHealth(GetMaxHealth());
         }
     }
     
     /**
-     * @param damage Damage of projectile
+     * @param aDamage Damage of projectile
      * @return 0 - if nothing, 1 - if killed
      */
-    public boolean takeDamage(int damage){
-        health -= damage;
-        return health <= 0;
+    public boolean TakeDamage(int aDamage){
+        mHealth -= aDamage;
+        return mHealth <= 0;
     }
 }

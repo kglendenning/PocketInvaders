@@ -1,85 +1,110 @@
-
 package gameapp.Projectile;
 
-import gameapp.Effect.Explosion;
 import gameapp.Effect.Effect;
+import gameapp.Effect.Explosion;
 import gameapp.Effect.LongExplosion;
 import gameapp.General.Logger;
 import java.util.ArrayList;
 
 /**
+ *
  * @author Kurt
  */
 public class Weapon {
-    private static final String[] NAME = {"", "Burst", "Rocket", "Spread", "Boomer", "Repair"};
-    private static final int[] DAMAGE = {20, 35, 150, 35, 1, -50};
-    private static final int[] MAX = {0, 25, 15, 20, 5, 3};
-    private static final int[] RELOAD = {0, 10, 5, 6, 2, 1};
-    private static final int[] EFFECT = {0, 0, 2, 0, 3, 0};
-    private static final ArrayList<ShotCallback> shotCallbacks = new ArrayList<>();
-    
-    public static String getWeaponName(int type){
-        return NAME[type];
+    private class WeaponInfo {
+        public WeaponInfo(String name, int damage, int maxLoad, int reloadCount, int effectIndex) {
+            mName = name;
+            mDamage = damage;
+            mMaxLoad = maxLoad;
+            mReloadCount = reloadCount;
+            mEffect = effectIndex;
+        }
+
+        String mName;
+        int mDamage;
+        int mMaxLoad;
+        int mReloadCount;
+        int mEffect;
     }
-    
-    public static int getDamage(int type){
-        return DAMAGE[type];
+
+    private final ArrayList<WeaponInfo> mWeaponInfo;
+    private final ArrayList<ShotCallback> mShotCallbacks;
+
+    public Weapon() {
+        mWeaponInfo = new ArrayList<>();
+
+        mWeaponInfo.add(new WeaponInfo("", 20, 0, 0, 0));
+        mWeaponInfo.add(new WeaponInfo("Burst", 35, 25, 10, 0));
+        mWeaponInfo.add(new WeaponInfo("Rocket", 150, 15, 5, 1));
+        mWeaponInfo.add(new WeaponInfo("Spread", 35, 20, 6, 0));
+        mWeaponInfo.add(new WeaponInfo("Boomer", 1, 5, 2, 2));
+        mWeaponInfo.add(new WeaponInfo("Repair", -50, 3, 1, 0));
+
+        mShotCallbacks = new ArrayList<>();
     }
-    
-    public static int getMax(int type){
-        return MAX[type];
+
+    public String GetWeaponName(int type) {
+        return mWeaponInfo.get(type).mName;
     }
-    
-    public static int getReload(int type){
-        return RELOAD[type];
+
+    public int GetDamage(int type) {
+        return mWeaponInfo.get(type).mDamage;
     }
-    
-    public static int getEffect(int type){
-        return EFFECT[type];
-    };
-    
-    public static int getNumWeapons(){
-        return NAME.length;
+
+    public int GetMax(int type) {
+        return mWeaponInfo.get(type).mMaxLoad;
     }
-    
-    public static Effect getEffect(Projectile projectile){
-        switch (EFFECT[projectile.getWeaponTypeIndex()]){
+
+    public int GetReload(int type) {
+        return mWeaponInfo.get(type).mReloadCount;
+    }
+
+    public int GetEffect(int type) {
+        return mWeaponInfo.get(type).mEffect;
+    }
+
+    public int GetNumWeapons() {
+        return mWeaponInfo.size();
+    }
+
+    public Effect getEffect(Projectile projectile) {
+        switch (mWeaponInfo.get(projectile.GetWeaponTypeIndex()).mEffect) {
             case 1:
-                return new Effect(projectile);
-            case 2:
                 return new Explosion(projectile);
-            case 3:
+            case 2:
                 return new LongExplosion(projectile);
             default:
                 return new Effect(projectile);
         }
     }
-    
+
     //add a weapon to the list dynamically
-    public static int addShotCallback(ShotCallback callback){
-        shotCallbacks.add(callback);
-        return shotCallbacks.indexOf(callback);
+    public int addShotCallback(ShotCallback callback) {
+        mShotCallbacks.add(callback);
+        return mShotCallbacks.indexOf(callback);
     }
-    
-    public static ArrayList<Projectile> getShot(int type, int x, int y, boolean up){
+
+    public ArrayList<Projectile> getShot(int type, int x, int y, boolean up) {
         ArrayList<Projectile> weaponShots = new ArrayList<>();
-        
-        switch (type){
+
+        switch (type) {
             case 1:
                 weaponShots.add(new Burst(x, y, up));
                 weaponShots.add(new Burst(x, y, up));
                 weaponShots.add(new Burst(x, y, up));
-                if(up)
-                    Logger.playerShots += 3;
-                else 
-                    Logger.enemyShotsFired += 3;
+                if (up) {
+                    Logger.mPlayerShots += 3;
+                } else {
+                    Logger.mEnemyShotsFired += 3;
+                }
                 break;
             case 2:
                 weaponShots.add(new Rocket(x, y, up));
-                if(up)
-                    Logger.playerShots++;
-                else
-                    Logger.enemyShotsFired++;
+                if (up) {
+                    Logger.mPlayerShots++;
+                } else {
+                    Logger.mEnemyShotsFired++;
+                }
                 break;
             case 3:
                 weaponShots.add(new Spread(x, y, -1.0, 7.0, up));
@@ -87,27 +112,29 @@ public class Weapon {
                 weaponShots.add(new Spread(x, y, 0.0, 8.0, up));
                 weaponShots.add(new Spread(x, y, 2.0, 6.0, up));
                 weaponShots.add(new Spread(x, y, 1.0, 7.0, up));
-                if(up)
-                    Logger.playerShots += 5;
-                else 
-                    Logger.enemyShotsFired += 5;
+                if (up) {
+                    Logger.mPlayerShots += 5;
+                } else {
+                    Logger.mEnemyShotsFired += 5;
+                }
                 break;
             case 4:
                 weaponShots.add(new Boomer(x, y, up));
-                if(up)
-                    Logger.playerShots++;
-                else
-                    Logger.enemyShotsFired++;
+                if (up) {
+                    Logger.mPlayerShots++;
+                } else {
+                    Logger.mEnemyShotsFired++;
+                }
                 break;
             case 5:
                 weaponShots.add(new Repair(x, y, up));
                 break;
         }
-        
+
         return weaponShots;
     }
-    
-    public static ArrayList<Projectile> getCallbackShot(int index, int x, int y, boolean up){
-        return shotCallbacks.get(index).getShot(x, y, up);
+
+    public ArrayList<Projectile> getCallbackShot(int index, int x, int y, boolean up) {
+        return mShotCallbacks.get(index).GetShot(x, y, up);
     }
 }

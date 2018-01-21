@@ -1,7 +1,7 @@
 
 package gameapp.Projectile;
 
-import java.awt.Point;
+import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
 /**
@@ -11,14 +11,13 @@ import javax.swing.ImageIcon;
 public class Repair extends Projectile {
     public Repair(int x, int y, boolean up) {
         super(x, y, up);
-        ImageIcon icon = new ImageIcon("images/InvisibleShot.gif");
         
-        setImage(icon);
-        setWidth(icon.getIconWidth());
-        setHeight(icon.getIconHeight());
-        setWeaponTypeIndex(5);
+        SetWeaponTypeIndex(5);
 
-        setRise(up ? 20 : -20);
-        setDamage(Weapon.getDamage(getWeaponTypeIndex()));
+        SetRise(up ? 20 : -20);
+        SetDamage(WeaponData.GetWeaponInfo().GetDamage(GetWeaponTypeIndex()));
     }
+    
+    @Override
+    public void Draw(Graphics g) {}
 }

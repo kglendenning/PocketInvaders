@@ -10,56 +10,56 @@ import java.awt.Point;
 /**
  * @author Kurt
  */
-public class Effect extends Entity{
-    private int timer = 3, damage;
-    private boolean harmful = false;
+public class Effect extends Entity {
+    private int mTimer = 3, mDamage;
+    private boolean mHarmful = false;
     
     public Effect(Projectile projectile){
-        Point center = projectile.getCenter();
+        Point center = projectile.GetCenter();
         
-        setX(center.x);
-        setY(center.y);
-        setWidth(10);
-        setHeight(10);
+        SetX(center.x);
+        SetY(center.y);
+        SetWidth(10);
+        SetHeight(10);
         //setHarmful(false);
         //setTimer(3);
     }
     
-    public void setTimer(int timer){
-        this.timer = timer;
+    public final void SetTimer(int timer){
+        mTimer = timer;
     }
     
-    public void setHarmful(boolean harmful){
-        this.harmful = harmful;
+    public final void SetHarmful(boolean harmful){
+        this.mHarmful = harmful;
     }
     
-    public void setDamage(int damage){
-        this.damage = damage;
+    public final void SetDamage(int damage){
+        mDamage = damage;
     }
     
-    public int getTimer(){
-        return timer;
+    public final int GetTimer(){
+        return mTimer;
     }
     
-    public boolean isHarmful(){
-        return harmful;
+    public final boolean IsHarmful(){
+        return mHarmful;
     }
     
-    public int getDamage(){
-        return damage;
+    public final int GetDamage(){
+        return mDamage;
     }
     
     /**
      * @return 0 - if not finished, 1 - if finished
      */
-    public int update(){
-        timer--;
-        return timer <= 0 ? 1 : 0;
+    public int Update(){
+        mTimer--;
+        return mTimer <= 0 ? 1 : 0;
     }
     
     @Override
-    public void draw(Graphics g){
+    public void Draw(Graphics g){
         g.setColor(Color.ORANGE);
-        g.fillOval(getX()-(getWidth())/2, getY()-(getHeight())/2, getWidth(), getHeight());
+        g.fillOval(GetX()-(GetWidth())/2, GetY()-(GetHeight())/2, GetWidth(), GetHeight());
     }
 }

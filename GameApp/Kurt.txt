@@ -1,5 +1,4 @@
 player death
-player repair powerup
 duration powerup (improved standard attack power)
 
 sticky bomb

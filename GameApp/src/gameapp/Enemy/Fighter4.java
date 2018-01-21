@@ -18,14 +18,14 @@ public class Fighter4 extends Enemy {
     }
     
     @Override
-    public boolean isHit(Entity entity){
-        return new Rectangle(getX(), getY()+getHeight()/4, getWidth(), getHeight()/2).intersects(entity.getBoundingBox());
+    public boolean IsHit(Entity entity){
+        return new Rectangle(GetX(), GetY()+GetHeight()/4, GetWidth(), GetHeight()/2).intersects(entity.GetBoundingBox());
     }
     
     @Override
-    public void shootProjectile(){
-        GameField.projectiles.add(new Projectile(getX(), getY()+getHeight(), false));
-        GameField.projectiles.add(new Projectile(getX()+getWidth(), getY()+getHeight(), false));
-        Logger.enemyShotsFired += 2;
+    public void ShootProjectile(){
+        GameField.mProjectiles.add(new Projectile(GetX(), GetY()+GetHeight(), false));
+        GameField.mProjectiles.add(new Projectile(GetX()+GetWidth(), GetY()+GetHeight(), false));
+        Logger.mEnemyShotsFired += 2;
     }
 }

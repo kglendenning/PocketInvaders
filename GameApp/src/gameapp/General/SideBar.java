@@ -1,6 +1,6 @@
 package gameapp.General;
 
-import gameapp.Projectile.Weapon;
+import gameapp.Projectile.WeaponData;
 import gameapp.Enemy.Enemy;
 import gameapp.Player.Player;
 import java.awt.Color;
@@ -15,67 +15,67 @@ import javax.swing.JPanel;
  */
 public class SideBar extends JPanel {
 
-    public Section top, upper, lower, bottom;
-    public JLabel ammoLabel, healthLabel, weaponLabel, targetLabel;
-    public ImageIcon weaponIcon, left, right;
-    public int health, maxHealth, targetHealth, targetMaxHealth;
+    public Section mTop, mUpper, mLower, mBottom;
+    public JLabel mAmmoLabel, mHealthLabel, mWeaponLabel, mTargetLabel;
+    public ImageIcon mWeaponIcon, mLeft, mRight;
+    public int mHealth, mMaxHealth, mTargetHealth, mTargetMaxHealth;
 
     public SideBar() {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        top = new Section(); upper = new Section(); lower = new Section(); bottom = new Section();
-        lower.setLeft(new ImageIcon("images/Left.jpg")); lower.setMiddle(new ImageIcon("images/BigBurstIcon.jpg")); lower.setRight(new ImageIcon("images/Right.jpg"));
-        ammoLabel = new JLabel(); healthLabel = new JLabel(); weaponLabel = new JLabel(); targetLabel = new JLabel();
+        mTop = new Section(); mUpper = new Section(); mLower = new Section(); mBottom = new Section();
+        mLower.SetLeft(new ImageIcon("images/Left.jpg")); mLower.SetMiddle(new ImageIcon("images/BigBurstIcon.jpg")); mLower.SetRight(new ImageIcon("images/Right.jpg"));
+        mAmmoLabel = new JLabel(); mHealthLabel = new JLabel(); mWeaponLabel = new JLabel(); mTargetLabel = new JLabel();
         
-        ammoLabel.setFont(new Font("Serif", Font.BOLD, 40));
-        healthLabel.setFont(new Font("Serif", Font.BOLD, 50));
-        weaponLabel.setFont(new Font("Serif", Font.PLAIN, 40));
-        targetLabel.setFont(new Font("Serif", Font.BOLD, 30));
-        top.setLayout(null);
-        healthLabel.setBounds(25, 20, 200, 50);
-        targetLabel.setBounds(25, 130, 200, 30);
+        mAmmoLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        mHealthLabel.setFont(new Font("Serif", Font.BOLD, 50));
+        mWeaponLabel.setFont(new Font("Serif", Font.PLAIN, 40));
+        mTargetLabel.setFont(new Font("Serif", Font.BOLD, 30));
+        mTop.setLayout(null);
+        mHealthLabel.setBounds(25, 20, 200, 50);
+        mTargetLabel.setBounds(25, 130, 200, 30);
         
-        ammoLabel.setForeground(Color.ORANGE);
-        healthLabel.setForeground(Color.ORANGE);
-        weaponLabel.setForeground(Color.ORANGE);
-        targetLabel.setForeground(Color.ORANGE);
+        mAmmoLabel.setForeground(Color.ORANGE);
+        mHealthLabel.setForeground(Color.ORANGE);
+        mWeaponLabel.setForeground(Color.ORANGE);
+        mTargetLabel.setForeground(Color.ORANGE);
         
-        top.setTop();
-        add(top);
-        add(upper);
-        add(lower);
-        add(bottom);
+        mTop.SetTop();
+        add(mTop);
+        add(mUpper);
+        add(mLower);
+        add(mBottom);
 
-        top.add(healthLabel);
-        top.add(targetLabel);
-        upper.add(weaponLabel);
-        bottom.add(ammoLabel);
+        mTop.add(mHealthLabel);
+        mTop.add(mTargetLabel);
+        mLower.add(mWeaponLabel);
+        mBottom.add(mAmmoLabel);
     }
 
-    public void update(Player player, Enemy target) {
-        health = player.getHealth();
-        maxHealth = player.getMaxHealth();
+    public void Update(Player player, Enemy target) {
+        mHealth = player.GetHealth();
+        mMaxHealth = player.GetMaxHealth();
         if(target != null){
-            targetHealth = target.getHealth();
-            targetMaxHealth = target.getMaxHealth();
+            mTargetHealth = target.GetHealth();
+            mTargetMaxHealth = target.GetMaxHealth();
         }
         
-        healthLabel.setText("" + health + "/" + maxHealth);
-        ammoLabel.setText("" + player.getWeaponAmmo()[player.getWeapon()]);
-        weaponLabel.setText(Weapon.getWeaponName(player.getWeapon()));
-        if(targetHealth > 0){
-            targetLabel.setText("Target");
-            top.target = true;
+        mHealthLabel.setText("" + mHealth + "/" + mMaxHealth);
+        mAmmoLabel.setText("" + player.GetWeaponAmmo()[player.GetWeapon()]);
+        mWeaponLabel.setText(WeaponData.GetWeaponInfo().GetWeaponName(player.GetWeapon()));
+        if(mTargetHealth > 0){
+            mTargetLabel.setText("Target");
+            mTop.mTarget = true;
         }else{
-            targetLabel.setText("");
-            top.target = false;
+            mTargetLabel.setText("");
+            mTop.mTarget = false;
         }
-        lower.setMiddle(new ImageIcon("images/Big" + Weapon.getWeaponName(player.getWeapon()) + "Icon.jpg"));
+        mLower.SetMiddle(new ImageIcon("images/Big" + WeaponData.GetWeaponInfo().GetWeaponName(player.GetWeapon()) + "Icon.jpg"));
         
-        top.draw(this);
-        upper.draw(this);
-        lower.draw(this);
-        bottom.draw(this);
+        mTop.Draw(this);
+        mUpper.Draw(this);
+        mLower.Draw(this);
+        mBottom.Draw(this);
     }
 }

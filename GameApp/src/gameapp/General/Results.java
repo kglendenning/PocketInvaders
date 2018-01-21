@@ -11,20 +11,20 @@ import javax.swing.JPanel;
  *
  * @author Kurt
  */
-class Results extends JPanel implements KeyListener{
-    public boolean enter;
+public class Results extends JPanel implements KeyListener{
+    public boolean mEnter;
     
     public Results() {
         super();
         
-        enter = false;
+        mEnter = false;
     }
     
-    public int update() {
+    public int Update() {
         repaint();
         
-        if(enter){
-            enter = false;
+        if(mEnter){
+            mEnter = false;
             return 3;
         }
         
@@ -39,26 +39,26 @@ class Results extends JPanel implements KeyListener{
         g.setColor(Color.black);
         g.fillRect(0, 0, getWidth(), getHeight());
         
-        String result = Logger.won ? "You Win!" : "You Lose.";
+        String result = Logger.mWon ? "You Win!" : "You Lose.";
         g.setFont(new Font("Serif", Font.BOLD, 40));
         g.setColor(Color.WHITE);
         g.drawString(result, 10, 50);
         
         g.setFont(new Font("Serif", Font.BOLD, 15));
-        g.drawString("Shots fired: " + Logger.playerShots, 10, 75);
-        g.drawString("Shots landed: " + Logger.playerHits, 10, 95);
-        double accuracy = Logger.playerShots > 0 ? (double) Logger.playerHits / (double) Logger.playerShots : 0;
+        g.drawString("Shots fired: " + Logger.mPlayerShots, 10, 75);
+        g.drawString("Shots landed: " + Logger.mPlayerHits, 10, 95);
+        double accuracy = Logger.mPlayerShots > 0 ? (double) Logger.mPlayerHits / (double) Logger.mPlayerShots : 0;
         g.drawString("Accuracy: " + String.format("%.4f", accuracy), 10, 115);
-        g.drawString("Damage dealt: " + Logger.damageDealt, 10, 135);
-        g.drawString("Enemies killed: " + Logger.enemiesKilled, 10, 155);
+        g.drawString("Damage dealt: " + Logger.mDamageDealt, 10, 135);
+        g.drawString("Enemies killed: " + Logger.mEnemiesKilled, 10, 155);
         
-        g.drawString("Enemy shots: " + Logger.enemyShotsFired, 10, 175);
-        g.drawString("Hits taken: " + Logger.hitsTaken, 10, 195);
-        g.drawString("Damage taken: " + Logger.damageTaken, 10, 215);
+        g.drawString("Enemy shots: " + Logger.mEnemyShotsFired, 10, 175);
+        g.drawString("Hits taken: " + Logger.mHitsTaken, 10, 195);
+        g.drawString("Damage taken: " + Logger.mDamageTaken, 10, 215);
         
-        g.drawString("Powerups spawned: " + Logger.powerupsSpawned, 10, 235);
-        g.drawString("Powerups collected: " + Logger.powerupsCollected, 10, 255);
-        g.drawString("Healing received: " + Logger.healingReceived, 10, 275);
+        g.drawString("Powerups spawned: " + Logger.mPowerupsSpawned, 10, 235);
+        g.drawString("Powerups collected: " + Logger.mPowerupsCollected, 10, 255);
+        g.drawString("Healing received: " + Logger.mHealingReceived, 10, 275);
         
         g.setFont(new Font("Serif", Font.BOLD, 30));
         g.setColor(Color.YELLOW);
@@ -71,10 +71,8 @@ class Results extends JPanel implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int key;
-        
-        if ((key = e.getKeyCode()) == KeyEvent.VK_ENTER) {
-            enter = true;
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            mEnter = true;
         }
     }
 
